@@ -17,18 +17,12 @@ import sys
 from setuptools import setup, find_packages
 from ConfigParser import RawConfigParser
 
-MAJOR = 0
-MINOR = 1
-MICRO = 0
-ISRELEASED = False
-VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
-
-"""
-get_version_info
-------------
-gets software version infos from
-"""
 def get_version_info(configuration_file="configuration.cfg"):
+    """
+    get_version_info
+    ------------
+    gets software version infos from
+    """
 
     RawConfigParser().read(configuration_file)
 
@@ -41,7 +35,6 @@ def get_version_info(configuration_file="configuration.cfg"):
     VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 
     return VERSION, ISRELEASED
-
 
 def write_version_py(filename="trendpy/version.py"):
     file_content= """
