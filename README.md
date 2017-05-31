@@ -66,6 +66,16 @@ that arch will work with older versions.
 * Pandas (0.19+)
 * seaborn (0.7.1+)
 
+# Sources
+
+Research papers that helped develop this library
+
+* Locally adaptative regression splines (1997) - Mammen, van der Geer
+* Asymptotic equivalence of non-parametric regression and white noise (1996) - Brown, Lo
+* Postwar US business cycles: an empirical investigation (1997) - Hodrick Prescott
+* Regression Shrinkage and Selection via the Lasso - (1996) Tibshirani
+* Lasso Regression: Estimation and Shrinkage via Limit of Gibbs Sampling - (2015) Rayaratnam et al.
+
 ### Support or Contact
 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.

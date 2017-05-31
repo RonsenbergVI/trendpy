@@ -37,6 +37,12 @@ def get_version_info(configuration_file="configuration.cfg"):
     return VERSION, ISRELEASED
 
 def write_version_py(filename="trendpy/version.py"):
+    """
+    write_version_py
+    ------------
+    write software version infos in version.py file
+    """
+
     file_content= """
     # FILE CONTENT GENERATED FROM SETUP.PY
     #
@@ -49,6 +55,16 @@ def write_version_py(filename="trendpy/version.py"):
     if not release:
         version = full_version
     """
+    VERSION, ISRELEASED = get_version_info()
+
+    _file = open(filename,"w")
+
+    try:
+        _file.write(file_content % {'version': VERSION,
+                       'full_version' : VERSION,
+                       'isrelease': str(ISRELEASED)})
+    finally:
+        _file.close()
 
 def configuration(parent_package='',top_path=None):
     #from numpy.distutils.misc_util import Configuration
@@ -105,7 +121,6 @@ def setup_package():
             'Topic :: Scientific/Engineering :: Mathematics',
             'Topic :: Software Development :: Libraries :: Python Modules'
         ])
-
 
 if __name__ == "__main__":
     setup_package()
