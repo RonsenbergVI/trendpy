@@ -9,7 +9,7 @@ The documentation can be found [here]().
 
 ## Contributing
 
-Contribution will be welcomed once a first stable release is ready.
+Contribution will be welcomed once a first stable release is ready. [Contact me]()
 
 ### Simulation
 
@@ -58,7 +58,7 @@ Syntax highlighted code block
 # Requirements
 
 These requirements reflect the testing environment.  It is possible
-that arch will work with older versions.
+that trendpy will work with older versions.
 
 * Python (2.7.11+)
 * NumPy (1.12+)
