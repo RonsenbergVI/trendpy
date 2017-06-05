@@ -19,3 +19,24 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
+class EstimationMethod(object):
+
+    def __init__(self,*args,**kwargs):
+        """
+
+        """
+
+class Options(object):
+
+    def __init__(self):
+        self.norm
+        self.total_variation
+        self.estimationMethod
+
+class OptionsFactory(object):
+
+    def __init__(self,type="hp-filter"):
+        """
+        
+        """

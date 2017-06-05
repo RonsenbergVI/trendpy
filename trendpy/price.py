@@ -34,7 +34,7 @@ class TimeSeries(object):
     @static
     def fromCSV(filename):
         """
-        instantiate time series with csv file with price
+        instantiates time series with csv file with price
         """
 
 

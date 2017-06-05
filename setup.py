@@ -24,13 +24,15 @@ def get_version_info(configuration_file="configuration.cfg"):
     gets software version infos from
     """
 
-    RawConfigParser().read(configuration_file)
+    config = RawConfigParser()
+
+    config.read(configuration_file)
 
     MAJOR = config.getint('version', 'major')
     MINOR = config.getint('version', 'minor')
     MICRO = config.getint('version', 'micro')
 
-    ISRELEASED = config.getbool('release', 'is_release')
+    ISRELEASED = config.getboolean('release', 'is_release')
 
     VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 
@@ -66,7 +68,7 @@ def write_version_py(filename="trendpy/version.py"):
     finally:
         _file.close()
 
-def configuration(parent_package='',top_path=None):
+#def configuration(parent_package='',top_path=None):
     #from numpy.distutils.misc_util import Configuration
 
     #config = Configuration(None, parent_package, top_path)
