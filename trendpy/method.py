@@ -22,21 +22,33 @@
 
 class EstimationMethod(object):
 
-    def __init__(self,*args,**kwargs):
+    def __init__(self,**kwargs):
+        """
+        -----------------------------------------------------------
+        estimation method can be either:
+        -----------------------------------------------------------
+            * bayesian (prior distribution have to be precised)
+            * interior points (optimisation algorithm parameters)
+        -----------------------------------------------------------
+        """
+        try:
+            self.method=kwargs["method"]
+        except:
+            self.method="optimisation"
+
+class MethodFactory(object):
+        """
+        -----------------------------------------------------------
+        estimation method factor
+        -----------------------------------------------------------
+            * bayesian with double exponential prior "bayesian-dexp"
+            * bayesian with double pareto prior "bayesian-dp"
+            * interior point optimisation (if the optimisation has
+              an explicit solution then return directly the value)
+              "interior-point"
+        -----------------------------------------------------------
+        """
+    def __init__(self,type="bayesian-dexp"):
         """
 
-        """
-
-class Options(object):
-
-    def __init__(self):
-        self.norm
-        self.total_variation
-        self.estimationMethod
-
-class OptionsFactory(object):
-
-    def __init__(self,type="hp-filter"):
-        """
-        
         """
