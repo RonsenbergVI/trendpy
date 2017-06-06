@@ -1,15 +1,13 @@
 # trendpy
 trend filtering micro library
-## Repository Content
-
 
 ## Documentation
 
-The documentation can be found [here]().
+The documentation can be found [here](https://help.github.com/categories/github-pages-basics/).
 
 ## Contributing
 
-Contribution will be welcomed once a first stable release is ready. [Contact me]()
+Contribution will be welcomed once a first stable release is ready. [Contact Me](https://help.github.com/categories/github-pages-basics/)
 
 ### Import data
 
@@ -31,10 +29,10 @@ Data is imported from a file (trendpy only supports csv for now).
 
 There are 4 trend filters possible
 
-* L2 (or Hodrick-Prescott) filter
 * L1 filter
-* L1-T filter
+* L2 filter (or Hodrick-Prescott filter)
 * L1-C filter
+* L2-C filter
 
 and two possible optimisation methods:
 
@@ -73,4 +71,4 @@ Research papers that helped develop this library
 
 ### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Having trouble with trendpy? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and I’ll help you sort it out.
