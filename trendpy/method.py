@@ -48,7 +48,7 @@ class MethodFactory(object):
               "interior-point"
         -----------------------------------------------------------
         """
-    def __init__(self,type="bayesian-dexp"):
+    def __init__(self,type):
         """
 
         """

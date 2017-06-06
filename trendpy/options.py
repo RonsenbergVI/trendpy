@@ -22,8 +22,8 @@
 
 class Options(object):
 
-    def __init__(self,):
-        self.norm
+    def __init__(self,*args):
+        self.norm=
         self.total_variation
         self.estimation_method
 
@@ -33,3 +33,5 @@ class OptionsFactory(object):
         """
 
         """
+        if type=="hp_filter":
+            return Option()

@@ -22,10 +22,10 @@
 
 class Trend(object):
 
-    def __init__(self):
+    def __init__(self,lambda,filter):
         self.price
+        self.method
+        
 
-    def l1_filter(self):
-        return
-
-    def l2_filter(self):
+    def filter(self):
+        pass

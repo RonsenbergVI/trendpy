@@ -16,21 +16,13 @@ Contribution will be welcomed once a first stable release is ready. [Contact me]
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
 ```markdown
-Syntax highlighted code block
+# import data from csv file (with dates and price) -- for now trendpy only
+# support 1D time series
 
-# Header 1
-## Header 2
-### Header 3
+  filename='snp500.csv'
+  data = TimeSeries.fromCSV(filename)
+  data.plot()
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
 
 ### Study of Historical data

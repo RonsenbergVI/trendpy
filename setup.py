@@ -47,8 +47,7 @@ def write_version_py(filename="trendpy/version.py"):
 
     file_content= """
     # FILE CONTENT GENERATED FROM SETUP.PY
-    #
-    # To compare versions robustly, use `numpy.lib.NumpyVersion`
+
     short_version = '%(version)s'
     version = '%(version)s'
     full_version = '%(full_version)s'

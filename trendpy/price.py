@@ -23,26 +23,21 @@
 from pandas import DataFrame
 
 class TimeSeries(object):
-    """
-    abstract class
-    """
-    def __init__(self):
-        """
 
-        """
+    def __init__(self,dates,data):
+        self.data=DataFrame(data,colums=['price'],index=dates)
 
     @static
     def fromCSV(filename):
         """
-        instantiates time series with csv file with price
+        instantiates time series with csv file with dates and prices
         """
 
-
-    def returns(self):
-        """
-        """
+        return TimeSeries(dates,data)
 
     def plot(self):
+        pass
 
 
-class Price(TimeSeries):
+    def filter_trend():
+        pass
