@@ -11,40 +11,43 @@ The documentation can be found [here]().
 
 Contribution will be welcomed once a first stable release is ready. [Contact me]()
 
-### Simulation
+### Import data
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Data is imported from a file (trendpy only supports csv for now).
 
 ```markdown
+
 # import data from csv file (with dates and price) -- for now trendpy only
 # support 1D time series
 
   filename='snp500.csv'
-  data = TimeSeries.fromCSV(filename)
+  data = TimeSeries.from_csv(filename)
+# plots time series
   data.plot()
 
 ```
 
-### Study of Historical data
+### Trend filtering
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+There are 4 trend filters possible
+
+* L2 (or Hodrick-Prescott) filter
+* L1 filter
+* L1-T filter
+* L1-C filter
+
+and two possible optimisation methods:
+
+* interior-point
+* MCMC
 
 ```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+# trend filter with selected filter
 
-- Bulleted
-- List
+  data.filter('hp_filter',optimisation=true)
+  data.plot(trend=true)
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
 
 # Requirements
@@ -54,7 +57,7 @@ that trendpy will work with older versions.
 
 * Python (2.7.11+)
 * NumPy (1.12+)
-* SciPy ((0.13+)
+* SciPy (0.13+)
 * Pandas (0.19+)
 * seaborn (0.7.1+)
 

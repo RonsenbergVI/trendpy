@@ -28,7 +28,7 @@ class TimeSeries(object):
         self.data=DataFrame(data,colums=['price'],index=dates)
 
     @static
-    def fromCSV(filename):
+    def from_csv(filename):
         """
         instantiates time series with csv file with dates and prices
         """
@@ -39,5 +39,5 @@ class TimeSeries(object):
         pass
 
 
-    def filter_trend():
+    def filter_trend(self,**kwargs):
         pass

@@ -25,7 +25,7 @@ class Trend(object):
     def __init__(self,lambda,filter):
         self.price
         self.method
-        
+
 
     def filter(self):
         pass
