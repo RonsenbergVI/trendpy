@@ -20,24 +20,48 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from pandas import DataFrame
+import matplotlib.pyplot as plot
+
+from numpy import arange
+from pandas import DataFrame, read_csv
+from trendpy.filter import Filter
+from trendpy.options import OptionsType, OptionsFactory
 
 class TimeSeries(object):
 
-    def __init__(self,dates,data):
-        self.data=DataFrame(data,colums=['price'],index=dates)
+    def __init__(self):
+        self.data=None
 
-    @static
+    def __len__(self):
+        return self.data.size
+
+    def __str__(self):
+        return self.data.__str__()
+
+    @staticmethod
     def from_csv(filename):
-        """
-        instantiates time series with csv file with dates and prices
-        """
-
-        return TimeSeries(dates,data)
+        ts=TimeSeries()
+        ts.data=read_csv(filename,index_col=0)
+        return ts
 
     def plot(self):
-        pass
+        self.data.plot()
+        plt.show()
 
+    def filter_trend(self,type,eta):
+        options=self.set_options(type)
+        trend=Filter(self,eta,options)
+        ts=filter.filter(type)
+        return ts
 
-    def filter_trend(self,**kwargs):
-        pass
+    def set_options(self,type):
+        if type==OptionsType.hp_filter:
+            return OptionsFactory.hp_filter()
+        elif type==OptionsType.l1_filter:
+            return OptionsFactory.l1_filter()
+        elif type==OptionsType.l1_c_filter:
+            return OptionsFactory.l1_c_filter()
+        elif type==OptionsType.l2_c_filter:
+            return OptionsFactory.l2_c_filter()
+        else:
+            pass

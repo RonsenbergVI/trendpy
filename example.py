@@ -20,12 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-class Trend(object):
-
-    def __init__(self,lambda,filter):
-        self.price
-        self.method
+from trendpy.time_series import TimeSeries
 
 
-    def filter(self):
-        pass
+y=TimeSeries.from_csv('data.csv')
+y.plot()
+y.hp_filter()

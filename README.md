@@ -53,7 +53,7 @@ and two possible optimisation methods:
 These requirements reflect the testing environment.  It is possible
 that trendpy will work with older versions.
 
-* Python (2.7.11+)
+* Python (3+)
 * NumPy (1.12+)
 * SciPy (0.13+)
 * Pandas (0.19+)

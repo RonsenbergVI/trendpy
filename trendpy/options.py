@@ -20,18 +20,35 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from enum import enum
+
+class OptionsType(Enum):
+    hp_filter="hp_filter"
+    l1_filter="l1_filter"
+    l1_c_filter="l1_c_filter"
+    l2_c_filter="l2_c_filter"
+
 class Options(object):
 
     def __init__(self,*args):
-        self.norm=
-        self.total_variation
-        self.estimation_method
+        self.norm=args[0]
+        self.total_variation=args[1]
+        self.parameters=args[2]
 
 class OptionsFactory(object):
 
-    def __init__(self,type="hp_filter"):
-        """
+    @staticmethod
+    def hp_filter():
+        return Options(2,2,None)
 
-        """
-        if type=="hp_filter":
-            return Option()
+    @staticmethod
+    def l1_filter():
+        return Options(1,1,{'xtol':1e-8,'disp':True})
+
+    @staticmethod
+    def l1_c_filter():
+        return Options(2,1,{'xtol':1e-8,'disp':True})
+
+    @staticmethod
+    def l2_c_filter():
+        return Options(1,2,None)
