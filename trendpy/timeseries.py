@@ -20,9 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import matplotlib.pyplot as plot
+import matplotlib.pyplot as plt
 
-from numpy import arange
+from numpy import arange, uint64
 from pandas import DataFrame, read_csv
 from trendpy.filter import Filter
 from trendpy.options import OptionsType, OptionsFactory
@@ -33,7 +33,7 @@ class TimeSeries(object):
         self.data=None
 
     def __len__(self):
-        return self.data.size
+        return uint64(self.data.size)
 
     def __str__(self):
         return self.data.__str__()
@@ -49,19 +49,4 @@ class TimeSeries(object):
         plt.show()
 
     def filter_trend(self,type,eta):
-        options=self.set_options(type)
-        trend=Filter(self,eta,options)
-        ts=filter.filter(type)
-        return ts
-
-    def set_options(self,type):
-        if type==OptionsType.hp_filter:
-            return OptionsFactory.hp_filter()
-        elif type==OptionsType.l1_filter:
-            return OptionsFactory.l1_filter()
-        elif type==OptionsType.l1_c_filter:
-            return OptionsFactory.l1_c_filter()
-        elif type==OptionsType.l2_c_filter:
-            return OptionsFactory.l2_c_filter()
-        else:
-            pass
+        pass

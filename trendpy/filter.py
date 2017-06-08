@@ -20,49 +20,72 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from trendpy.time_series import TimeSeries
+from trendpy.timeseries import *
 from numpy.linalg import norm
 from numpy import dot, ones, zeros
-from scipy.optimize import minimize
+
+__all__ = ['Filter','L1','L2','options','derivative']
+
+
+def derivative_matrix(size, order=1):
+    """
+    Compute discrete derivatives matrix with size (size-order,size)
+
+    Parameters
+    ----------
+    size : integer
+        number of observations
+    order : integer, optional
+        order of the total variation
+
+    Returns
+    -------
+    derivative_matrix:
+        discrete derivative matrix
+    """
+    D=zeros((size-order, size))
+    if order==1:
+        d=[-1,1]
+    elif order==2:
+        d=[1,-2,1]
+    for n in range(size-order):
+        for l in range(order+1):
+            D[n,n+l]=d[l]
+    return D
+
+class Options(object):
+
+    def __init__(self,*args):
+        self.norm=args[0]
+        self.total_variation=args[1]
+        self.parameters=args[2]
 
 class Filter(object):
+    """
+    Abstract class for MCMC filters
 
-    def __init__(self,time_series,eta,options):
-        self.price=time_series
-        self.y=self.price.data.as_matrix()
-        self.eta=eta
-        self.N=len(time_series)
-        self.options=options
-        self.D=self.get_derivative(option.total_variation)
+    Methods that raise NotImplementedError should be overriden by
+    any subclass.
+    """
 
-    def get_trend(self,type):
-        x0=ones(self.N)
-        constraints= [{'type':'ineq','fun':self.pos_constraint},{'type':'ineq','fun':self.neg_constraint}]
-        result=minimize(self.function,x0,args=(self.y,self.D),method='nelder-mead',options=self.options.parameters,contraints=constraints)
-        print(res)
-        return res
+    def __init__(self,):
+        self.price = None
+        self.size = 0
+        self.options = None
+        self.derivative_matrix = None
 
-    def function(self,x,y,D):
-        return 0.5*dot(x,dot(D,x.T))-dot(y,dot(D,x.T))
+    def filter(self,*args):
+        """
+        """
+        raise NotImplementedError("Must be overriden")
 
-    def pos_constraint(self,x):
-        return x-self.eta*ones(self.N)
 
-    def neg_constraint(self,x):
-        return self.eta*ones(self.N)-x
+class L1(Filter):
 
-    def get_derivative(self,order):
-        D=zeros((self.N-order,self.N))
-        if order==1:
-            a=1
-            b=-1
-            c=0
-        elif order==2:
-            a=1
-            b=-2
-            c=1
-        for n in range(self.N-order):
-            D[n,n]=a
-            D[n,n+1]=b
-            D[n,n+2]=c
-        return D
+    def __init__(self, price=None, options=None):
+        self.price = price
+        self.size = len(price)
+        self.options = options
+        self.derivative_matrix = derivative_matrix(self.size, options.total_variation_order)
+
+    def filter(self, *args):
