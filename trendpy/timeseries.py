@@ -25,10 +25,30 @@ import matplotlib.pyplot as plt
 from numpy import arange, uint64
 from pandas import DataFrame, read_csv
 from trendpy.filter import Filter
-from trendpy.options import OptionsType, OptionsFactory
+
+__all__ = ['TimeSeries']
 
 class TimeSeries(object):
-
+#     """
+#     Time series class used as interface to load data and filter trend
+#
+#     Methods
+#     -------
+#     from_csv :
+#
+#
+#     plot :
+#
+#
+#     filter_trend :
+#
+#
+#     Attributes
+#     ----------
+#     data :
+#
+#
+#     """
     def __init__(self):
         self.data=None
 

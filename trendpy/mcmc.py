@@ -21,21 +21,22 @@
 # SOFTWARE.
 
 from numpy import uint64
-from scipy.stats import (norm, invgauss, invgamma, multivariate_normal)
+
+__all__ = ['Parameter','Parameters','MCMC']
 
 class Parameter(object):
-    """
-    MCMC Parameters object
-
-    Attributes
-    ----------
-    name : string
-        name of the parameter
-    distribution : rv_continuous (scipy object)
-        posterior distribution of the parameter
-    current_value : numpy array (possibly a number)
-        last value generated for the parameter
-    """"
+    # """
+    # MCMC Parameters object
+    #
+    # Attributes
+    # ----------
+    # name : string
+    #     name of the parameter
+    # distribution : rv_continuous (scipy object)
+    #     posterior distribution of the parameter
+    # current_value : numpy array (possibly a number)
+    #     last value generated for the parameter
+    # """"
 
     def __init__(self, name=None, distribution=None, current_value=None):
         self.name = str(name)
@@ -49,19 +50,19 @@ class Parameter(object):
         """ % (self.name, self.distribution.__str__())
 
 class Parameters(object):
-    """
-    Collection of MCMC Parameters
-
-    Methods
-    -------
-    append
-        adds a new parameter to the parameter collection
-
-    Attributes
-    ----------
-    params: dictionary
-        dictionary with the parameter name as key and the parameter instance as value
-    """"
+    # """
+    # Collection of MCMC Parameters
+    #
+    # Methods
+    # -------
+    # append
+    #     adds a new parameter to the parameter collection
+    #
+    # Attributes
+    # ----------
+    # params: dictionary
+    #     dictionary with the parameter name as key and the parameter instance as value
+    # """"
 
     def __init__(self, parameters=None, hierarchy=None):
         self.parameters = parameters
@@ -96,50 +97,43 @@ class Parameters(object):
         """ % (len(self), self.parameters.__str__())
 
     def append(self, parameter):
-        """
-        Adds a new parameter to the parameter set
-        """
+        # """
+        # Adds a new parameter to the parameter set
+        # """
         self.parameters[parameter.name] = parameter
         self.hierarchy.append(parameter.name)
 
-class ParametersFactory(object):
-
-    @staticmethod
-    def l1():
-        parameters=Parameters()
-        Parameter("trend", multivariate_normal, )
-        Parameter("trend", multivariate_normal, )
 
 class MCMC(object):
-    """
-    MCMC Abstract class: any MCMC filtering method is a subclass of this class
-
-    Methods
-    -------
-    distribution_parameters :
-
-
-    summary :
-
-
-    generate :
-
-
-    run :
-        runs the MCMC procedure
-
-    Attributes
-    ----------
-    data :
-
-
-    parameters :
-
-
-    simulations :
-
-
-    """
+    # """
+    # MCMC Abstract class: any MCMC filtering method is a subclass of this class
+    #
+    # Methods
+    # -------
+    # distribution_parameters :
+    #
+    #
+    # summary :
+    #
+    #
+    # generate :
+    #
+    #
+    # run :
+    #     runs the MCMC procedure
+    #
+    # Attributes
+    # ----------
+    # data :
+    #
+    #
+    # parameters :
+    #
+    #
+    # simulations :
+    #
+    #
+    # """
 
     def __init__(self, data=None, parameters=None):
         """
@@ -177,6 +171,6 @@ class MCMC(object):
                 histo[name][:,i*value.current_value.shape[1]:(i+1)*value.current_value.shape[1]] = values[name]
                 n[name] = n[name]+1
 
-class MCMCL1(MCMC):
+#class MCMCL1(MCMC):
 
 #class MCMCL2(MCMC):

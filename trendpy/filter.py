@@ -28,21 +28,21 @@ __all__ = ['Filter','L1','L2','options','derivative']
 
 
 def derivative_matrix(size, order=1):
-    """
-    Compute discrete derivatives matrix with size (size-order,size)
-
-    Parameters
-    ----------
-    size : integer
-        number of observations
-    order : integer, optional
-        order of the total variation
-
-    Returns
-    -------
-    derivative_matrix:
-        discrete derivative matrix
-    """
+    # """
+    # Compute discrete derivatives matrix with size (size-order,size)
+    #
+    # Parameters
+    # ----------
+    # size : integer
+    #     number of observations
+    # order : integer, optional
+    #     order of the total variation
+    #
+    # Returns
+    # -------
+    # derivative_matrix:
+    #     discrete derivative matrix
+    # """
     D=zeros((size-order, size))
     if order==1:
         d=[-1,1]
@@ -54,6 +54,12 @@ def derivative_matrix(size, order=1):
     return D
 
 class Options(object):
+    # """
+    # Wrapper class containing all the parameters to configure a filter
+    #
+    # Methods that raise NotImplementedError should be overriden by
+    # any subclass.
+    # """
 
     def __init__(self,*args):
         self.norm=args[0]
@@ -61,12 +67,12 @@ class Options(object):
         self.parameters=args[2]
 
 class Filter(object):
-    """
-    Abstract class for MCMC filters
-
-    Methods that raise NotImplementedError should be overriden by
-    any subclass.
-    """
+    # """
+    # Abstract class for MCMC filters
+    #
+    # Methods that raise NotImplementedError should be overriden by
+    # any subclass.
+    # """
 
     def __init__(self,):
         self.price = None
@@ -75,8 +81,8 @@ class Filter(object):
         self.derivative_matrix = None
 
     def filter(self,*args):
-        """
-        """
+        # """
+        # """
         raise NotImplementedError("Must be overriden")
 
 
@@ -88,4 +94,4 @@ class L1(Filter):
         self.options = options
         self.derivative_matrix = derivative_matrix(self.size, options.total_variation_order)
 
-    def filter(self, *args):
+    #def filter(self, *args):

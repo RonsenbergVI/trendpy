@@ -20,6 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from trendpy.filter import Options
+from trendpy.mcmc import Parameter, Parameters
+from scipy.stats import (norm, invgauss, invgamma, gamma, multivariate_normal)
+
+__all__ = ['OptionsFactory','ParametersFactory']
+
 class OptionsFactory(object):
 
     @staticmethod
@@ -33,3 +39,18 @@ class OptionsFactory(object):
     @staticmethod
     def custom_filter():
         return Options(1,1,{'xtol':1e-8,'disp':True})
+
+class ParametersFactory(object):
+
+    @staticmethod
+    def l1(size, order):
+        parameters=Parameters()
+        parameters.append(Parameter("trend", multivariate_normal, (size,size)))
+        parameters.append(Parameter("sigma", invgamma, (1,1)))
+        parameters.append(Parameter("lambda", gamma, (1,1)))
+        for i in range(size-order):
+            parameters.append(Parameter("omega%d" % i, invgamma, (1,1)))
+        return parameters
+
+    #@staticmethod
+    #def l2(size, order):
