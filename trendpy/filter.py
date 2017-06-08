@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from trendpy.timeseries import *
+from trendpy.timeseries import TimeSeries
 from numpy.linalg import norm
 from numpy import dot, ones, zeros
 

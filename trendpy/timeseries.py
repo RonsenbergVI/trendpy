@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 
 from numpy import arange, uint64
 from pandas import DataFrame, read_csv
-from trendpy.filter import Filter
+from trendpy.filter import *
 
 __all__ = ['TimeSeries']
 

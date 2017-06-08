@@ -49,6 +49,9 @@ class Parameter(object):
             parameter distribution : %s
         """ % (self.name, self.distribution.__str__())
 
+    def __len__(self):
+        return
+
 class Parameters(object):
     # """
     # Collection of MCMC Parameters
@@ -73,19 +76,19 @@ class Parameters(object):
         return self.___parameters
 
     @parameters.setter
-    def params(self, parameters):
-        if not (parameters=None and len(parameters)==0):
+    def parameters(self, parameters):
+        if not (parameters==None):
             self.__parameters = parameters
-        else
+        else:
             self.__parameters = {}
 
     @property
     def hierarchy(self):
-        return self.___hierarchy
+        return self.__hierarchy
 
     @hierarchy.setter
     def hierarchy(self, hierarchy):
-        return self.___hierarchy
+        self.__hierarchy = hierarchy
 
     def __len__(self):
         return uint64(len(params))
@@ -155,7 +158,7 @@ class MCMC(object):
         """
         """
         distribution = self.parameters[parameter_name].distribution
-        parameters = self.(distribution_parameters, parameter_name)
+        parameters = self.distribution_parameters(parameter_name)
         return distribution.rvs(parameters[0],parameters[1])
 
     def run(self, run=50, number_simulations=100):
