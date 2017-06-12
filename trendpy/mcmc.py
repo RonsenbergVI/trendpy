@@ -20,160 +20,126 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from numpy import uint64
+from numpy import zeros, reshape
+from scipy.stats import rv_continuous
 
 __all__ = ['Parameter','Parameters','MCMC']
 
 class Parameter(object):
-    # """
-    # MCMC Parameters object
-    #
-    # Attributes
-    # ----------
-    # name : string
-    #     name of the parameter
-    # distribution : rv_continuous (scipy object)
-    #     posterior distribution of the parameter
-    # current_value : numpy array (possibly a number)
-    #     last value generated for the parameter
-    # """"
 
-    def __init__(self, name=None, distribution=None, current_value=None):
-        self.name = str(name)
-        self.distribution = distribution
-        self.current_value = current_value
+	def __init__(self, name, distribution, size, current_value=None):
+		self.name = str(name)
+		self.distribution = distribution
+		self.size = size
+		self.current_value = current_value
 
-    def __str__(self):
-        return """
-            parameter name : %s
-            parameter distribution : %s
-        """ % (self.name, self.distribution.__str__())
+	@property
+	def current_value(self):
+		return self.__current_value
 
-    def __len__(self):
-        return
+	@current_value.setter
+	def current_value(self, current_value):
+		self.__current_value = current_value
+
+	def __str__(self):
+		return """
+			parameter name : %s
+			parameter distribution : %s
+		""" % (self.name, self.distribution.__str__())
+
+	def __len__(self):
+		return 1
+		
+	def is_multivariate(self):
+		return self.size == (1,1)
 
 class Parameters(object):
-    # """
-    # Collection of MCMC Parameters
-    #
-    # Methods
-    # -------
-    # append
-    #     adds a new parameter to the parameter collection
-    #
-    # Attributes
-    # ----------
-    # params: dictionary
-    #     dictionary with the parameter name as key and the parameter instance as value
-    # """"
 
-    def __init__(self, parameters=None, hierarchy=None):
-        self.parameters = parameters
-        self.hierarchy = hierarchy
+	def __init__(self, list={}, hierarchy=[]):
+		self.list = list
+		self.hierarchy = hierarchy
 
-    @property
-    def parameters(self):
-        return self.___parameters
+	@property
+	def parameters(self):
+		return self.__list
 
-    @parameters.setter
-    def parameters(self, parameters):
-        if not (parameters==None):
-            self.__parameters = parameters
-        else:
-            self.__parameters = {}
+	@parameters.setter
+	def parameters(self, list):
+		if not (list=={}):
+			self.__list = list
+		else:
+			self.__list = {}
 
-    @property
-    def hierarchy(self):
-        return self.__hierarchy
+	@property
+	def hierarchy(self):
+		return self.__hierarchy
 
-    @hierarchy.setter
-    def hierarchy(self, hierarchy):
-        self.__hierarchy = hierarchy
+	@hierarchy.setter
+	def hierarchy(self, hierarchy):
+		self.__hierarchy = hierarchy
 
-    def __len__(self):
-        return uint64(len(params))
+	def __len__(self):
+		return len(self.list)
 
-    def __str__(self):
-        return """
-            number of parameters : %d
-            list : %s
-        """ % (len(self), self.parameters.__str__())
+	def __str__(self):
+		descr = '(parameters: ----------------------- \n'
+		descr += ', \n'.join(['name: %s, distribution: %s, size: %s' % (str(l.name), l.distribution.__str__(), l.size) for l in self.list.values()])
+		descr += '\n ----------------------- )'
+		return descr
 
-    def append(self, parameter):
-        # """
-        # Adds a new parameter to the parameter set
-        # """
-        self.parameters[parameter.name] = parameter
-        self.hierarchy.append(parameter.name)
-
+	def append(self, parameter):
+		self.list[parameter.name] = parameter
+		self.hierarchy.append(parameter.name)
+		
+class Distribution(rv_continuous):
+	pass
 
 class MCMC(object):
-    # """
-    # MCMC Abstract class: any MCMC filtering method is a subclass of this class
-    #
-    # Methods
-    # -------
-    # distribution_parameters :
-    #
-    #
-    # summary :
-    #
-    #
-    # generate :
-    #
-    #
-    # run :
-    #     runs the MCMC procedure
-    #
-    # Attributes
-    # ----------
-    # data :
-    #
-    #
-    # parameters :
-    #
-    #
-    # simulations :
-    #
-    #
-    # """
 
-    def __init__(self, data=None, parameters=None):
-        """
-        """
-        self.data = data
-        self.parameters = parameters
-        self.simulations = {}
+	def __init__(self, data, strategy):
+		self.data = data
+		self.strategy = strategy
+		self.simulations = None
 
-    def summary(self):
-        """
-        MCMC method summary
-        """
-        raise NotImplementedError("Must be overriden")
+	def summary(self):
+		smry = ""
+		return smry
 
-    def distribution_parameters(self, parameter_name=None, *args, **kwargs):
-        raise NotImplementedError("Must be overriden")
+	def distribution_parameters(self, parameter_name, *args, **kwargs):
+		return self.strategy.distribution_parameters(parameter_name, *args, **kwargs) # returns a dictionary
 
-    def generate(self, parameter_name=None):
-        """
-        """
-        distribution = self.parameters[parameter_name].distribution
-        parameters = self.distribution_parameters(parameter_name)
-        return distribution.rvs(parameters[0],parameters[1])
+	def generate(self, parameter_name):
+		return self.strategy.generate(parameter_name)
 
-    def run(self, run=50, number_simulations=100):
-        """
-        """
-        n = {key : 1 for key in self.parameters.keys()}
-        values = {key:value.current_value for (key, value) in self.parameters.items()}
-        self.simulations = {key : zeros((param.shape[0], param.shape[1]*number_simulations)) for (key, param) in self.parameters.items()}
+	def output(self, burn, parameter_name):
+		return self.strategy.output(self.simulations, burn, parameter_name)
+		
+	def define_parameters(self):
+		return self.strategy.define_parameters()
 
-        for i in range(number_simulations):
-            for name in hierarchy:
-                values[name] = generate(name, values)
-                histo[name][:,i*value.current_value.shape[1]:(i+1)*value.current_value.shape[1]] = values[name]
-                n[name] = n[name]+1
+	def initial_value(self,parameter_name):
+		return self.strategy.initial_value(parameter_name)
 
-#class MCMCL1(MCMC):
+	def run(self, number_simulations=100):
+		self.simulations = {key : zeros((param.size[0],param.size[1],number_simulations)) for (key, param) in self.strategy.parameters.list.items()}
 
-#class MCMCL2(MCMC):
+		for name in self.strategy.parameters.hierarchy:
+			self.strategy.parameters.list[name].current_value = self.initial_value(name)
+			
+		for i in range(number_simulations):
+			print("== step %i ==" % (int(i+1),))
+			restart_step = True
+			while restart_step:
+				for name in self.strategy.parameters.hierarchy:
+					print("== parameter %s ==" % name)
+					try:
+						self.strategy.parameters.list[name].current_value = self.generate(name)
+						self.simulations[name][:,:,i] = self.strategy.parameters.list[name].current_value.reshape(self.strategy.parameters.list[name].size)
+						restart_step = False
+					except:
+						print("== restart step %i ==" % i)
+						restart_step = True
+						break
+
+class ConvergenceAnalysis(object):
+	
