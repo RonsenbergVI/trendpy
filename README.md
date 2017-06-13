@@ -3,11 +3,11 @@ bayesian trend filtering micro library
 
 ## Documentation
 
-The documentation can be found [here](http://trendpy.readthedocs.io/en/latest/).
+The documentation can be found [here](https://ronsenbergvi.github.io/trendpy/).
 
 ## Contributing
 
-Contribution will be welcomed once a first stable release is ready. [Contact Me](https://help.github.com/categories/github-pages-basics/)
+Contribution will be welcomed once a first stable release is ready. [Contact Me]()
 
 ### Import data
 
