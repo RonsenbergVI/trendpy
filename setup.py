@@ -15,24 +15,19 @@ Links
 import os
 import sys
 from setuptools import setup, find_packages
-from configparser import ConfigParser
 
-def get_version_info(configuration_file="setup.cfg"):
+def get_version_info():
     """
     get_version_info
     ------------
     gets software version infos from
     """
 
-    config = ConfigParser()
+    MAJOR = 0
+    MINOR = 2
+    MICRO = 1
 
-    config.read(configuration_file)
-
-    MAJOR = config.getint('version', 'major')
-    MINOR = config.getint('version', 'minor')
-    MICRO = config.getint('version', 'micro')
-
-    ISRELEASED = config.getboolean('release', 'is_release')
+    ISRELEASED = False
 
     VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 
@@ -104,7 +99,7 @@ def setup_package():
                               'pandas',
                               'seaborn'],
           classifiers=[
-            'Development Status :: 1 - Planning',
+            'Development Status :: 2 - Pre-Alpha',
             'Environment :: Web Environment',
             'Intended Audience :: Financial and Insurance Industry',
             'License :: OSI Approved :: MIT License',
