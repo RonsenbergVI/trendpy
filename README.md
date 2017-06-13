@@ -22,7 +22,6 @@ from trendpy.timeseries import TimeSeries
 
 filename='data.csv'
 fund=TimeSeries.from_csv('data.csv')
-fund.filter(number_simulations=30, burns=10)
 
 # plots time series
 fund.plot()
@@ -47,8 +46,8 @@ and two possible optimisation methods:
 
 # trend filter with selected filter
 
-  data.filter('hp_filter',optimisation=true)
-  data.plot(trend=true)
+fund.filter(number_simulations=30, burns=10)
+fund.plot()
 
 ```
 
