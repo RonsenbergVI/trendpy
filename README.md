@@ -18,10 +18,14 @@ Data is imported from a file (trendpy only supports csv for now).
 # import data from csv file (with dates and price) -- for now trendpy only
 # support 1D time series
 
-  filename='snp500.csv'
-  data = TimeSeries.from_csv(filename)
+from trendpy.timeseries import TimeSeries
+
+filename='data.csv'
+fund=TimeSeries.from_csv('data.csv')
+fund.filter(number_simulations=30, burns=10)
+
 # plots time series
-  data.plot()
+fund.plot()
 
 ```
 
