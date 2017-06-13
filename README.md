@@ -3,7 +3,7 @@ bayesian trend filtering micro library
 
 ## Documentation
 
-The documentation can be found [here](https://help.github.com/categories/github-pages-basics/).
+The documentation can be found [here](http://trendpy.readthedocs.io/en/latest/).
 
 ## Contributing
 
