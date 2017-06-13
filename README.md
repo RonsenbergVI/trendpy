@@ -71,4 +71,4 @@ Research papers that helped develop this library
 
 ### Support or Contact
 
-Having trouble with trendpy? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and I’ll help you sort it out.
+Having trouble with trendpy? Check out our [documentation](https://ronsenbergvi.github.io/trendpy/) or [contact support](https://github.com/contact) and I’ll help you sort it out.
