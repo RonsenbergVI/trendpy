@@ -23,7 +23,7 @@ There are 3 trend filters possible
 
 * L1 filter
 * L2 filter (or Hodrick-Prescott filter)
-* Lp filter with 0<=p<=2
+* Lp filter (0<=p<=2)
 
 Custom filters with more options to come in first stable release.
 
