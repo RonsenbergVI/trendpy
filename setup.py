@@ -15,16 +15,16 @@ Links
 import os
 import sys
 from setuptools import setup, find_packages
-from ConfigParser import RawConfigParser
+from configparser import ConfigParser
 
-def get_version_info(configuration_file="configuration.cfg"):
+def get_version_info(configuration_file="setup.cfg"):
     """
     get_version_info
     ------------
     gets software version infos from
     """
 
-    config = RawConfigParser()
+    config = ConfigParser()
 
     config.read(configuration_file)
 
@@ -96,7 +96,6 @@ def setup_package():
           license='MIT',
           keywords = ['trend', 'finance', 'pandas', 'seaborn', 'filter', 'trading', 'stocks', 'equities', 'forex'],
           url = 'https://github.com/RonsenbergVI/trendpy',
-          packages = find_packages(),
           zip_safe=False,
           include_package_data = True,
           platforms='any',
