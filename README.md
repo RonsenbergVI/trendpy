@@ -38,11 +38,6 @@ There are 3 trend filters possible
 
 Custom filters with more options to come in first stable release.
 
-and two possible optimisation methods:
-
-* interior-point
-* MCMC
-
 ```markdown
 
 # trend filter with selected filter
