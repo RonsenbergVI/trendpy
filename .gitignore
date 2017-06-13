@@ -1,2 +1,5 @@
 __pycache__
 .git
+.DS_Store
+dist
+trendpy.egg-info
