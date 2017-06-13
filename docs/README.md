@@ -1,7 +1,3 @@
-# trendpy
-bayesian trend filtering micro library
-
-
 ### Import data
 
 Data is imported from a file (trendpy only supports csv for now).
