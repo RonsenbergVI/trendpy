@@ -30,12 +30,13 @@ fund.plot()
 
 ### Trend filtering
 
-There are 4 trend filters possible
+There are 3 trend filters possible
 
 * L1 filter
 * L2 filter (or Hodrick-Prescott filter)
-* L1-C filter
-* L2-C filter
+* Lp filter with 0<=p<=2
+
+Custom filters with more options to come in first stable release.
 
 and two possible optimisation methods:
 
@@ -61,6 +62,7 @@ that trendpy will work with older versions.
 * SciPy (0.13+)
 * Pandas (0.19+)
 * seaborn (0.7.1+)
+* statsmodels(0.8.0+)
 
 # Sources
 
