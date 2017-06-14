@@ -1,8 +1,0 @@
-setup.cfg
-setup.py
-trendpy.egg-info/PKG-INFO
-trendpy.egg-info/SOURCES.txt
-trendpy.egg-info/dependency_links.txt
-trendpy.egg-info/not-zip-safe
-trendpy.egg-info/requires.txt
-trendpy.egg-info/top_level.txt
