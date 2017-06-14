@@ -21,7 +21,7 @@ Data is imported from a file (trendpy only supports csv for now).
 from trendpy.timeseries import TimeSeries
 
 filename='data.csv'
-fund=TimeSeries.from_csv('data.csv')
+fund=TimeSeries.from_csv(filename)
 
 # plots time series
 fund.plot()
