@@ -1,3 +1,5 @@
+# __init__.py
+
 # MIT License
 
 # Copyright (c) 2017 Rene Jean Corneille
