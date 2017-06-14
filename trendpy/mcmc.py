@@ -141,5 +141,4 @@ class MCMC(object):
 						restart_step = True
 						break
 
-class ConvergenceAnalysis(object):
 	
