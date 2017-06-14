@@ -1,3 +1,5 @@
+# mcmc.py
+
 # MIT License
 
 # Copyright (c) 2017 Rene Jean Corneille
@@ -21,78 +23,8 @@
 # SOFTWARE.
 
 from numpy import zeros, reshape
-from scipy.stats import rv_continuous
 
-__all__ = ['Parameter','Parameters','MCMC']
-
-class Parameter(object):
-
-	def __init__(self, name, distribution, size, current_value=None):
-		self.name = str(name)
-		self.distribution = distribution
-		self.size = size
-		self.current_value = current_value
-
-	@property
-	def current_value(self):
-		return self.__current_value
-
-	@current_value.setter
-	def current_value(self, current_value):
-		self.__current_value = current_value
-
-	def __str__(self):
-		return """
-			parameter name : %s
-			parameter distribution : %s
-		""" % (self.name, self.distribution.__str__())
-
-	def __len__(self):
-		return 1
-		
-	def is_multivariate(self):
-		return self.size == (1,1)
-
-class Parameters(object):
-
-	def __init__(self, list={}, hierarchy=[]):
-		self.list = list
-		self.hierarchy = hierarchy
-
-	@property
-	def parameters(self):
-		return self.__list
-
-	@parameters.setter
-	def parameters(self, list):
-		if not (list=={}):
-			self.__list = list
-		else:
-			self.__list = {}
-
-	@property
-	def hierarchy(self):
-		return self.__hierarchy
-
-	@hierarchy.setter
-	def hierarchy(self, hierarchy):
-		self.__hierarchy = hierarchy
-
-	def __len__(self):
-		return len(self.list)
-
-	def __str__(self):
-		descr = '(parameters: ----------------------- \n'
-		descr += ', \n'.join(['name: %s, distribution: %s, size: %s' % (str(l.name), l.distribution.__str__(), l.size) for l in self.list.values()])
-		descr += '\n ----------------------- )'
-		return descr
-
-	def append(self, parameter):
-		self.list[parameter.name] = parameter
-		self.hierarchy.append(parameter.name)
-		
-class Distribution(rv_continuous):
-	pass
+__all__ = ['MCMC']
 
 class MCMC(object):
 
@@ -105,8 +37,8 @@ class MCMC(object):
 		smry = ""
 		return smry
 
-	def distribution_parameters(self, parameter_name, *args, **kwargs):
-		return self.strategy.distribution_parameters(parameter_name, *args, **kwargs) # returns a dictionary
+	def distribution_parameters(self, parameter_name):
+		return self.strategy.distribution_parameters(parameter_name) # returns a dictionary
 
 	def generate(self, parameter_name):
 		return self.strategy.generate(parameter_name)
@@ -140,5 +72,3 @@ class MCMC(object):
 						print("== restart step %i ==" % i)
 						restart_step = True
 						break
-
-	
