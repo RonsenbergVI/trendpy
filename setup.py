@@ -1,10 +1,9 @@
 """
-Trendpy
+trendpy
 -----
 
-Trendpy is a trend filtering microframework
-Trendpy implements L1 and L2 filtering methods solved by interior points or
-MCMC methods
+trendpy is a trend filtering microframework
+trendpy implements L1, L2 and Lp filtering solved by MCMC methods
 
 -----
 Links
@@ -25,7 +24,7 @@ def get_version_info():
 
     MAJOR = 0
     MINOR = 2
-    MICRO = 1
+    MICRO = 6
 
     ISRELEASED = False
 
@@ -40,7 +39,7 @@ def write_version_py(filename="trendpy/version.py"):
     write software version infos in version.py file
     """
 
-    file_content= """
+    file_content = """
     # FILE CONTENT GENERATED FROM SETUP.PY
 
     short_version = '%(version)s'
@@ -79,26 +78,27 @@ def write_version_py(filename="trendpy/version.py"):
 
 def setup_package():
 
-    _version, _isRelease = get_version_info()
+    _version, _isReleased = get_version_info()
 
     write_version_py()
 
-    setup(name='trendpy',
-          version=str(_version),
-          description='Trend Filtering Python MicroFramework',
-          author='Rene-Jean Corneille',
-          author_email='rene_jean.corneille@edu.escpeurope.eu',
-          license='MIT',
+    setup(name = 'trendpy',
+          version = str(_version),
+          description = 'Trend Filtering Python MicroFramework',
+          author = 'Rene-Jean Corneille',
+          author_email = 'rene_jean.corneille@edu.escpeurope.eu',
+          license = 'MIT',
           keywords = ['trend', 'finance', 'pandas', 'seaborn', 'filter', 'trading', 'stocks', 'equities', 'forex'],
           url = 'https://github.com/RonsenbergVI/trendpy',
-          zip_safe=False,
+          zip_safe = False,
           include_package_data = True,
-          platforms='any',
+          platforms = 'any',
           install_requires = ['numpy',
                               'scipy',
                               'pandas',
-                              'seaborn'],
-          classifiers=[
+                              'seaborn',
+							  'tabulate'],
+          classifiers = [
             'Development Status :: 2 - Pre-Alpha',
             'Environment :: Web Environment',
             'Intended Audience :: Financial and Insurance Industry',
