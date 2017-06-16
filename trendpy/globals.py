@@ -22,10 +22,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-def derivative_matrix(size, order=1):
+from __future__ import absolute_import
 
+from numpy import zeros
+
+__all__ = ['derivative_matrix']
+
+def derivative_matrix(size, order=2):
 	D=zeros((size-order, size))
-
 	if order==0:
 		d=[1]
 	elif order==1:
