@@ -23,9 +23,6 @@ if "install" in sys.argv:
         lib_paths.append(get_python_lib(prefix="/usr/local"))
     for lib_path in lib_paths:
         existing_path = os.path.abspath(os.path.join(lib_path, "trendpy"))
-        if os.path.exists(existing_path):
-            overlay_warning = True
-            break
 
 def get_version_info():
     """
@@ -35,8 +32,8 @@ def get_version_info():
     """
 
     MAJOR = 0
-    MINOR = 2
-    MICRO = 6
+    MINOR = 3
+    MICRO = 1
 
     ISRELEASED = False
 
