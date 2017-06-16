@@ -22,9 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from numpy import zeros, reshape
-
-__all__ = ['MCMC']
+from numpy import reshape, zeros
 
 class MCMC(object):
 
@@ -37,6 +35,12 @@ class MCMC(object):
 		smry = ""
 		return smry
 
+	def define_parameters(self):
+		return self.strategy.define_parameters()
+
+	def initial_value(self,parameter_name):
+		return self.strategy.initial_value(parameter_name)
+
 	def distribution_parameters(self, parameter_name):
 		return self.strategy.distribution_parameters(parameter_name) # returns a dictionary
 
@@ -45,12 +49,6 @@ class MCMC(object):
 
 	def output(self, burn, parameter_name):
 		return self.strategy.output(self.simulations, burn, parameter_name)
-		
-	def define_parameters(self):
-		return self.strategy.define_parameters()
-
-	def initial_value(self,parameter_name):
-		return self.strategy.initial_value(parameter_name)
 
 	def run(self, number_simulations=100):
 		self.simulations = {key : zeros((param.size[0],param.size[1],number_simulations)) for (key, param) in self.strategy.parameters.list.items()}
@@ -60,15 +58,15 @@ class MCMC(object):
 			
 		for i in range(number_simulations):
 			print("== step %i ==" % (int(i+1),))
-			restart_step = True
-			while restart_step:
-				for name in self.strategy.parameters.hierarchy:
-					print("== parameter %s ==" % name)
-					try:
-						self.strategy.parameters.list[name].current_value = self.generate(name)
-						self.simulations[name][:,:,i] = self.strategy.parameters.list[name].current_value.reshape(self.strategy.parameters.list[name].size)
-						restart_step = False
-					except:
-						print("== restart step %i ==" % i)
-						restart_step = True
-						break
+			#restart_step = True
+			#while restart_step:
+			for name in self.strategy.parameters.hierarchy:
+				print("== parameter %s ==" % name)
+				#try:
+				self.strategy.parameters.list[name].current_value = self.generate(name)
+				self.simulations[name][:,:,i] = self.strategy.parameters.list[name].current_value.reshape(self.strategy.parameters.list[name].size)
+					#restart_step = False
+					#except:
+					#	print("== restart step %i ==" % i)
+					#	restart_step = True
+					#	break
