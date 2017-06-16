@@ -24,7 +24,7 @@
 
 from __future__ import absolute_import
 
-from numpy import eye, zeros, dot, array, diag, sqrt
+from numpy import eye, zeros, dot, array, diag, sqrt, mean
 
 from scipy.stats import multivariate_normal, invgamma, invgauss, gamma
 from numpy.linalg import inv, norm
