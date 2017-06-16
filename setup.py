@@ -24,8 +24,8 @@ def get_version_info():
     """
 
     MAJOR = 0
-    MINOR = 2
-    MICRO = 6
+    MINOR = 3
+    MICRO = 0
 
     ISRELEASED = False
 
