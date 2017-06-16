@@ -11,6 +11,7 @@ Links
 * `website`:
 * `documentation`:
 """
+
 import os
 import sys
 from setuptools import setup, find_packages
@@ -40,16 +41,17 @@ def write_version_py(filename="trendpy/version.py"):
     """
 
     file_content = """
-    # FILE CONTENT GENERATED FROM SETUP.PY
+# FILE CONTENT GENERATED FROM SETUP.PY
 
-    short_version = '%(version)s'
-    version = '%(version)s'
-    full_version = '%(full_version)s'
-    release = %(isrelease)s
+short_version = '%(version)s'
+version = '%(version)s'
+full_version = '%(full_version)s'
+release = %(isrelease)s
 
-    if not release:
-        version = full_version
+if not release:
+	version = full_version
     """
+
     VERSION, ISRELEASED = get_version_info()
 
     _file = open(filename,"w")
@@ -93,6 +95,8 @@ def setup_package():
           zip_safe = False,
           include_package_data = True,
           platforms = 'any',
+		  package_dir={'trendpy': './trendpy'},
+		  packages=['trendpy'],
           install_requires = ['numpy',
                               'scipy',
                               'pandas',
