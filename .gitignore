@@ -2,6 +2,8 @@ __pycache__
 .git
 .DS_Store
 dist
-trendpy.egg-info
-*.pyc
 build
+*.bak
+*.pyc
+*.pyo
+*.egg-info
