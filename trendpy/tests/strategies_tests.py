@@ -1,3 +1,5 @@
+# strategies_tests.py
+
 # MIT License
 
 # Copyright (c) 2017 Rene Jean Corneille
@@ -19,11 +21,3 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
-from trendpy.series import Series
-
-filename='data.csv'
-
-quant_fund=Series.from_csv(filename)
-quant_fund.filter(number_simulations=30, burns=10)
-quant_fund.plot()
