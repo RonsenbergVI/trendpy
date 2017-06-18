@@ -32,7 +32,7 @@ def get_version_info():
     """
 
     MAJOR = 0
-    MINOR = 3
+    MINOR = 1
     MICRO = 1
 
     ISRELEASED = False
