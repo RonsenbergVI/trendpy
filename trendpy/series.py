@@ -134,7 +134,20 @@ class Series(object):
 
         method : string
 
-            trend filering method. 
+            trend filering method.
+
+		number_simulations : int
+
+			number of random draws for each parameter.
+
+		burns : int
+
+			number of draws dismissed as burning samples.
+
+		total_variation : int
+
+			\norm ()
+
         """
 		mcmc = MCMC(self, StrategyFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
 

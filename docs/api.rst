@@ -20,8 +20,8 @@ Factory class handling the creation of bayesian algorithms.
     :members:
 
     .. automethod:: add
-	
-	.. automethod:: create
+
+    .. automethod:: create
 
 
 globals
@@ -63,7 +63,7 @@ strategies
 .. toctree::
    :maxdepth: 2
 
-Strategies tell the mcmc algorithm how to simulate the Markov chain. 
+Strategies tell the mcmc algorithm how to simulate the Markov chain.
 
 .. module:: trendpy.strategies
 
