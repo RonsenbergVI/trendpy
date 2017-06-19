@@ -1,5 +1,5 @@
 User's Guide
-------------
+============
 
 This part of the documentation focuses on step-by-step
 instructions for trend and volatility filtering with trendpy.
@@ -12,7 +12,7 @@ instructions for trend and volatility filtering with trendpy.
    tutorial
 
 API Reference
--------------
+=============
 
 If you are looking for information on a specific function, class or
 method, this part of the documentation is for you.
@@ -23,7 +23,7 @@ method, this part of the documentation is for you.
    api
 
 Additional Notes
-----------------
+================
 
 Additional notes for anyone interested.
 
@@ -35,7 +35,7 @@ Additional notes for anyone interested.
    contributing
 
 Indices and tables
-----------------
+==================
 
 .. toctree::
    :maxdepth: 2
