@@ -57,18 +57,18 @@ class MCMC(object):
 
 		for name in self.strategy.parameters.hierarchy:
 			self.strategy.parameters.list[name].current_value = self.initial_value(name)
-			
+
 		for i in range(number_simulations):
 			print("== step %i ==" % (int(i+1),))
-			#restart_step = True
-			#while restart_step:
-			for name in self.strategy.parameters.hierarchy:
-				print("== parameter %s ==" % name)
-				#try:
-				self.strategy.parameters.list[name].current_value = self.generate(name)
-				self.simulations[name][:,:,i] = self.strategy.parameters.list[name].current_value.reshape(self.strategy.parameters.list[name].size)
-					#restart_step = False
-					#except:
-					#	print("== restart step %i ==" % i)
-					#	restart_step = True
-					#	break
+			restart_step = True
+			while restart_step:
+				for name in self.strategy.parameters.hierarchy:
+					print("== parameter %s ==" % name)
+					try:
+						self.strategy.parameters.list[name].current_value = self.generate(name)
+						self.simulations[name][:,:,i] = self.strategy.parameters.list[name].current_value.reshape(self.strategy.parameters.list[name].size)
+						restart_step = False
+					except:
+						print("== restart step %i ==" % i)
+						restart_step = True
+						break

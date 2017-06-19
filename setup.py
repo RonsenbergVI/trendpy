@@ -81,7 +81,7 @@ def setup_package():
 
     setup(name = 'trendpy',
           version = str(_version),
-          description = 'Trend Filtering Python MicroFramework',
+          description = 'Trend Filtering Python Micro Framework',
           author = 'Rene-Jean Corneille',
           author_email = 'rene_jean.corneille@edu.escpeurope.eu',
           license = 'MIT',

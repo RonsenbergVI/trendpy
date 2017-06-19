@@ -50,8 +50,8 @@ class Series(object):
 		ts.data=read_csv(filename,index_col=0)
 		return ts
 
-	def returns(self,period=1):
-		pass
+	#def returns(self,period=1):
+	#	pass
 
 	def save(self,filename='export.csv',type='csv',separator=','):
 		if type=='csv':
@@ -72,8 +72,8 @@ class Series(object):
 
 		self.data = self.data.join(DataFrame(trend,index=self.data.index,columns=[method]))
 
-	def regression(self,method="lasso", number_simulations=100, burns=50):
-		pass
+	#def regression(self,method="Lasso", number_simulations=100, burns=50):
+	#	pass
 
-	def export(self, filename, as_txt=False):
-		pass
+	#def export(self, filename, as_txt=False):
+	#	pass

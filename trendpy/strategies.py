@@ -40,12 +40,12 @@ class Parameter(object):
 
 	Examples
 	--------
-	
+
 	Import the wanted posterior distribution
-	
+
 	>>> from scipy.stats import norm
-	
-	create parameter 
+
+	create parameter
 
 	>>> param1 = Parameter('lambda',norm,(1,1),0.1)
 
@@ -94,16 +94,40 @@ class Parameter(object):
 		return 1
 
 	def is_multivariate(self):
+		""" Checks if the parameter is univariate.
+
+		Parameters
+		----------
+		"""
 		return self.size == (1,1)
 
 class Parameters(object):
+	""" Implements the set of parameters to be estimated
 
+	Examples
+	--------
+
+	Import the wanted posterior distribution
+
+	>>> from scipy.stats import invgamma
+
+	create parameter set
+
+	>>> param1 = Parameter('sigma2',invgamma,(1,1),0.09)
+	>>> params = Params()
+	>>> params.append(param1)
+	>>> print(params)
+
+	"""
 	def __init__(self, list={}, hierarchy=[]):
 		self.list = list
 		self.hierarchy = hierarchy
 
 	@property
 	def parameters(self):
+		""" Dictionary containing the parameters to be
+			estimated
+		"""
 		return self.__list
 
 	@parameters.setter
@@ -115,6 +139,10 @@ class Parameters(object):
 
 	@property
 	def hierarchy(self):
+		""" List containing the order in which
+			the Gibbs sampler updates the
+			parameter values
+		"""
 		return self.__hierarchy
 
 	@hierarchy.setter
@@ -131,10 +159,31 @@ class Parameters(object):
 		return descr
 
 	def append(self, parameter):
+		""" Adds a parameter to the parameter set.
+		First parameter added is the first in the
+		hierarchy.
+
+		Parameters
+		----------
+
+		parameter : Parameter
+			parameter to estimate
+
+		distribution : rv_continuous
+			Posterior Probability distribution of the parameter
+
+		size : tuple
+			Dimension of the
+
+		current_value : array : optional
+			Current value of the parameter (the current value is the one
+			used for computations)
+		"""
 		self.list[parameter.name] = parameter
 		self.hierarchy.append(parameter.name)
 
 class Strategy(object):
+	""" Abstract class for implementing Gibbs sampling algorithms."""
 
 	def __init__(self):
 		self.parameters = None
@@ -144,19 +193,111 @@ class Strategy(object):
 		self.parameters = None
 
 	def parameters(self):
+        """ Method to set the parameter set to be updated
+			in the MCMC algorithm
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        parameters : Parameters
+
+			the parameter set to be estimated.
+        """
 		raise NotImplementedError("Must be overriden")
 
 	def initial_value(self,parameter_name):
+        """ Method that sets the initial value of the
+			parameters to be estimated
+
+        Parameters
+        ----------
+
+        parameter_name : string
+
+            name of the parameter
+
+        Returns
+        -------
+
+        initial_val : ndarray
+
+            initial value used in the MCMC algorithm.
+        """
 		raise NotImplementedError("Must be overriden")
 
 	def distribution_parameters(self, parameter_name):
+        """ Method that sets the parameters of the posterior
+			distribution of the parameters to be estimated.
+
+        Parameters
+        ----------
+
+        parameter_name : string
+
+            name of the parameter
+        Returns
+        -------
+
+        dist_parameters : dictionary
+
+			dictionary the parameters needed to compute the
+			next value of the Markov chain for the parameter with name:
+			parameter_name.
+        """
 		raise NotImplementedError("Must be overriden")
 
 	def generate(self,parameter_name):
+        """ This method handles the generation of the random draws of
+			the Markov chain for each parameters.
+
+        Parameters
+        ----------
+
+        parameter_name : string
+
+            name of the parameter
+        Returns
+        -------
+
+        random_draw : ndarray
+
+            random draw for the parameter with name parameter_name.
+        """
 		raise NotImplementedError("Must be overriden")
 
 	def output(self, simulations, burn, parameter_name):
+        """ Computes the poserior mean of the parameters
+
+        Parameters
+        ----------
+
+
+        simulations : dictionary
+
+            dictonnary containing the complete history of the generated
+			values for each parameters in the MCMC algorithm.
+
+        burn : int
+           number of draws dismissed as burning samples.
+
+        us : ndarray, optional
+
+            If provided, control input to the filter for each time step
+
+
+        Returns
+        -------
+
+        (xhat_smooth, xhat) : ndarray, ndarray
+
+            xhat_smooth is the output of the N step fix lag smoother
+            xhat is the filter output of the standard Kalman filter
+        """
 		raise NotImplementedError("Must be overriden")
+
 
 class L1Filter(Strategy):
 
@@ -230,6 +371,3 @@ class L1Filter(Strategy):
 	class Factory(object):
 		def create(self,*args,**kwargs):
 			return L1Filter(args[0],total_variation_order=kwargs['total_variation_order'])
-
-class Lasso(Strategy):
-	pass
