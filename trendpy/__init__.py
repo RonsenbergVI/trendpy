@@ -29,3 +29,6 @@ from trendpy.globals import *
 
 from trendpy.version import version
 from trendpy.factory import StrategyFactory
+
+
+__version__ = version
