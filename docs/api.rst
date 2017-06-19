@@ -30,7 +30,7 @@ A collection of functions used to perform estimations.
 .. autofunction:: derivative_matrix
 
 mcmc
-====
+----
 
 .. autoclass:: MCMC
     :members:
@@ -38,7 +38,7 @@ mcmc
     .. automethod:: __init__
 
 series
-=====
+------
 
 .. autoclass:: Series
     :members:
