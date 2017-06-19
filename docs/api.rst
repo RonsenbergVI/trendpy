@@ -10,7 +10,7 @@ the most relevent part are documented and we provide links to the respective doc
 factory
 ^^^^^^^
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
 Factory class handling the creation of bayesian algorithms.
 
@@ -27,7 +27,7 @@ Factory class handling the creation of bayesian algorithms.
 globals
 ^^^^^^^
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
 A collection of functions used to perform estimations.
 
@@ -36,7 +36,7 @@ A collection of functions used to perform estimations.
 mcmc
 ^^^^
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
 .. module:: trendpy.mcmc
 
@@ -48,7 +48,7 @@ mcmc
 series
 ^^^^^^
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
 
 .. module:: trendpy.series
@@ -61,7 +61,7 @@ series
 strategies
 ^^^^^^^^^^
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
 Strategies tell the mcmc algorithm how to simulate the Markov chain. 
 
