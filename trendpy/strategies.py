@@ -36,8 +36,26 @@ from trendpy.globals import derivative_matrix
 __all__ = ['Parameter','Parameters','Strategy','L1Filter','Lasso']
 
 class Parameter(object):
-
+	
 	def __init__(self, name, distribution, size, current_value=None):
+		""" Creates a parameter to estimate in the MCMC algorithm.
+
+		Parameters
+		----------
+
+		name : string
+			Name of the parameter (unique identification)
+
+		distribution : rv_continuous
+			Posterior Probability distribution of the parameter
+
+		size : tuple
+			Dimension of the
+			
+		current_value : array : optional
+			Current value of the parameter (the current value is the one 
+			used for computations)
+		"""
 		self.name = str(name)
 		self.distribution = distribution
 		self.size = size
@@ -45,6 +63,7 @@ class Parameter(object):
 
 	@property
 	def current_value(self):
+		"""Parameter current value (last generated)"""
 		return self.__current_value
 
 	@current_value.setter
