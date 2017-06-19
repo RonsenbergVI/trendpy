@@ -1,8 +1,8 @@
 Installation
-------------
+============
 
 Installation with pip (recommended)
-===================================
+-----------------------------------
 
 The library is available on pypi and to install the last available version, run this command:
 
@@ -19,7 +19,7 @@ this should display the version installed on your system.
 
 
 Installation from GitHub
-========================
+------------------------
 
 trendpy releases are also available on github (https://github.com/ronsenbergVI/trendpy). 
 You first need to clone (or fork if you want to modify it) and 
