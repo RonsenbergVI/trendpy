@@ -7,7 +7,7 @@ Welcome to trendpy's documentation!
 **********************************
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
 
 .. include:: contents.rst.inc
