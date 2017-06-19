@@ -1,7 +1,7 @@
 .. _introduction:
 
 Introduction
-============
+------------
 
 trendpy is a bayesian filtering micro library.
 
@@ -10,7 +10,7 @@ The library also supports bayesian regression models (Lasso and Ridge).
 Models are fitted using MCMC algorithms.
 
 Requirements
-------------
+^^^^^^^^^^^^
 
 trenpy is build on top of the following libraries:
 
@@ -23,7 +23,7 @@ trenpy is build on top of the following libraries:
 and for testing I chose py.test (http://pytest.org/latest/)
 
 Issues
-------
+^^^^^^
 
 Should you encounter any issue with the library ou can raise them here: https://github.com/ronsenbergVI/filterpy/issues
 
