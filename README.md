@@ -56,7 +56,7 @@ that trendpy will work with older versions.
 * NumPy (1.12+)
 * SciPy (0.13+)
 * Pandas (0.19+)
-* seaborn (0.7.1+)
+* matplotlib (2.0+)
 * tabulate (0.7.7+)
 
 # Sources
