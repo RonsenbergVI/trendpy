@@ -10,7 +10,7 @@ the most relevent part are documented and we provide links to the respective doc
 
 
 factory
--------
+======
 
 Factory class handling the creation of bayesian algorithms.
 
@@ -23,14 +23,14 @@ Factory class handling the creation of bayesian algorithms.
 
 
 globals
--------
+=======
 
 A collection of functions used to perform estimations.
 
 .. autofunction:: derivative_matrix
 
 mcmc
-----
+====
 
 .. autoclass:: MCMC
     :members:
@@ -38,7 +38,7 @@ mcmc
     .. automethod:: __init__
 
 series
-------
+=====
 
 .. autoclass:: Series
     :members:
@@ -46,7 +46,7 @@ series
     .. automethod:: __init__
 
 strategies
-----------
+==========
 
 Strategies tell the mcmc algorithm how to simulate the Markov chain. 
 
