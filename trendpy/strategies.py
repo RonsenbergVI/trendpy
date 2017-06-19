@@ -36,7 +36,24 @@ from trendpy.globals import derivative_matrix
 __all__ = ['Parameter','Parameters','Strategy','L1Filter','Lasso']
 
 class Parameter(object):
+	""" Implements an unknown parameter to be estimated
 	
+	Examples
+	--------
+
+	..code:
+		from scipy.stats import norm
+		
+		param1 = Parameter('lambda',norm,(1,1),0.1)
+
+	References
+	----------
+
+	Zarchan and Musoff. "Fundamentals of Kalman filtering: A Practical
+	Approach." AIAA, third edition.
+
+	"""
+
 	def __init__(self, name, distribution, size, current_value=None):
 		""" Creates a parameter to estimate in the MCMC algorithm.
 
