@@ -13,7 +13,7 @@ Welcome to trendpy's documentation!
 .. include:: contents.rst.inc
 
 Indices and tables
-------------------
+******************
 
 * :ref:`genindex`
 * :ref:`modindex`
