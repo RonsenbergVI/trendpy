@@ -37,13 +37,14 @@ __all__ = ['Parameter','Parameters','Strategy','L1Filter','Lasso']
 
 class Parameter(object):
 	""" Implements an unknown parameter to be estimated
-	
+
 	Examples
 	--------
 
 	..code:
+
 		from scipy.stats import norm
-		
+
 		param1 = Parameter('lambda',norm,(1,1),0.1)
 
 	References
@@ -68,9 +69,9 @@ class Parameter(object):
 
 		size : tuple
 			Dimension of the
-			
+
 		current_value : array : optional
-			Current value of the parameter (the current value is the one 
+			Current value of the parameter (the current value is the one
 			used for computations)
 		"""
 		self.name = str(name)
@@ -171,7 +172,7 @@ class L1Filter(Strategy):
 		self.total_variation_order = total_variation_order
 		self.parameters = self.parameters()
 		self.derivative_matrix = derivative_matrix(self.size, self.total_variation_order)
-		
+
 	def parameters(self):
 		parameters=Parameters()
 
@@ -218,18 +219,18 @@ class L1Filter(Strategy):
 		parameters = self.distribution_parameters(parameter_name)
 
 		if parameter_name=='trend':
-			return distribution.rvs(parameters['mean'],parameters['cov']) 
+			return distribution.rvs(parameters['mean'],parameters['cov'])
 		elif parameter_name=='omega':
 			result = zeros(self.parameters.list['omega'].current_value.shape)
 			for i in range(len(result)):
-				result[i] = 1/distribution.rvs(parameters['pos'][i],loc=parameters['loc'],scale=parameters['scale']) 
+				result[i] = 1/distribution.rvs(parameters['pos'][i],loc=parameters['loc'],scale=parameters['scale'])
 			return result
 		return distribution.rvs(parameters['pos'],loc=parameters['loc'],scale=parameters['scale']) #pb with the parameter name
 
 	def output(self, simulations, burn, parameter_name):
 		out = mean(simulations[parameter_name][:,:,burn:],axis=2)
 		return out
-		
+
 	class Factory(object):
 		def create(self,*args,**kwargs):
 			return L1Filter(args[0],total_variation_order=kwargs['total_variation_order'])
