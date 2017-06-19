@@ -1,7 +1,7 @@
 .. _api:
 
 API
----
+===
 
 .. module:: trendpy
 
@@ -10,7 +10,7 @@ the most relevent part are documented and we provide links to the respective doc
 
 
 factory
-======
+-------
 
 Factory class handling the creation of bayesian algorithms.
 
@@ -23,7 +23,7 @@ Factory class handling the creation of bayesian algorithms.
 
 
 globals
-=======
+-------
 
 A collection of functions used to perform estimations.
 
@@ -46,7 +46,7 @@ series
     .. automethod:: __init__
 
 strategies
-==========
+----------
 
 Strategies tell the mcmc algorithm how to simulate the Markov chain. 
 
