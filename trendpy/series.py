@@ -32,7 +32,20 @@ from trendpy.factory import StrategyFactory
 from pandas import DataFrame, read_csv
 
 class Series(object):
+	""" Implements univariate time series
 
+	Examples
+	--------
+
+	Import the class
+
+	>>> from trendpy.series import Series
+
+	create from csv
+
+	>>> data = Series.from_csv('data.csv')
+
+	"""
 	def __init__(self):
 		self.data=None
 		self.is_log_price = False
@@ -45,25 +58,84 @@ class Series(object):
 
 	@staticmethod
 	def from_csv(filename, nomalise=True):
-		ts=Series()
-		ts.nomalise = nomalise
-		ts.data=read_csv(filename,index_col=0)
-		return ts
+        """ Instantiate new time series from a csv file with the
+			following format
+			Date,Title
+			date_1,data_1
+			.     	.
+			.     	.
+			.     	.
+			date_n,data_n
 
-	#def returns(self,period=1):
-	#	pass
+        Parameters
+        ----------
+
+        filename : string
+
+            path of the file with extension (.csv or .txt)
+
+        Returns
+        -------
+
+        time_series : Series
+
+            time series with the data contained in the csv file.
+        """
+		time_series=Series()
+		time_series.nomalise = nomalise
+		time_series.data=read_csv(filename,index_col=0)
+		return time_series
+
+	def returns(self,period=1):
+        """ adds a new time series to the data with the returns of the original
+			time series.
+
+        Parameters
+        ----------
+
+        period : int
+
+            number of days between two consecutive observations used to
+			compute the returns.
+        """
+		pass
 
 	def save(self,filename='export.csv',type='csv',separator=','):
+        """ Saves the data contained in the object to a csv file
+
+        Parameters
+        ----------
+
+        filename : string
+
+            path and name of the file to export
+
+		type : string, optional
+
+			by default csv, if no value is given then a csv file is saved.
+			another possible format is json (other should be available in
+			future releases).
+        """
 		if type=='csv':
 			pass
 		if type=='json':
 			pass
 
 	def plot(self):
+        """ Plots the time series"""
 		self.data.plot()
 		plt.show()
 
 	def filter(self, method="L1Filter",number_simulations=100, burns=50,total_variation=2):
+        """ Filters the trend of the time series.
+
+        Parameters
+        ----------
+
+        method : string
+
+            trend filering method. 
+        """
 		mcmc = MCMC(self, StrategyFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
 
 		mcmc.run(number_simulations)

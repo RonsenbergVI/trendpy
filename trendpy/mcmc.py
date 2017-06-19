@@ -38,21 +38,121 @@ class MCMC(object):
 		return smry
 
 	def define_parameters(self):
+        """ Method to set the parameter set to be updated
+			in the MCMC algorithm
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        parameters : Parameters
+
+			the parameter set to be estimated.
+        """
 		return self.strategy.define_parameters()
 
 	def initial_value(self,parameter_name):
+        """ Method that sets the initial value of the
+			parameters to be estimated
+
+        Parameters
+        ----------
+
+        parameter_name : string
+
+            name of the parameter
+
+        Returns
+        -------
+
+        initial_val : ndarray
+
+            initial value used in the MCMC algorithm.
+        """
 		return self.strategy.initial_value(parameter_name)
 
 	def distribution_parameters(self, parameter_name):
+        """ Method that sets the parameters of the posterior
+			distribution of the parameters to be estimated.
+
+        Parameters
+        ----------
+
+        parameter_name : string
+
+            name of the parameter
+        Returns
+        -------
+
+        dist_parameters : dictionary
+
+			dictionary the parameters needed to compute the
+			next value of the Markov chain for the parameter with name:
+			parameter_name.
+        """
 		return self.strategy.distribution_parameters(parameter_name) # returns a dictionary
 
 	def generate(self, parameter_name):
+        """ This method handles the generation of the random draws of
+			the Markov chain for each parameters.
+
+        Parameters
+        ----------
+
+        parameter_name : string
+
+            name of the parameter
+        Returns
+        -------
+
+        random_draw : ndarray
+
+            random draw for the parameter with name parameter_name.
+        """
 		return self.strategy.generate(parameter_name)
 
 	def output(self, burn, parameter_name):
+        """ Computes the poserior mean of the parameters
+
+        Parameters
+        ----------
+
+
+        simulations : dictionary
+
+            dictonnary containing the complete history of the generated
+			values for each parameters in the MCMC algorithm.
+
+        burn : int
+
+           number of draws dismissed as burning samples.
+
+        parameter_name : string
+
+            name of the parameter of interest
+
+
+        Returns
+        -------
+
+        poserior_mean : ndarray
+
+            returns the posterior mean of the parameter.
+        """
 		return self.strategy.output(self.simulations, burn, parameter_name)
 
 	def run(self, number_simulations=100):
+        """ Runs the MCMC algorithm
+
+        Parameters
+        ----------
+
+        number_simulations : int
+
+            number of random draws for each parameter.
+        """
 		self.simulations = {key : zeros((param.size[0],param.size[1],number_simulations)) for (key, param) in self.strategy.parameters.list.items()}
 
 		for name in self.strategy.parameters.hierarchy:

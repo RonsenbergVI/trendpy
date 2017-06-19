@@ -167,17 +167,8 @@ class Parameters(object):
 		----------
 
 		parameter : Parameter
+
 			parameter to estimate
-
-		distribution : rv_continuous
-			Posterior Probability distribution of the parameter
-
-		size : tuple
-			Dimension of the
-
-		current_value : array : optional
-			Current value of the parameter (the current value is the one
-			used for computations)
 		"""
 		self.list[parameter.name] = parameter
 		self.hierarchy.append(parameter.name)
@@ -192,7 +183,7 @@ class Strategy(object):
 		self.derivative_matrix = None
 		self.parameters = None
 
-	def parameters(self):
+	def define_parameters(self):
         """ Method to set the parameter set to be updated
 			in the MCMC algorithm
 
@@ -281,20 +272,20 @@ class Strategy(object):
 			values for each parameters in the MCMC algorithm.
 
         burn : int
+
            number of draws dismissed as burning samples.
 
-        us : ndarray, optional
+        parameter_name : string
 
-            If provided, control input to the filter for each time step
+            name of the parameter of interest
 
 
         Returns
         -------
 
-        (xhat_smooth, xhat) : ndarray, ndarray
+        poserior_mean : ndarray
 
-            xhat_smooth is the output of the N step fix lag smoother
-            xhat is the filter output of the standard Kalman filter
+            returns the posterior mean of the parameter.
         """
 		raise NotImplementedError("Must be overriden")
 
@@ -310,7 +301,7 @@ class L1Filter(Strategy):
 		self.parameters = self.parameters()
 		self.derivative_matrix = derivative_matrix(self.size, self.total_variation_order)
 
-	def parameters(self):
+	def define_parameters(self):
 		parameters=Parameters()
 
 		parameters.append(Parameter("trend", multivariate_normal, (self.size,1)))
