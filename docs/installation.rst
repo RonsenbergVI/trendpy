@@ -28,5 +28,5 @@ You first need to clone (or fork if you want to modify it) and
 
      $ git clone https://github.com/ronsenbergVI/trendpy.git
      $ cd filterpy
-	 $ python setup.py build
+     $ python setup.py build
      $ python setup.py install 
