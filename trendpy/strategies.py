@@ -41,7 +41,7 @@ class Parameter(object):
 	Examples
 	--------
 
-	..code:
+	..code::
 
 		from scipy.stats import norm
 
