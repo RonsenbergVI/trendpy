@@ -11,6 +11,8 @@ the most relevent part are documented and we provide links to the respective doc
 
 factory
 -------
+.. toctree::
+   :maxdepth: 1
 
 Factory class handling the creation of bayesian algorithms.
 
@@ -24,6 +26,8 @@ Factory class handling the creation of bayesian algorithms.
 
 globals
 -------
+.. toctree::
+   :maxdepth: 1
 
 A collection of functions used to perform estimations.
 
@@ -31,6 +35,8 @@ A collection of functions used to perform estimations.
 
 mcmc
 ----
+.. toctree::
+   :maxdepth: 1
 
 .. autoclass:: MCMC
     :members:
@@ -39,6 +45,8 @@ mcmc
 
 series
 ------
+.. toctree::
+   :maxdepth: 1
 
 .. autoclass:: Series
     :members:
@@ -47,6 +55,8 @@ series
 
 strategies
 ----------
+.. toctree::
+   :maxdepth: 1
 
 Strategies tell the mcmc algorithm how to simulate the Markov chain. 
 
