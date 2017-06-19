@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # factory.py
 
 # MIT License
