@@ -1,9 +1,8 @@
 User's Guide
 ------------
 
-This part of the documentation, which is mostly prose, begins with some
-background information about Flask, then focuses on step-by-step
-instructions for web development with Flask.
+This part of the documentation focuses on step-by-step
+instructions for trend and volatility filtering with trendpy.
 
 .. toctree::
    :maxdepth: 2
