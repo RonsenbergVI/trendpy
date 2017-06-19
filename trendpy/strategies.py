@@ -40,18 +40,14 @@ class Parameter(object):
 
 	Examples
 	--------
+	
+	Import the wanted posterior distribution
+	
+	>>> from scipy.stats import norm
+	
+	create parameter 
 
-	..code::
-
-		from scipy.stats import norm
-
-		param1 = Parameter('lambda',norm,(1,1),0.1)
-
-	References
-	----------
-
-	Zarchan and Musoff. "Fundamentals of Kalman filtering: A Practical
-	Approach." AIAA, third edition.
+	>>> param1 = Parameter('lambda',norm,(1,1),0.1)
 
 	"""
 
