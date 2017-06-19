@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # mcmc.py
 
 # MIT License
