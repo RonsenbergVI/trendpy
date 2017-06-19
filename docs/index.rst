@@ -9,13 +9,3 @@ Welcome to trendpy's documentation!
 
 .. include:: contents.rst.inc
 
-Indices and tables
-******************
-
-.. toctree::
-   :maxdepth: 2
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
