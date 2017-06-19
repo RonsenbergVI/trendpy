@@ -5,10 +5,10 @@ License
 
 trendpy is licensed under the MIT Licence. It means that the source
 code provided in the binaries can be used, modified, or distributed
-freely for commercial or personal use with conditions only requiring 
+freely for commercial or personal use with conditions only requiring
 preservation of copyright and license notices.
 
-The full license text can be found below (:ref:`trendpy-license`). 
+The full license text can be found below (:ref:`trendpy-license`).
 
 .. _authors:
 
@@ -35,6 +35,6 @@ documentation.
 .. _trendpy-license:
 
 trendpy License
--------------
+---------------
 
 .. include:: ../LICENSE

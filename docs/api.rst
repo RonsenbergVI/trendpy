@@ -31,6 +31,8 @@ globals
 
 A collection of functions used to perform estimations.
 
+.. module:: trendpy.globals
+
 .. autofunction:: derivative_matrix
 
 mcmc
