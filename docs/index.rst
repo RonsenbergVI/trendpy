@@ -17,7 +17,7 @@ The library also supports bayesian regression models (Lasso and Ridge).
 Models are fitted using MCMC algorithms.
 
 Requirements
-============
+------------
 
 trenpy is build on top of the following libraries:
 
@@ -37,7 +37,7 @@ Should you encounter any issue with the library ou can raise them here: https://
 .. include:: contents.rst.inc
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`
