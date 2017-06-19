@@ -2,7 +2,7 @@ Installation
 ------------
 
 Installation with pip (recommended)
------------------------------------
+===================================
 
 The library is available on pypi and to install the last available version, run this command:
 
