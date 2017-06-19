@@ -3,8 +3,6 @@
 API
 ---
 
-.. module:: trendpy
-
 This part of the documentation covers all the interfaces of trendpy. Whenever an external library is used
 the most relevent part are documented and we provide links to the respective documentations.
 
@@ -15,6 +13,8 @@ factory
    :maxdepth: 1
 
 Factory class handling the creation of bayesian algorithms.
+
+.. module:: trendpy.factory
 
 .. autoclass:: StrategyFactory
     :members:
@@ -38,6 +38,8 @@ mcmc
 .. toctree::
    :maxdepth: 1
 
+.. module:: trendpy.mcmc
+
 .. autoclass:: MCMC
     :members:
 
@@ -47,6 +49,9 @@ series
 ^^^^^^
 .. toctree::
    :maxdepth: 1
+
+
+.. module:: trendpy.series
 
 .. autoclass:: Series
     :members:
@@ -59,6 +64,8 @@ strategies
    :maxdepth: 1
 
 Strategies tell the mcmc algorithm how to simulate the Markov chain. 
+
+.. module:: trendpy.strategies
 
 .. autoclass:: Parameter
     :members:
