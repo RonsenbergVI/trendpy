@@ -12,8 +12,8 @@ The library is available on pypi and to install the last available version, run 
 
 To test the installation:
 
-    >>> import filterpy
-    >>> filterpy.__version__
+    >>> import trendpy
+    >>> trendpy.__version__
 
 this should display the version installed on your system.
 
