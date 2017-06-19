@@ -33,3 +33,13 @@ Additional notes for anyone interested.
    changes
    license
    contributing
+
+Indices and tables
+----------------
+
+.. toctree::
+   :maxdepth: 2
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
