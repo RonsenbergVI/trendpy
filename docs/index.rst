@@ -29,7 +29,7 @@ trendpy is build on top of the following libraries:
 Issues
 ------
 
-Should you encounter any issue with the library ou can raise them here: https://github.com/ronsenbergVI/filterpy/issues
+Should you encounter any issue with the library you can raise them here: https://github.com/ronsenbergVI/filterpy/issues
 
 Installing trendpy
 ------------------
@@ -53,29 +53,29 @@ this should display the version installed on your system.
 Installation from GitHub
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-trendpy releases are also available on github (https://github.com/ronsenbergVI/trendpy). 
-You first need to clone (or fork if you want to modify it) and 
+trendpy releases are also available on github (https://github.com/ronsenbergVI/trendpy).
+You first need to clone (or fork if you want to modify it) and
 
 .. code-block:: bash
 
 		$ git clone https://github.com/ronsenbergVI/trendpy.git
 		$ cd trendpy
 		$ python setup.py build
-		$ python setup.py install 
+		$ python setup.py install
 
 
 Introduction to filtering theory
 --------------------------------
 
 Consider :math:`(y_t)_{t \in [0,T]}` the (continuous), normalized price process of a stock, verifying the decomposition:
-	
+
 .. math::
 
    \forall t \in [0,T], \quad y_t = x_t + \epsilon_t
 
 where :math:`x` is the price trend and :math:`\epsilon` a stochastic noise.
-The process of trend filtering consists in recovering :math:`x` from the 
-observations of :math:`y`. Under regularity conditions, the first derivative of 
+The process of trend filtering consists in recovering :math:`x` from the
+observations of :math:`y`. Under regularity conditions, the first derivative of
 :math:`x` indicates up or down price trends:
 
 .. math::
@@ -83,19 +83,19 @@ observations of :math:`y`. Under regularity conditions, the first derivative of
    \mu_t = \dfrac{x_t}{dt}
 
 The trend filtering equation becomes:
-	
+
 .. math::
 
 	dy_t = \mu_tdt + d\epsilon_t
-	
+
 A common assumption on the dynamic of the noise is:
 
 .. math::
-	
+
 	d\epsilon_t = \sigma_t dW_t
-   
+
 with :math:`\sigma>0` and :math:`W` a standard Brownian motion.
-From a theoretical point of view trend filtering is equivalent 
+From a theoretical point of view trend filtering is equivalent
 to finding the functional form:
 
 .. math::
@@ -105,7 +105,7 @@ to finding the functional form:
 Quickstart
 ----------
 
-To create a new series from a csv file:: 
+To create a new series from a csv file::
 
 	>>> from trendpy.series import Series
 	>>> data = Series.from_csv('data.csv')
@@ -123,7 +123,7 @@ The MCMC class containts the generic structure of any MCMC algorithm:
 Thus any new algorithm can be added to the library by subclassing the **Strategy** class::
 
 	class BlackScholes(Strategy):
-		
+
 		def __init__():
 			pass
 
@@ -133,7 +133,7 @@ Then the new MCMC instance just needs to be initialized with the new strategy an
 	>>> new_mcmc = MCMC(self, StrategyFactory.create("BlackScholes",data))
 
 	>>> mcmc.run(number_simulations=50)
-	
+
 	>>> estimation = mcmc.output()
 
 
@@ -154,17 +154,8 @@ Factory class handling the creation of bayesian algorithms.
 .. autoclass:: StrategyFactory
 
 	.. automethod:: add
-	
+
 	.. automethod:: create
-
-Globals
--------
-
-A collection of functions used to perform estimations.
-
-.. module:: trendpy.globals
-
-	.. autofunction:: derivative_matrix
 
 Mcmc
 ----
@@ -176,26 +167,26 @@ Generic structure of the algorithms implemented.
 .. autoclass:: MCMC
 
 	.. attribute:: strategy
-	  
+
 	  implementation strategy of the MCMC algorithm
-	  
+
 	.. attribute:: simulations
-	
+
 	  dictionary containing the history of simulations (is None if
 	  the MCMC algorithm has not been ran yet)
-	   
+
 	.. automethod:: define_parameters
-	
+
 	.. automethod:: initial_value
-	
+
 	.. automethod:: distribution_parameters
-	
+
 	.. automethod:: generate
-	
+
 	.. automethod:: output
-	
+
 	.. automethod:: run
-	
+
 Series
 ------
 
@@ -206,17 +197,17 @@ Class implementing time series analysis.
 .. autoclass:: Series
 
 	.. attribute:: data
-	   
-	   
-	
+
+
+
 	.. automethod:: from_csv
-	
+
 	.. automethod:: returns
-	
+
 	.. automethod:: save
-	
+
 	.. automethod:: plot
-	
+
 	.. automethod:: filter
 
 Strategies
@@ -229,29 +220,29 @@ Strategies tell the mcmc algorithm how to simulate the Markov chain.
 .. autoclass:: Parameter
 
 	.. attribute:: distribution
-	
-	   Subclass of the Scipy rv_continuous class. 
+
+	   Subclass of the Scipy rv_continuous class.
 
 	.. attribute:: size
-	
-	   Dimensions of the parameter. 
+
+	   Dimensions of the parameter.
 
 	.. attribute:: name
-	
- 	   Name of the parameter. 
+
+ 	   Name of the parameter.
 
 	.. automethod:: __init__
 
 	.. automethod:: is_multivariate
-	
+
 .. autoclass:: Parameters
 
 	.. attribute:: list
-	
+
 	   A dictionary with the parameters to estimate.
 
 	.. attribute:: hierarchy
-	
+
 	   List containing the order in which
 	   the Gibbs sampler updates the
 	   parameter values.
@@ -259,27 +250,27 @@ Strategies tell the mcmc algorithm how to simulate the Markov chain.
 	.. automethod:: __init__
 
 	.. automethod:: append
-	
+
 .. autoclass:: Strategy
 
 	.. attribute:: parameters
-		
+
 	   Parameters to be estimated in the MCMC algorithm.
-	
+
 	.. attribute:: data
-	
+
 	  array with the price time series
-	  
+
 	.. automethod:: define_parameters
 
 	.. automethod:: initial_value
-	
+
 	.. automethod:: distribution_parameters
-	
+
 	.. automethod:: generate
-	
+
 	.. automethod:: output
-	
+
 	.. automethod:: filter
 
 Trendpy Changelog

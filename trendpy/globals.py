@@ -31,7 +31,7 @@ from numpy import zeros
 __all__ = ['derivative_matrix']
 
 def derivative_matrix(size, order=2):
-	""" Computes a discrete derivative matrix
+	""" Computes a discrete difference operator
 
 	:param size: dimension of the matrix.
 	:type size: int

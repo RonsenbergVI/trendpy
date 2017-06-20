@@ -60,7 +60,7 @@ class Parameter(object):
 		:type distribution: `Scipy.stats.rv_continuous`
 		:param size: Dimension of the parameter.
 		:type name: tuple
-		:param current_value: Current value of the parameter 
+		:param current_value: Current value of the parameter
 		:type current_value: array
 		"""
 		self.name = str(name)
@@ -113,7 +113,7 @@ class Parameters(object):
 		:param list: A dictionary with the parameters to estimate
 		:type list: dict
 		:param hierarchy: List containing the order in which
-	    		the Gibbs sampler updates the parameter values. 
+	    		the Gibbs sampler updates the parameter values.
 		:type hierarchy: array
 		"""
 		self.list = list
@@ -223,7 +223,7 @@ class Strategy(object):
 
 class L1Filter(Strategy):
 
-	def __init__(self,data,alpha=1,rho=0.01,total_variation_order=2):
+	def __init__(self,data,alpha=0.1,rho=0.1,total_variation_order=2):
 		self.rho = rho
 		self.alpha = alpha
 		self.data = data
@@ -244,7 +244,7 @@ class L1Filter(Strategy):
 
 	def initial_value(self,parameter_name):
 		if parameter_name=='trend':
-			return array([(4*i+10) for i in range(self.size)])
+			return array([(4*i+10)/20 for i in range(self.size)])
 		elif parameter_name=='sigma2':
 			return 0.8
 		elif parameter_name=='lambda2':
@@ -264,13 +264,13 @@ class L1Filter(Strategy):
 			loc = 0
 			scale = 0.5*dot((self.data-dot(eye(self.size),self.parameters.list['trend'].current_value)).T,(self.data-dot(eye(self.size),self.parameters.list['trend'].current_value)))+0.5*dot(dot(self.parameters.list['trend'].current_value.T,E),self.parameters.list['trend'].current_value)
 		elif parameter_name=='lambda2':
-			pos = self.size-2+self.alpha
+			pos = self.size-self.total_variation_order-1+self.alpha
 			loc = 0.5*(norm(dot(self.derivative_matrix,self.parameters.list['trend'].current_value),ord=1))/self.parameters.list['sigma2'].current_value+self.rho
 			scale = 1
 		elif parameter_name==str('omega'):
-			pos = [sqrt((self.parameters.list['lambda2'].current_value**2*self.parameters.list['sigma2'].current_value)/(dj**2)) for dj in dot(self.derivative_matrix,self.parameters.list['trend'].current_value)]
+			pos = [sqrt(((self.parameters.list['lambda2'].current_value**2)*self.parameters.list['sigma2'].current_value)/(dj**2)) for dj in dot(self.derivative_matrix,self.parameters.list['trend'].current_value)]
 			loc = 0
-			scale = self.parameters.list['lambda2'].current_value*2
+			scale = self.parameters.list['lambda2'].current_value**2
 		return {'pos' : pos, 'loc' : loc, 'scale' : scale}
 
 	def generate(self,parameter_name):
