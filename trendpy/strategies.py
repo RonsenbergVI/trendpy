@@ -113,8 +113,7 @@ class Parameters(object):
 		:param list: A dictionary with the parameters to estimate
 		:type list: dict
 		:param hierarchy: List containing the order in which
-	    the Gibbs sampler updates the
-	    parameter values 
+	    		the Gibbs sampler updates the parameter values. 
 		:type hierarchy: array
 		"""
 		self.list = list
