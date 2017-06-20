@@ -18,11 +18,11 @@ Requirements
 
 trenpy is build on top of the following libraries:
 
-* `Numpy (http://www.numpy.org)`
-* `SciPy (http://www.scipy.org)`
-* `Pandas (http://pandas.pydata.org/)`
-* `matplotlib (http://http://matplotlib.org/)`
-* `statsmodels (http://www.statsmodels.org/stable/index.html)`
+* `Numpy` (http://www.numpy.org)
+* `SciPy` (http://www.scipy.org)
+* `Pandas` (http://pandas.pydata.org/)
+* `matplotlib` (http://http://matplotlib.org/)
+* `statsmodels` (http://www.statsmodels.org/stable/index.html)
 
 and for testing I chose py.test (http://pytest.org/latest/)
 
