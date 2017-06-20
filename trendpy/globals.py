@@ -31,13 +31,6 @@ from numpy import zeros
 __all__ = ['derivative_matrix']
 
 def derivative_matrix(size, order=2):
-	""" Computes a discrete derivative matrix
-
-	:param size: dimension of the matrix.
-	:type size: int
-	:param order: derivation order.
-	:type order: int
-	"""
 	D=zeros((size-order, size))
 	if order==0:
 		d=[1]
