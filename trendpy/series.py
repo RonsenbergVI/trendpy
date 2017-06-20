@@ -44,11 +44,9 @@ class Series(object):
 		create from csv
 
 		>>> data = Series.from_csv('data.csv')
-
 	"""
 	def __init__(self):
 		self.data=None
-		self.is_log_price = False
 
 	def __len__(self):
 		return self.data.size
@@ -57,64 +55,37 @@ class Series(object):
 		return self.data.__str__()
 
 	@staticmethod
-	def from_csv(filename, nomalise=True):
-		""" Instantiate new time series from a csv file with the
-			following format
-			Date,Title
-			date_1,data_1
-			.     	.
-			.     	.
-			.     	.
-			date_n,data_n
+	def from_csv(filename):
+		""" Instantiate new time series from a csv file
 
-		Parameters
-		----------
-
-			filename : string
-
-				path of the file with extension (.csv or .txt)
-
-		Returns
-		-------
-
-			time_series : Series
-
-				time series with the data contained in the csv file.
+		:param filename: path of the file with extension (.csv or .txt)
+		:type filename: str
 		"""
 		time_series=Series()
-		time_series.nomalise = nomalise
 		time_series.data=read_csv(filename,index_col=0)
 		return time_series
 
 	def returns(self,period=1):
-		""" adds a new time series to the data with the returns of the original
+		""" Adds a new time series to the data with the returns of the original
 			time series.
 
-		Parameters
-		----------
-
-			period : int
-
-				number of days between two consecutive observations used to
+		:param period: number of days between two consecutive observations used to
 				compute the returns.
+		:type period: int
 		"""
 		pass
 
 	def save(self,filename='export.csv',type='csv',separator=','):
 		""" Saves the data contained in the object to a csv file
 
-		Parameters
-		----------
-
-			filename : string
-
-				path and name of the file to export
-
-			type : string, optional
-
-				by default csv, if no value is given then a csv file is saved.
+		:param filename: path and name of the file to export
+		:type filename: str
+		:param  type: by default csv, if no value is given then a csv file is saved.
 				another possible format is json (other should be available in
 				future releases).
+		:type type: string, optional
+		:param separator: separator between columns in file.
+		:type separator: str
 		"""
 		if type=='csv':
 			pass
@@ -129,25 +100,14 @@ class Series(object):
 	def filter(self, method="L1Filter",number_simulations=100, burns=50,total_variation=2):
 		""" Filters the trend of the time series.
 
-		Parameters
-		----------
-
-			method : string
-
-				trend filering method.
-
-			number_simulations : int
-
-				number of random draws for each parameter.
-
-			burns : int
-
-				number of draws dismissed as burning samples.
-
-			total_variation : int
-
-				\norm ()
-
+		:param method: path and name of the file to export
+		:type method: str
+		:param  type: by default csv, if no value is given then a csv file is saved.
+				another possible format is json (other should be available in
+				future releases).
+		:type type: string, optional
+		:param separator: separator between columns in file.
+		:type separator: str
 		"""
 		mcmc = MCMC(self, StrategyFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
 
