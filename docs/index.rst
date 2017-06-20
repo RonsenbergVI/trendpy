@@ -207,6 +207,15 @@ Strategies tell the mcmc algorithm how to simulate the Markov chain.
 
 	.. automethod:: append
 	
+.. autoclass:: Strategy
+
+	.. attribute:: parameters
+	
+	.. attribute:: data
+	
+	.. attribute:: options
+	
+	.. attribute:: derivative_matrix
 
 Additional Notes
 ================
