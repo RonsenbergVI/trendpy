@@ -72,9 +72,36 @@ Consider :math:`(y_t)_{t \in [0,T]}` the (continuous), normalized price process 
 	
 .. math::
 
-   \forall t \in [0,T], y_t = x_t + \epsilon_t
+   \forall t \in [0,T], \quad y_t = x_t + \epsilon_t
 
-where :math:`(y_t)_{t \in [0,T]}`
+where :math:`x` is the price trend and :math:`\epsilon` a stochastic noise.
+The process of trend filtering consists in recovering :math:`x` from the 
+observations of :math:`y`. Under regularity conditions, the first derivative of 
+:math:`x` indicates up or down price trends:
+
+.. math::
+
+   \mu_t = \dfrac{x_t}{dt}
+
+The trend filtering equation becomes:
+	
+.. math::
+
+	dy_t = \mu_tdt + d\epsilon_t
+	
+A common assumption on the dynamic of the noise is:
+
+.. math::
+	
+	d\epsilon_t = \sigma_t dW_t
+   
+with :math:`\sigma>0` and :math:`W` a standard Brownian motion.
+From a theoretical point of view trend filtering is equivalent 
+to finding the functional form:
+
+.. math::
+
+	x_t = \bold{f}(t,y)
 
 Quickstart
 ----------
