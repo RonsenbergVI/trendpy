@@ -42,7 +42,7 @@ class StrategyFactory:
 
 	@staticmethod
 	def create(id,*args,**kwargs):
-		""" creates an instance of the class..
+		""" creates an instance of the class.
 
 		:param id: name of the class.
 		:type id: str
