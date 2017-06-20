@@ -150,7 +150,6 @@ Trendpy Changelog
 
 .. include:: ../CHANGES
 
-
 License
 -------
 
