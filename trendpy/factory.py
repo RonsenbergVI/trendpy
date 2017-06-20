@@ -31,12 +31,12 @@ class StrategyFactory:
 
 	@staticmethod
 	def add(id,factory):
-	""" Computes a discrete derivative matrix
+	""" Adds a class to factory with a chosen id
 
-	:param size: dimension of the matrix.
-	:type size: int
-	:param order: derivation order.
-	:type order: int
+	:param id: name of the class.
+	:type id: str
+	:param factory: factory subclass of a Strategy instace.
+	:type factory: `Strategy.Factory`
 	"""
 		StrategyFactory.factories.put[id] = factory
 
