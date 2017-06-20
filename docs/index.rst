@@ -164,7 +164,7 @@ A collection of functions used to perform estimations.
 
 .. module:: trendpy.globals
 
-	.. automethod:: derivative_matrix
+	.. autofunction:: derivative_matrix
 
 Mcmc
 ----
