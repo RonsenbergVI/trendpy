@@ -74,6 +74,8 @@ Consider :math:`(y_t)_{t \in [0,T]}` the (continuous), normalized price process 
 
    \forall t \in [0,T], y_t = x_t + \epsilon_t
 
+where :math:`(y_t)_{t \in [0,T]}`
+
 Quickstart
 ----------
 
