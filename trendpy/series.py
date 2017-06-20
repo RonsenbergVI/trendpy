@@ -37,13 +37,13 @@ class Series(object):
 	Examples
 	--------
 
-	Import the class
+		Import the class
 
-	>>> from trendpy.series import Series
+		>>> from trendpy.series import Series
 
-	create from csv
+		create from csv
 
-	>>> data = Series.from_csv('data.csv')
+		>>> data = Series.from_csv('data.csv')
 
 	"""
 	def __init__(self):
@@ -58,7 +58,7 @@ class Series(object):
 
 	@staticmethod
 	def from_csv(filename, nomalise=True):
-        """ Instantiate new time series from a csv file with the
+		""" Instantiate new time series from a csv file with the
 			following format
 			Date,Title
 			date_1,data_1
@@ -67,88 +67,88 @@ class Series(object):
 			.     	.
 			date_n,data_n
 
-        Parameters
-        ----------
+		Parameters
+		----------
 
-        filename : string
+			filename : string
 
-            path of the file with extension (.csv or .txt)
+				path of the file with extension (.csv or .txt)
 
-        Returns
-        -------
+		Returns
+		-------
 
-        time_series : Series
+			time_series : Series
 
-            time series with the data contained in the csv file.
-        """
+				time series with the data contained in the csv file.
+		"""
 		time_series=Series()
 		time_series.nomalise = nomalise
 		time_series.data=read_csv(filename,index_col=0)
 		return time_series
 
 	def returns(self,period=1):
-        """ adds a new time series to the data with the returns of the original
+		""" adds a new time series to the data with the returns of the original
 			time series.
 
-        Parameters
-        ----------
+		Parameters
+		----------
 
-        period : int
+			period : int
 
-            number of days between two consecutive observations used to
-			compute the returns.
-        """
+				number of days between two consecutive observations used to
+				compute the returns.
+		"""
 		pass
 
 	def save(self,filename='export.csv',type='csv',separator=','):
-        """ Saves the data contained in the object to a csv file
+		""" Saves the data contained in the object to a csv file
 
-        Parameters
-        ----------
+		Parameters
+		----------
 
-        filename : string
+			filename : string
 
-            path and name of the file to export
+				path and name of the file to export
 
-		type : string, optional
+			type : string, optional
 
-			by default csv, if no value is given then a csv file is saved.
-			another possible format is json (other should be available in
-			future releases).
-        """
+				by default csv, if no value is given then a csv file is saved.
+				another possible format is json (other should be available in
+				future releases).
+		"""
 		if type=='csv':
 			pass
 		if type=='json':
 			pass
 
 	def plot(self):
-        """ Plots the time series"""
+		""" Plots the time series"""
 		self.data.plot()
 		plt.show()
 
 	def filter(self, method="L1Filter",number_simulations=100, burns=50,total_variation=2):
-        """ Filters the trend of the time series.
+		""" Filters the trend of the time series.
 
-        Parameters
-        ----------
+		Parameters
+		----------
 
-        method : string
+			method : string
 
-            trend filering method.
+				trend filering method.
 
-		number_simulations : int
+			number_simulations : int
 
-			number of random draws for each parameter.
+				number of random draws for each parameter.
 
-		burns : int
+			burns : int
 
-			number of draws dismissed as burning samples.
+				number of draws dismissed as burning samples.
 
-		total_variation : int
+			total_variation : int
 
-			\norm ()
+				\norm ()
 
-        """
+		"""
 		mcmc = MCMC(self, StrategyFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
 
 		mcmc.run(number_simulations)
@@ -156,9 +156,3 @@ class Series(object):
 		trend = mcmc.output(burns,"trend")
 
 		self.data = self.data.join(DataFrame(trend,index=self.data.index,columns=[method]))
-
-	#def regression(self,method="Lasso", number_simulations=100, burns=50):
-	#	pass
-
-	#def export(self, filename, as_txt=False):
-	#	pass
