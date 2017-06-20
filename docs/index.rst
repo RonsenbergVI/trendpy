@@ -116,30 +116,30 @@ method, this part of the documentation is for you.
 API
 ---
 
-.. module:: trendpy
+.. module:: trendpy.strategies
 
-.. autoclass:: StrategyFactory
-   :members: add, create
+	.. autoclass:: StrategyFactory
+   		:members: add, create
 
-.. autoclass:: MCMC
-	:members: define_parameters, initial_value, distribution_parameters, generate, output, run
+.. module:: trendpy.mcmc
 
-.. autoclass:: Series
-   :members: from_csv, returns, save, plot, filter
+	.. autoclass:: MCMC
+		:members: define_parameters, initial_value, distribution_parameters, generate, output, run
 
-.. autoclass:: Message
-   :members: attach, add_recipient
+	.. autoclass:: Series
+  		 :members: from_csv, returns, save, plot, filter
+
+	.. autoclass:: Message
+   		:members: attach, add_recipient
    
-.. autoclass:: Parameter
-   :members: __init__, is_multivariate
+	.. autoclass:: Parameter
+  		:members: __init__, is_multivariate
    
-.. autoclass:: Parameters
-   :members: append
+	.. autoclass:: Parameters
+   		:members: append
 
-.. autoclass:: Strategy
-   :members: define_parameters, initial_value, distribution_parameters, generate, output
-
-
+	.. autoclass:: Strategy
+   		:members: define_parameters, initial_value, distribution_parameters, generate, output
 
 Additional Notes
 ================
