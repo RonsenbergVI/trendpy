@@ -31,10 +31,26 @@ class StrategyFactory:
 
 	@staticmethod
 	def add(id,factory):
+	""" Computes a discrete derivative matrix
+
+	:param size: dimension of the matrix.
+	:type size: int
+	:param order: derivation order.
+	:type order: int
+	"""
 		StrategyFactory.factories.put[id] = factory
 
 	@staticmethod
 	def create(id,*args,**kwargs):
+	""" Computes a discrete derivative matrix
+
+	:param id: name of the class.
+	:type id: str
+	:param args: Positional arguments.
+	:type args: list
+	:param args: Keyword arguments.
+	:type args: dict
+	"""
 		if not id in StrategyFactory.factories:
 			StrategyFactory.factories[id] = eval('%s.Factory()' % id)
 		return StrategyFactory.factories[id].create(*args,**kwargs)
