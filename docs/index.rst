@@ -139,15 +139,15 @@ strategies
 
 Strategies tell the mcmc algorithm how to simulate the Markov chain.
 
-.. module:: trendpy
+.. module:: trendpy.strategies
 
 .. autoclass:: Parameter
 
-	.. attribute:: distribution
+	.. attribute:: trendpy.distribution
 	
 	   Subclass of the Scipy rv_continuous class. 
 
-	.. attribute:: size
+	.. attribute:: trendpy.size
 	
 	   Dimensions of the parameter. 
 
