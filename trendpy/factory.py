@@ -31,26 +31,26 @@ class StrategyFactory:
 
 	@staticmethod
 	def add(id,factory):
-	""" Adds a class to factory with a chosen id
+		""" Adds a class to factory with a chosen id
 
-	:param id: name of the class.
-	:type id: str
-	:param factory: factory subclass of a Strategy instace.
-	:type factory: `Strategy.Factory`
-	"""
-	StrategyFactory.factories.put[id] = factory
+		:param id: name of the class.
+		:type id: str
+		:param factory: factory subclass of a Strategy instace.
+		:type factory: `Strategy.Factory`
+		"""
+		StrategyFactory.factories.put[id] = factory
 
 	@staticmethod
 	def create(id,*args,**kwargs):
-	""" Computes a discrete derivative matrix
+		""" Computes a discrete derivative matrix
 
-	:param id: name of the class.
-	:type id: str
-	:param args: Positional arguments.
-	:type args: list
-	:param args: Keyword arguments.
-	:type args: dict
-	"""
-	if not id in StrategyFactory.factories:
-		StrategyFactory.factories[id] = eval('%s.Factory()' % id)
-	return StrategyFactory.factories[id].create(*args,**kwargs)
+		:param id: name of the class.
+		:type id: str
+		:param args: Positional arguments.
+		:type args: list
+		:param args: Keyword arguments.
+		:type args: dict
+		"""
+		if not id in StrategyFactory.factories:
+			StrategyFactory.factories[id] = eval('%s.Factory()' % id)
+		return StrategyFactory.factories[id].create(*args,**kwargs)
