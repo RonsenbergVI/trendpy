@@ -205,47 +205,18 @@ class Strategy(object):
 		""" This method handles the generation of the random draws of
 			the Markov chain for each parameters.
 
-        Parameters
-        ----------
-
-			parameter_name : string
-
-				name of the parameter
-
-        Returns
-        -------
-
-			random_draw : ndarray
-
-				random draw for the parameter with name parameter_name.
+		:param parameter_name: name of the parameter of interest
+		:type parameter_name: string
         """
 		raise NotImplementedError("Must be overriden")
 
 	def output(self, simulations, burn, parameter_name):
 		""" Computes the poserior mean of the parameters
 
-		Parameters
-		----------
-
-			simulations : dictionary
-
-				dictonnary containing the complete history of the generated
-				values for each parameters in the MCMC algorithm.
-
-			burn : int
-
-				number of draws dismissed as burning samples.
-
-			parameter_name : string
-
-				name of the parameter of interest
-
-        Returns
-        -------
-
-			poserior_mean : ndarray
-
-				returns the posterior mean of the parameter.
+		:param parameter_name: name of the parameter of interest
+		:type parameter_name: string
+		:param burn: number of draws dismissed as burning samples
+		:type burn: int
         """
 		raise NotImplementedError("Must be overriden")
 
