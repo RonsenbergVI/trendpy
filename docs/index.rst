@@ -1,3 +1,4 @@
+=======
 trendpy
 =======
 
@@ -9,12 +10,12 @@ The library also supports bayesian regression models (Lasso and Ridge).
 
 Models are fitted using MCMC algorithms.
 
-============
+
 User's Guide
 ============
 
 Requirements
-^^^^^^^^^^^^
+------------
 
 trenpy is build on top of the following libraries:
 
@@ -27,7 +28,7 @@ trenpy is build on top of the following libraries:
 and for testing I chose py.test (http://pytest.org/latest/)
 
 Issues
-^^^^^^
+------
 
 Should you encounter any issue with the library ou can raise them here: https://github.com/ronsenbergVI/filterpy/issues
 
@@ -105,7 +106,7 @@ Then the new MCMC instance just needs to be initialized with the new strategy an
 	
 	estimation = mcmc.output()
 
-=============
+
 API Reference
 =============
 
@@ -139,7 +140,7 @@ API
    :members: define_parameters, initial_value, distribution_parameters, generate, output
 
 
-================
+
 Additional Notes
 ================
 
@@ -163,17 +164,17 @@ preservation of copyright and license notices.
 The full license text can be found below (:ref:`trendpy-license`).
 
 Authors
-^^^^^^^
+-------
 
 .. include:: ../AUTHORS
 
 Contributing
-^^^^^^^^^^^^
+------------
 
 Contribution will be welcomed once a first stable release is ready.
 
 License Definitions
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 The following section contains the full license texts for trendpy and the
 documentation.
@@ -185,9 +186,7 @@ documentation.
     part of trendpy (trendpy itself as well as the examples and the unittests)
     as well as documentation.
 
-.. _trendpy-license:
-
 trendpy License
-^^^^^^^^^^^^^^^
+---------------
 
 .. include:: ../LICENSE
