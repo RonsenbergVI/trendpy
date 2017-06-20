@@ -104,7 +104,7 @@ to finding the functional form:
 
 .. math::
 
-	x_t = \bold{f}(t,y)
+	x_t = \textbf{f}(t,y)
 
 Quickstart
 ----------
