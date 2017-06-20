@@ -120,47 +120,19 @@ factory
 ^^^^^^^
 Factory class handling the creation of bayesian algorithms.
 
-.. module:: trendpy.factory
-
-.. autoclass:: StrategyFactory
-    :members:
-
-    .. automethod:: add
-
-    .. automethod:: create
-
-
 globals
 ^^^^^^^
 
 A collection of functions used to perform estimations.
 
-.. module:: trendpy.globals
-
-.. autofunction:: derivative_matrix
-
 mcmc
 ^^^^
 Generic structure of the algorithms implemented.
 
-.. module:: trendpy.mcmc
-
-.. autoclass:: MCMC
-    :members:
-
-    .. automethod:: __init__
-
 series
 ^^^^^^
 
-
-.. module:: trendpy.series
-
-.. autoclass:: Series
-    :members:
-
-    .. automethod:: __init__
-   
+Class implementing time series analysis.
 
 strategies
 ^^^^^^^^^^
@@ -173,37 +145,17 @@ Strategies tell the mcmc algorithm how to simulate the Markov chain.
 	
 	   Subclass of the Scipy rv_continuous class. 
 
-	   
 	.. attribute:: size
 	
 	   Dimensions of the parameter. 
 
 	.. attribute:: name
 	
-	   Name of the parameter. 
+ 	   Name of the parameter. 
 
 	.. automethod:: __init__
 
 	.. automethod:: is_multivariate
-
-
-.. autoclass:: Parameters
-    :members:
-
-    .. automethod:: __init__
-
-
-.. autoclass:: Strategy
-    :members:
-
-    .. automethod:: __init__
-
-
-.. autoclass:: L1Filter
-    :members:
-
-    .. automethod:: __init__
-
 
 Additional Notes
 ================
