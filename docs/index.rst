@@ -175,11 +175,11 @@ Strategies tell the mcmc algorithm how to simulate the Markov chain.
 
 .. autoclass:: Parameter
 
-	.. attribute:: trendpy.distribution
+	.. attribute:: distribution
 	
 	   Subclass of the Scipy rv_continuous class. 
 
-	.. attribute:: trendpy.size
+	.. attribute:: size
 	
 	   Dimensions of the parameter. 
 
@@ -190,6 +190,23 @@ Strategies tell the mcmc algorithm how to simulate the Markov chain.
 	.. automethod:: __init__
 
 	.. automethod:: is_multivariate
+	
+.. autoclass:: Parameters
+
+	.. attribute:: list
+	
+	   A dictionary with the parameters to estimate.
+
+	.. attribute:: hierarchy
+	
+	   List containing the order in which
+	   the Gibbs sampler updates the
+	   parameter values.
+
+	.. automethod:: __init__
+
+	.. automethod:: append
+	
 
 Additional Notes
 ================
