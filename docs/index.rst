@@ -148,6 +148,8 @@ Additional notes for anyone interested.
 Trendpy Changelog
 -----------------
 
+We detail here the changes made to the library
+
 .. include:: ../CHANGES
 
 License
