@@ -87,11 +87,7 @@ class Parameter(object):
 		return 1
 
 	def is_multivariate(self):
-		""" Checks if the parameter is univariate.
-
-		Parameters
-		----------
-		"""
+		""" Checks if the parameter is univariate."""
 		return self.size == (1,1)
 
 class Parameters(object):
@@ -110,9 +106,17 @@ class Parameters(object):
 	>>> params = Params()
 	>>> params.append(param1)
 	>>> print(params)
-
 	"""
 	def __init__(self, list={}, hierarchy=[]):
+		""" Creates a parameter set to estimate in the MCMC algorithm.
+
+		:param list: A dictionary with the parameters to estimate
+		:type list: dictionary
+		:param hierarchy: List containing the order in which
+	    the Gibbs sampler updates the
+	    parameter values 
+		:type hierarchy: array
+		"""
 		self.list = list
 		self.hierarchy = hierarchy
 
@@ -156,12 +160,8 @@ class Parameters(object):
 			First parameter added is the first in the
 			hierarchy.
 
-		Parameters
-		----------
-
-			parameter : Parameter
-
-				parameter to estimate
+		:param parameter: parameter to estimate
+		:type parameter: trendpy.Parameter
 		"""
 		self.list[parameter.name] = parameter
 		self.hierarchy.append(parameter.name)
@@ -179,16 +179,6 @@ class Strategy(object):
 	def define_parameters(self):
 		""" Method to set the parameter set to be updated
 			in the MCMC algorithm
-
-		Parameters
-		----------
-
-		Returns
-		-------
-
-			parameters : Parameters
-
-				the parameter set to be estimated.
 		"""
 		raise NotImplementedError("Must be overriden")
 
@@ -196,19 +186,8 @@ class Strategy(object):
 		""" Method that sets the initial value of the
 			parameters to be estimated
 
-        Parameters
-        ----------
-
-			parameter_name : string
-
-				name of the parameter
-
-        Returns
-        -------
-
-			initial_val : ndarray
-	
-				initial value used in the MCMC algorithm.
+		:param initial_val: initial value used in the MCMC algorithm.
+		:type initial_val: ndarray
         """
 		raise NotImplementedError("Must be overriden")
 
@@ -216,21 +195,10 @@ class Strategy(object):
 		""" Method that sets the parameters of the posterior
 			distribution of the parameters to be estimated.
 
-        Parameters
-        ----------
-
-			parameter_name : string
-
-				name of the parameter
-
-        Returns
-        -------
-
-			dist_parameters : dictionary
-
-				dictionary the parameters needed to compute the
-				next value of the Markov chain for the parameter with name:
-				parameter_name.
+		:param dist_parameters: dictionary the parameters needed to compute the
+			next value of the Markov chain for the parameter with name:
+			parameter_name.
+		:type dist_parameters: dictionary
         """
 		raise NotImplementedError("Must be overriden")
 
