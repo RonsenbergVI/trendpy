@@ -54,21 +54,14 @@ class Parameter(object):
 	def __init__(self, name, distribution, size, current_value=None):
 		""" Creates a parameter to estimate in the MCMC algorithm.
 
-		Parameters
-		----------
-
-		name : string
-			Name of the parameter (unique identification)
-
-		distribution : rv_continuous
-			Posterior Probability distribution of the parameter
-
-		size : tuple
-			Dimension of the
-
-		current_value : array : optional
-			Current value of the parameter (the current value is the one
-			used for computations)
+		:param name: Name of the parameter (unique identification)
+		:type name: string
+		:param distribution: Posterior Probability distribution of the parameter.
+		:type distribution: rv_continuous
+		:param name: Dimension of the parameter.
+		:type name: tuple
+		:param current_value: Current value of the parameter 
+		:type current_value: array
 		"""
 		self.name = str(name)
 		self.distribution = distribution
