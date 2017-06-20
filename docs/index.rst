@@ -10,9 +10,9 @@ The library also supports bayesian regression models (Lasso and Ridge).
 
 Models are fitted using MCMC algorithms.
 
-
+############
 User's Guide
-============
+############
 
 Requirements
 ------------
@@ -138,9 +138,9 @@ Then the new MCMC instance just needs to be initialized with the new strategy an
 	
 	estimation = mcmc.output()
 
-
+#############
 API Reference
-=============
+#############
 
 If you are looking for information on a specific function, class or
 method, this part of the documentation is for you.
