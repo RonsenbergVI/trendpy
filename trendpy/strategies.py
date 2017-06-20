@@ -57,8 +57,8 @@ class Parameter(object):
 		:param name: Name of the parameter (unique identification)
 		:type name: string
 		:param distribution: Posterior Probability distribution of the parameter.
-		:type distribution: rv_continuous
-		:param name: Dimension of the parameter.
+		:type distribution: `Scipy.stats.rv_continuous`
+		:param size: Dimension of the parameter.
 		:type name: tuple
 		:param current_value: Current value of the parameter 
 		:type current_value: array
