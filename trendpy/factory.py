@@ -38,7 +38,7 @@ class StrategyFactory:
 	:param factory: factory subclass of a Strategy instace.
 	:type factory: `Strategy.Factory`
 	"""
-		StrategyFactory.factories.put[id] = factory
+	StrategyFactory.factories.put[id] = factory
 
 	@staticmethod
 	def create(id,*args,**kwargs):
@@ -51,6 +51,6 @@ class StrategyFactory:
 	:param args: Keyword arguments.
 	:type args: dict
 	"""
-		if not id in StrategyFactory.factories:
-			StrategyFactory.factories[id] = eval('%s.Factory()' % id)
-		return StrategyFactory.factories[id].create(*args,**kwargs)
+	if not id in StrategyFactory.factories:
+		StrategyFactory.factories[id] = eval('%s.Factory()' % id)
+	return StrategyFactory.factories[id].create(*args,**kwargs)
