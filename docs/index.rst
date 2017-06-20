@@ -116,31 +116,90 @@ method, this part of the documentation is for you.
 API
 ---
 
+factory
+^^^^^^^
+.. toctree::
+   :maxdepth: 2
+
+Factory class handling the creation of bayesian algorithms.
+
 .. module:: trendpy.factory
 
-	.. autoclass:: StrategyFactory
-   		:members: add, create
+.. autoclass:: StrategyFactory
+    :members:
+
+    .. automethod:: add
+
+    .. automethod:: create
+
+
+globals
+^^^^^^^
+.. toctree::
+   :maxdepth: 2
+
+A collection of functions used to perform estimations.
+
+.. module:: trendpy.globals
+
+.. autofunction:: derivative_matrix
+
+mcmc
+^^^^
+.. toctree::
+   :maxdepth: 2
 
 .. module:: trendpy.mcmc
 
 .. autoclass:: MCMC
-	:members: define_parameters, initial_value, distribution_parameters, generate, output, run
+    :members:
+
+    .. automethod:: __init__
+
+series
+^^^^^^
+.. toctree::
+   :maxdepth: 2
+
 
 .. module:: trendpy.series
 
 .. autoclass:: Series
-	:members: from_csv, returns, save, plot, filter
+    :members:
+
+    .. automethod:: __init__
+
+strategies
+^^^^^^^^^^
+.. toctree::
+   :maxdepth: 2
+
+Strategies tell the mcmc algorithm how to simulate the Markov chain.
 
 .. module:: trendpy.strategies
 
 .. autoclass:: Parameter
-	:members: __init__, is_multivariate
+    :members:
+
+    .. automethod:: __init__
+
 
 .. autoclass:: Parameters
-	:members: append
+    :members:
+
+    .. automethod:: __init__
+
 
 .. autoclass:: Strategy
-	:members: define_parameters, initial_value, distribution_parameters, generate, output
+    :members:
+
+    .. automethod:: __init__
+
+
+.. autoclass:: L1Filter
+    :members:
+
+    .. automethod:: __init__
 
 Additional Notes
 ================
