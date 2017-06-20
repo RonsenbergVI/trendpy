@@ -139,6 +139,8 @@ strategies
 
 Strategies tell the mcmc algorithm how to simulate the Markov chain.
 
+.. module:: trendpy
+
 .. autoclass:: Parameter
 
 	.. attribute:: distribution
