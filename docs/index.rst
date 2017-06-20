@@ -277,22 +277,17 @@ Strategies tell the mcmc algorithm how to simulate the Markov chain.
 	.. automethod:: output
 	
 	.. automethod:: filter
-	
-
-Additional Notes
-================
-
-Additional notes for anyone interested.
 
 Trendpy Changelog
------------------
+=================
 
 We detail here the changes made to the library
 
 .. include:: ../CHANGES
 
+
 License
--------
+=======
 
 trendpy is licensed under the MIT Licence. It means that the source
 code provided in the binaries can be used, modified, or distributed
