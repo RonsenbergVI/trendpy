@@ -177,8 +177,12 @@ Generic structure of the algorithms implemented.
 
 	.. attribute:: strategy
 	  
+	  implementation strategy of the MCMC algorithm
 	  
 	.. attribute:: simulations
+	
+	  dictionary containing the history of simulations (is None if
+	  the MCMC algorithm has not been ran yet)
 	   
 	.. automethod:: define_parameters
 	
