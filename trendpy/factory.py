@@ -42,7 +42,7 @@ class StrategyFactory:
 
 	@staticmethod
 	def create(id,*args,**kwargs):
-		""" Computes a discrete derivative matrix
+		""" creates an instance of the class..
 
 		:param id: name of the class.
 		:type id: str
