@@ -111,7 +111,7 @@ class Parameters(object):
 		""" Creates a parameter set to estimate in the MCMC algorithm.
 
 		:param list: A dictionary with the parameters to estimate
-		:type list: dictionary
+		:type list: dict
 		:param hierarchy: List containing the order in which
 	    the Gibbs sampler updates the
 	    parameter values 
