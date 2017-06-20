@@ -145,26 +145,75 @@ API Reference
 If you are looking for information on a specific function, class or
 method, this part of the documentation is for you.
 
-API
----
 
 factory
-^^^^^^^
+-------
+
 Factory class handling the creation of bayesian algorithms.
 
+.. module:: trendpy.factory
+
+.. autoclass:: StrategyFactory
+
+	.. automethod:: add
+	
+	.. automethod:: create
+
 globals
-^^^^^^^
+-------
 
 A collection of functions used to perform estimations.
 
+.. module:: trendpy.globals
+
+	.. autofunction:: derivative_matrix
+
 mcmc
-^^^^
+----
+
 Generic structure of the algorithms implemented.
 
+.. module:: trendpy.mcmc
+
+.. autoclass:: MCMC
+
+	.. attribute:: strategy
+	  
+	  
+	.. attribute:: simulations
+	   
+	.. automethod:: define_parameters
+	
+	.. automethod:: initial_value
+	
+	.. automethod:: distribution_parameters
+	
+	.. automethod:: generate
+	
+	.. automethod:: output
+	
+	.. automethod:: run
+	
 series
-^^^^^^
+------
 
 Class implementing time series analysis.
+
+.. module:: trendpy.series
+
+.. autoclass:: Series
+
+	.. attribute:: data
+	   
+	   
+	
+	.. automethod:: from_csv
+	
+	.. automethod:: returns
+	
+	.. automethod:: save
+	
+	.. automethod:: plot
 
 strategies
 ^^^^^^^^^^
@@ -210,12 +259,25 @@ Strategies tell the mcmc algorithm how to simulate the Markov chain.
 .. autoclass:: Strategy
 
 	.. attribute:: parameters
+		
+	   Parameters to be estimated in the MCMC algorithm.
 	
 	.. attribute:: data
 	
-	.. attribute:: options
+	  array with the price time series
+	  
+	.. automethod:: define_parameters
+
+	.. automethod:: initial_value
 	
-	.. attribute:: derivative_matrix
+	.. automethod:: distribution_parameters
+	
+	.. automethod:: generate
+	
+	.. automethod:: output
+	
+	.. automethod:: filter
+	
 
 Additional Notes
 ================
