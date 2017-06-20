@@ -17,7 +17,7 @@ User's Guide
 Requirements
 ------------
 
-trenpy is build on top of the following libraries:
+trendpy is build on top of the following libraries:
 
 * `Numpy` (http://www.numpy.org)
 * `SciPy` (http://www.scipy.org)
@@ -25,7 +25,6 @@ trenpy is build on top of the following libraries:
 * `matplotlib` (http://http://matplotlib.org/)
 * `statsmodels` (http://www.statsmodels.org/stable/index.html)
 
-and for testing I chose py.test (http://pytest.org/latest/)
 
 Issues
 ------
@@ -112,11 +111,10 @@ To create a new series from a csv file::
 	>>> data = Series.from_csv('data.csv')
 	>>> data.plot()
 
-
 Adding new algorithms
 ---------------------
 
-The MCMC class containts thegeneric structure of any MCMC algorithm:
+The MCMC class containts the generic structure of any MCMC algorithm:
 
 * `definition of the parameters (posterior distribution, dimensions)`
 * `initialisation of the parameters to be estimated`
@@ -146,7 +144,7 @@ If you are looking for information on a specific function, class or
 method, this part of the documentation is for you.
 
 
-factory
+Factory
 -------
 
 Factory class handling the creation of bayesian algorithms.
@@ -159,7 +157,7 @@ Factory class handling the creation of bayesian algorithms.
 	
 	.. automethod:: create
 
-globals
+Globals
 -------
 
 A collection of functions used to perform estimations.
@@ -168,7 +166,7 @@ A collection of functions used to perform estimations.
 
 	.. autofunction:: derivative_matrix
 
-mcmc
+Mcmc
 ----
 
 Generic structure of the algorithms implemented.
@@ -194,7 +192,7 @@ Generic structure of the algorithms implemented.
 	
 	.. automethod:: run
 	
-series
+Series
 ------
 
 Class implementing time series analysis.
@@ -214,8 +212,10 @@ Class implementing time series analysis.
 	.. automethod:: save
 	
 	.. automethod:: plot
+	
+	.. automethod:: filter
 
-strategies
+Strategies
 ----------
 
 Strategies tell the mcmc algorithm how to simulate the Markov chain.
