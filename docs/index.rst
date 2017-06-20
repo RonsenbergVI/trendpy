@@ -132,11 +132,11 @@ Thus any new algorithm can be added to the library by subclassing the **Strategy
 
 Then the new MCMC instance just needs to be initialized with the new strategy and ran::
 
-	new_mcmc = MCMC(self, StrategyFactory.create("BlackScholes",data))
+	>>> new_mcmc = MCMC(self, StrategyFactory.create("BlackScholes",data))
 
-	mcmc.run(number_simulations=50)
+	>>> mcmc.run(number_simulations=50)
 	
-	estimation = mcmc.output()
+	>>> estimation = mcmc.output()
 
 
 API Reference
