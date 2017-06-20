@@ -14,9 +14,6 @@ Models are fitted using MCMC algorithms.
 User's Guide
 ============
 
-.. toctree::
-   :maxdepth: 2
-
 Requirements
 ------------
 
@@ -36,10 +33,10 @@ Issues
 Should you encounter any issue with the library ou can raise them here: https://github.com/ronsenbergVI/filterpy/issues
 
 Installing trendpy
-==================
+------------------
 
 Installation with pip (recommended)
------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The library is available on pypi and to install the last available version, run this command:
 
@@ -55,7 +52,7 @@ To test the installation:
 this should display the version installed on your system.
 
 Installation from GitHub
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 trendpy releases are also available on github (https://github.com/ronsenbergVI/trendpy). 
 You first need to clone (or fork if you want to modify it) and 
@@ -69,7 +66,7 @@ You first need to clone (or fork if you want to modify it) and
 
 
 Introduction to filtering theory
-================================
+--------------------------------
 
 Consider :math:`(y_t)_{t \in [0,T]}` the (continuous), normalized price process of a stock, verifying the decomposition:
 	
@@ -107,17 +104,17 @@ to finding the functional form:
 	x_t = \textbf{f}(t,y)
 
 Quickstart
-==========
+----------
 
 To create a new series from a csv file:: 
 
-	from trendpy.series import Series
-	data = Series.from_csv('data.csv')
-	data.plot()
+	>>> from trendpy.series import Series
+	>>> data = Series.from_csv('data.csv')
+	>>> data.plot()
 
 
 Adding new algorithms
-=====================
+---------------------
 
 The MCMC class containts thegeneric structure of any MCMC algorithm:
 
@@ -148,34 +145,29 @@ API Reference
 If you are looking for information on a specific function, class or
 method, this part of the documentation is for you.
 
-
-.. toctree::
-   :maxdepth: 2
-
 API
-===
+---
 
 factory
--------
+^^^^^^^
 Factory class handling the creation of bayesian algorithms.
 
 globals
--------
+^^^^^^^
 
 A collection of functions used to perform estimations.
 
 mcmc
-----
-
+^^^^
 Generic structure of the algorithms implemented.
 
 series
-------
+^^^^^^
 
 Class implementing time series analysis.
 
 strategies
-----------
+^^^^^^^^^^
 
 Strategies tell the mcmc algorithm how to simulate the Markov chain.
 
@@ -204,19 +196,15 @@ Additional Notes
 
 Additional notes for anyone interested.
 
-.. toctree::
-   :maxdepth: 2
-
-
 Trendpy Changelog
-=================
+-----------------
 
 We detail here the changes made to the library
 
 .. include:: ../CHANGES
 
 License
-=======
+-------
 
 trendpy is licensed under the MIT Licence. It means that the source
 code provided in the binaries can be used, modified, or distributed
@@ -226,17 +214,17 @@ preservation of copyright and license notices.
 The full license text can be found below (:ref:`trendpy-license`).
 
 Authors
-=======
+-------
 
 .. include:: ../AUTHORS
 
 Contributing
-============
+------------
 
 Contribution will be welcomed once a first stable release is ready.
 
 License Definitions
-===================
+-------------------
 
 The following section contains the full license texts for trendpy and the
 documentation.
