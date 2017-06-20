@@ -216,7 +216,7 @@ Class implementing time series analysis.
 	.. automethod:: plot
 
 strategies
-^^^^^^^^^^
+----------
 
 Strategies tell the mcmc algorithm how to simulate the Markov chain.
 
