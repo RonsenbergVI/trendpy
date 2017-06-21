@@ -41,11 +41,11 @@ class Parameter(object):
 	Examples
 	--------
 
-	Import the wanted posterior distribution
+	We first need to import the wanted posterior distribution in `Scipy`:
 
 	>>> from scipy.stats import norm
 
-	create parameter
+	and then we can instanciate parameter:
 
 	>>> param1 = Parameter('lambda',norm,(1,1),0.1)
 
@@ -96,11 +96,11 @@ class Parameters(object):
 	Examples
 	--------
 
-	Import the wanted posterior distribution
+	We first need to import the wanted posterior distribution in `Scipy.stats`:
 
 	>>> from scipy.stats import invgamma
 
-	create parameter set
+	then we can create an empty parameter set and add a new parameter:
 
 	>>> param1 = Parameter('sigma2',invgamma,(1,1),0.09)
 	>>> params = Params()
@@ -122,7 +122,7 @@ class Parameters(object):
 	@property
 	def parameters(self):
 		""" Dictionary containing the parameters to be
-			estimated
+			estimated.
 		"""
 		return self.__list
 
@@ -137,7 +137,7 @@ class Parameters(object):
 	def hierarchy(self):
 		""" List containing the order in which
 			the Gibbs sampler updates the
-			parameter values
+			parameter values.
 		"""
 		return self.__hierarchy
 
@@ -177,16 +177,18 @@ class Strategy(object):
 
 	def define_parameters(self):
 		""" Method to set the parameter set to be updated
-			in the MCMC algorithm
+			in the MCMC algorithm.
 		"""
 		raise NotImplementedError("Must be overriden")
 
 	def initial_value(self,parameter_name):
 		""" Method that sets the initial value of the
-			parameters to be estimated
+			parameters to be estimated.
 
-		:param initial_val: initial value used in the MCMC algorithm.
-		:type initial_val: ndarray
+		:param parameter_name: name of the parameter.
+		:type parameter_name: str
+		:return: initial value of the parameter
+		:rtype: `Numpy.dnarray`
         """
 		raise NotImplementedError("Must be overriden")
 
@@ -194,10 +196,12 @@ class Strategy(object):
 		""" Method that sets the parameters of the posterior
 			distribution of the parameters to be estimated.
 
-		:param dist_parameters: dictionary the parameters needed to compute the
+		:param parameter_name: name of the parameter.
+		:type parameter_name: str
+		:return: dictionary the parameters needed to compute the
 			next value of the Markov chain for the parameter with name:
 			parameter_name.
-		:type dist_parameters: dictionary
+		:rtype: dict
         """
 		raise NotImplementedError("Must be overriden")
 
@@ -207,16 +211,22 @@ class Strategy(object):
 
 		:param parameter_name: name of the parameter of interest
 		:type parameter_name: string
+		:return: random draw from the posterior probability distribution
+		:rtype: `Numpy.dnarray`
         """
 		raise NotImplementedError("Must be overriden")
 
 	def output(self, simulations, burn, parameter_name):
-		""" Computes the poserior mean of the parameters
-
-		:param parameter_name: name of the parameter of interest
-		:type parameter_name: string
+		""" Computes the poserior mean of the parameters.
+		
+		:param simulations: history of the Markov chain simulation
+		:type simulations: dict
 		:param burn: number of draws dismissed as burning samples
 		:type burn: int
+		:param parameter_name: name of the parameter of interest
+		:type parameter_name: string
+		:return: output of the MCMC algorithm
+		:rtype: `Numpy.dnarray`
         """
 		raise NotImplementedError("Must be overriden")
 
