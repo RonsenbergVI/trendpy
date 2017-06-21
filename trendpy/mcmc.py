@@ -33,10 +33,6 @@ class MCMC(object):
 		self.strategy = strategy
 		self.simulations = None
 
-	def summary(self):
-		smry = ""
-		return smry
-
 	def define_parameters(self):
 		""" Method to set the parameter set to be updated
 			in the MCMC algorithm.
