@@ -31,12 +31,14 @@ from numpy import zeros
 __all__ = ['derivative_matrix']
 
 def derivative_matrix(size, order=2):
-	""" Computes a discrete difference operator
+	""" Computes a discrete difference operator.
 
 	:param size: dimension of the matrix.
 	:type size: int
 	:param order: derivation order.
 	:type order: int
+	:return: Discrete difference operator
+	:rtype: `Numpy.dnarray`
 	"""
 	D=zeros((size-order, size))
 	if order==0:
