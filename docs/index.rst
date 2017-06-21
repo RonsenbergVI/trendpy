@@ -70,6 +70,8 @@ Introduction to filtering theory
 Consider :math:`(y_t)_{t \in [0,T]}` the (continuous), normalized price process of a stock, verifying the decomposition:
 
 .. math::
+	:nowrap:
+
 	\begin{eqnarray}
       \forall t \in [0,T], \quad y_t = x_t + \epsilon_t
     \end{eqnarray}
