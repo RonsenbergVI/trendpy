@@ -53,10 +53,6 @@ class Series(object):
 
 	def __str__(self):
 		return self.data.__str__()
-		
-	def summary():
-		smry = ''
-		return smry
 
 	@staticmethod
 	def from_csv(filename):
@@ -78,8 +74,14 @@ class Series(object):
 		:param period: number of days between two consecutive observations used to
 				compute the returns.
 		:type period: int, optional
+		:return: output of the MCMC algorithm
+		:rtype: `Numpy.dnarray`
 		"""
-		pass
+		return_series = Series()
+		return_series.data = self.data.pct_change(periods=period)
+		return_series.data.returns.fillna(value=0)
+		return return_series
+		
 
 	def save(self,filename='export.csv',separator=','):
 		""" Saves the data contained in the object to a csv file
