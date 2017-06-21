@@ -48,8 +48,8 @@ class StrategyFactory:
 		:type id: str
 		:param args: Positional arguments.
 		:type args: list
-		:param args: Keyword arguments.
-		:type args: dict
+		:param kwargs: Keyword arguments.
+		:type kwargs: dict
 		:return: new instance of a :py:meth:`~trendpy.strategies.Strategy` subclass
 		:rtype: `Numpy.dnarray`
 		"""
