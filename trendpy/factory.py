@@ -31,7 +31,7 @@ class StrategyFactory:
 
 	@staticmethod
 	def add(id,factory):
-		""" Adds a class to factory with a chosen id
+		""" Adds a class to factory with a chosen id.
 
 		:param id: name of the class.
 		:type id: str
@@ -42,7 +42,7 @@ class StrategyFactory:
 
 	@staticmethod
 	def create(id,*args,**kwargs):
-		""" creates an instance of the class.
+		""" Creates an instance of the class.
 
 		:param id: name of the class.
 		:type id: str
@@ -50,6 +50,8 @@ class StrategyFactory:
 		:type args: list
 		:param args: Keyword arguments.
 		:type args: dict
+		:return: new instance of a :py:meth:`~trendpy.strategies.Strategy` subclass
+		:rtype: `Numpy.dnarray`
 		"""
 		if not id in StrategyFactory.factories:
 			StrategyFactory.factories[id] = eval('%s.Factory()' % id)
