@@ -26,8 +26,14 @@
 
 import matplotlib.pyplot as plt
 
+
 from trendpy.mcmc import MCMC
 from trendpy.factory import StrategyFactory
+
+from statsmodels.iolib.table import SimpleTable
+from statsmodels.iolib.summary import Summary, fmt_2cols, fmt_params
+
+from datetime import datetime
 
 from pandas import DataFrame, read_csv
 
@@ -47,6 +53,8 @@ class Series(object):
 	"""
 	def __init__(self):
 		self.data=None
+		self.begin_index=None
+		self.ed_index=None
 
 	def __len__(self):
 		return self.data.size
@@ -55,8 +63,9 @@ class Series(object):
 		return self.data.__str__()
 
 	@staticmethod
-	def from_csv(filename):
-		""" Instantiate new time series from a csv file.
+	def from_csv(filename,index='date'):
+		""" Instantiate new time series from a csv file where the first
+			column is a timestamp or a date or a datetime.
 
 		:param filename: path of the file with extension (.csv or .txt)
 		:type filename: str
@@ -67,7 +76,7 @@ class Series(object):
 		time_series.data=read_csv(filename,index_col=0)
 		return time_series
 
-	def returns(self,period=1):
+	def returns(self,period=1,annualize):
 		""" Adds a new time series to the data with the returns of the original
 			time series.
 
@@ -82,9 +91,41 @@ class Series(object):
 		return_series.data.returns.fillna(value=0)
 		return return_series
 		
+	def summary(self):
+		smry = Summary()
+		summary_title = ''
+		top_left = [('begin: ',0),
+					('end: ',0),
+					('number of observations: ',0),
+					('number of time series: ',0),
+					('', ''),
+					('Date: ', now().strftime('%a, %b %d %Y')),
+					('Time: ', now().strftime('%H:%M:%S'))]
 
-	def save(self,filename='export.csv',separator=','):
-		""" Saves the data contained in the object to a csv file
+		top_right = [('return:', 0),
+					 ('volatility:', 0),
+					 ('max-drawdown:', 0),
+					 ('', ''),
+					 ('', ''),
+					 ('', ''),
+					 ('', '')]
+        stubs = []
+        values = []
+        for stub, val in top_left:
+            stubs.append(stub)
+            vals.append([val])
+        table = SimpleTable(vals, txt_fmt=fmt_2cols, title=title, stubs=stubs)
+		
+		
+		
+	def max_drawdown(self):
+		pass
+	
+	def rolling_volatility(self,period,annualize):
+		pass
+
+	def save(self,filename='export.csv',separator=',',date_format='%d-%m%y'):
+		""" Saves the data contained in the object to a csv file.
 
 		:param filename: path and name of the file to export
 		:type filename: str, optional
@@ -94,7 +135,7 @@ class Series(object):
 		self.data.to_csv(filename,sep=separator,date_format='')
 
 	def plot(self):
-		""" Plots the time series"""
+		""" Plots the time series."""
 		self.data.plot()
 		plt.show()
 
@@ -115,3 +156,10 @@ class Series(object):
 		trend = mcmc.output(burns,"trend")
 
 		self.data = self.data.join(DataFrame(trend,index=self.data.index,columns=[method]))
+
+		
+class Group(object):
+	
+	
+	def plot(self)
+	
