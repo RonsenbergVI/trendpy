@@ -32,7 +32,7 @@ from trendpy.factory import StrategyFactory
 from pandas import DataFrame, read_csv
 
 class Series(object):
-	""" Implements univariate time series
+	""" Implements univariate time series.
 
 	Examples
 	--------
@@ -53,13 +53,19 @@ class Series(object):
 
 	def __str__(self):
 		return self.data.__str__()
+		
+	def summary():
+		smry = ''
+		return smry
 
 	@staticmethod
 	def from_csv(filename):
-		""" Instantiate new time series from a csv file
+		""" Instantiate new time series from a csv file.
 
 		:param filename: path of the file with extension (.csv or .txt)
 		:type filename: str
+		:return: the price time series
+		:rtype: `trendpy.series.Series`
 		"""
 		time_series=Series()
 		time_series.data=read_csv(filename,index_col=0)
@@ -71,26 +77,19 @@ class Series(object):
 
 		:param period: number of days between two consecutive observations used to
 				compute the returns.
-		:type period: int
+		:type period: int, optional
 		"""
 		pass
 
-	def save(self,filename='export.csv',type='csv',separator=','):
+	def save(self,filename='export.csv',separator=','):
 		""" Saves the data contained in the object to a csv file
 
 		:param filename: path and name of the file to export
-		:type filename: str
-		:param  type: by default csv, if no value is given then a csv file is saved.
-				another possible format is json (other should be available in
-				future releases).
-		:type type: string, optional
+		:type filename: str, optional
 		:param separator: separator between columns in file.
-		:type separator: str
+		:type separator: str, optional
 		"""
-		if type=='csv':
-			pass
-		if type=='json':
-			pass
+		self.data.to_csv(filename,sep=separator,date_format='')
 
 	def plot(self):
 		""" Plots the time series"""
@@ -101,13 +100,11 @@ class Series(object):
 		""" Filters the trend of the time series.
 
 		:param method: path and name of the file to export
-		:type method: str
-		:param  type: by default csv, if no value is given then a csv file is saved.
-				another possible format is json (other should be available in
-				future releases).
-		:type type: string, optional
-		:param separator: separator between columns in file.
-		:type separator: str
+		:type method: str, optional
+		:param number_simulations: number of simulations in the MCMC algorithm
+		:type number_simulations: int, optional
+		:param burns: number of draws dismissed as burning samples
+		:type burns: int, optional
 		"""
 		mcmc = MCMC(self, StrategyFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
 
