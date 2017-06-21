@@ -70,8 +70,9 @@ Introduction to filtering theory
 Consider :math:`(y_t)_{t \in [0,T]}` the (continuous), normalized price process of a stock, verifying the decomposition:
 
 .. math::
-
-   \forall t \in [0,T], \quad y_t = x_t + \epsilon_t
+	\begin{eqnarray}
+      \forall t \in [0,T], \quad y_t = x_t + \epsilon_t
+    \end{eqnarray}
 
 where :math:`x` is the price trend and :math:`\epsilon` a stochastic noise.
 The process of trend filtering consists in recovering :math:`x` from the
@@ -80,7 +81,7 @@ observations of :math:`y`. Under regularity conditions, the first derivative of
 
 .. math::
 
-   \mu_t = \dfrac{x_t}{dt}
+   \mu_t = \dfrac{dx_t}{dt}
 
 The trend filtering equation becomes:
 
@@ -105,7 +106,7 @@ to finding the functional form:
 Quickstart
 ----------
 
-To create a new series from a csv file::
+To create a new :py:meth:`~trendpy.series.Series` instance from a csv file::
 
 	>>> from trendpy.series import Series
 	>>> data = Series.from_csv('data.csv')
@@ -131,9 +132,7 @@ Thus any new algorithm can be added to the library by subclassing the **Strategy
 Then the new MCMC instance just needs to be initialized with the new strategy and ran::
 
 	>>> new_mcmc = MCMC(self, StrategyFactory.create("BlackScholes",data))
-
 	>>> mcmc.run(number_simulations=50)
-
 	>>> estimation = mcmc.output()
 
 
