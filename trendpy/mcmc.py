@@ -39,16 +39,18 @@ class MCMC(object):
 
 	def define_parameters(self):
 		""" Method to set the parameter set to be updated
-			in the MCMC algorithm
+			in the MCMC algorithm.
 		"""
 		return self.strategy.define_parameters()
 
 	def initial_value(self,parameter_name):
 		""" Method that sets the initial value of the
-			parameters to be estimated
+			parameters to be estimated.
 
 		:param parameter_name: name of the parameter.
 		:type parameter_name: str
+		:return: initial value of the parameter
+		:rtype: `Numpy.dnarray`
         """
 		return self.strategy.initial_value(parameter_name)
 
@@ -58,6 +60,10 @@ class MCMC(object):
 
 		:param parameter_name: name of the parameter.
 		:type parameter_name: str
+		:return: dictionary the parameters needed to compute the
+			next value of the Markov chain for the parameter with name:
+			parameter_name.
+		:rtype: dict
         """
 		return self.strategy.distribution_parameters(parameter_name) # returns a dictionary
 
@@ -65,21 +71,27 @@ class MCMC(object):
 		""" This method handles the generation of the random draws of
 			the Markov chain for each parameters.
 
-		:param parameter_name: name of the parameter.
-		:type parameter_name: str
+		:param parameter_name: name of the parameter of interest
+		:type parameter_name: string
+		:return: random draw from the posterior probability distribution
+		:rtype: `Numpy.dnarray`
         """
 		return self.strategy.generate(parameter_name)
 
 	def output(self, burn, parameter_name):
-		""" Computes the poserior mean of the parameters
+		""" Computes the poserior mean of the parameters.
 
-		:param parameter_name: name of the parameter.
-		:type parameter_name: str
+		:param parameter_name: name of the parameter of interest
+		:type parameter_name: string
+		:param burn: number of draws dismissed as burning samples
+		:type burn: int
+		:return: output of the MCMC algorithm
+		:rtype: `Numpy.dnarray`
         """
 		return self.strategy.output(self.simulations, burn, parameter_name)
 
 	def run(self, number_simulations=100):
-		""" Runs the MCMC algorithm
+		""" Runs the MCMC algorithm.
 
 		:param number_simulations: number of random draws for each parameter.
 		:type number_simulations: int
