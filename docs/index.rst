@@ -198,9 +198,9 @@ Class implementing time series analysis.
 
 	.. attribute:: data
 
-
-
 	.. automethod:: from_csv
+	
+	.. automethod:: rolling_volatility
 
 	.. automethod:: returns
 
