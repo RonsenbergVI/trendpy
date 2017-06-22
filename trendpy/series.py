@@ -76,21 +76,6 @@ class Series(object):
 		time_series=Series()
 		time_series.data=read_csv(filename,index_col=0)
 		return time_series
-
-	def returns(self,period=1,annualize='Y'):
-		""" Adds a new time series to the data with the returns of the original
-			time series.
-
-		:param period: number of days between two consecutive observations used to
-				compute the returns.
-		:type period: int, optional
-		:return: output of the MCMC algorithm
-		:rtype: `Numpy.dnarray`
-		"""
-		return_series = Series()
-		return_series.data = self.data.pct_change(periods=period)
-		return_series.data = return_series.data.fillna(0)
-		return return_series
 		
 	def summary(self):
 		""" Returns an ASCII table with basic statistics of the time series loaded.
@@ -107,12 +92,12 @@ class Series(object):
 					('', ''),
 					('Date: ', datetime.now().strftime('%a, %b %d %Y %H:%M:%S'))]
 
-		right = [('Ann. return: ', round(float(self.annualized_return()),2)),
-					 ('Ann. volatility: ', round(float(self.annualized_volatility()),2)),
-					 ('Max drawdown: ', 0),
+		right = [('Ann. return:','%.2f%%' % float(100*self.annualized_return())),
+					 ('Ann. volatility:','%.2f%%' % float(100*self.annualized_volatility())),
+					 ('Max drawdown:', 0),
 					 ('Drawdown Duration: ', 0),
-					 ('Skewness: ', 0),
-					 ('Kurtosis: ', 0)]
+					 ('Skewness:', 0),
+					 ('Kurtosis:', 0)]
 		keys = []
 		values = []
 		for key, value in left:
@@ -127,6 +112,21 @@ class Series(object):
 			values.append([value])
 		table.extend_right(SimpleTable(values, stubs=keys))
 		return smry
+
+	def returns(self,period=1,annualize='Y'):
+		""" Adds a new time series to the data with the returns of the original
+			time series.
+
+		:param period: number of days between two consecutive observations used to
+				compute the returns.
+		:type period: int, optional
+		:return: output of the MCMC algorithm
+		:rtype: `Numpy.dnarray`
+		"""
+		return_series = Series()
+		return_series.data = self.data.pct_change(periods=period)
+		return_series.data = return_series.data.fillna(0)
+		return return_series
 		
 	def annualized_return(self):
 		""" Computes the annualized return.
@@ -135,7 +135,7 @@ class Series(object):
 		:rtype: float
 		"""
 		returns = self.returns().data.as_matrix()
-		return (252)*sum(returns)
+		return (252/len(returns))*sum(returns)
 		
 	def annualized_volatility(self):
 		""" Computes the annualized volatility.
@@ -148,23 +148,53 @@ class Series(object):
 		return sqrt((252/(len(returns)-1))*sum(array([(ret-r)**2 for ret in returns])))
 	
 	def skewness(self):
+		""" Computes the skewness of the returns empirical distribution.
+	
+		:return: skewness on the whole time series returns.
+		:rtype: float
+		"""
 		pass
 		#returns = self.returns().as_matrix()
 		#return sum(array([s]))
 	
 	def kurtosis(self):
+		""" Computes the kurtosis of the returns empirical distribution.
+	
+		:return: kurtosis on the whole time series returns.
+		:rtype: float
+		"""
 		pass
 	
 	def drawdown_duration(self):
+		""" Computes the drawdown duration of the price time series.
+	
+		:return: drawdown duration of th time series.
+		:rtype: float
+		"""
 		pass
 
 	def max_drawdown(self):
+		""" Computes the maximum drawdown of the price time series.
+	
+		:return: drawdown duration of th time series.
+		:rtype: float
+		"""
 		pass
 
 	def periodic_returns(self,period=30):
+		""" Computes the maximum drawdown of the price time series.
+	
+		:return: periodic return plot of the time series.
+		:rtype: float
+		"""
 		pass
 
-	def rolling_max_drawdown(self,period=1):
+	def rolling_max_drawdown(self,lag=1):
+		""" Computes the rolling maximum drawdown of the time series.
+
+		:param lag: number of observations used.
+		:type lag: int, optional
+		"""
 		pass
 
 	def rolling_volatility(self,lag=360):
