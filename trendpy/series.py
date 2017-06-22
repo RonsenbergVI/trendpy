@@ -146,43 +146,18 @@ class Series(object):
 		pass
 
 	def rolling_volatility(self,lag='M', *args, **kwargs):
-		"""
-		Bootstrap based on blocks of the same length with end-to-start wrap around
+		""" Computes the rolling volatility of the time series
+		    with annualization possible. The formula used is the following:
 
-		Parameters
-		----------
-		lag : str
-			Size of block to use
-		args
-			Positional arguments
-		kwargs
-			Keyword arguments
-
-		Notes
-		-----
-		Supports numpy arrays and pandas Series and DataFrames.  Data returned has
-		the same type as the input date.
-
-		Data entered using keyword arguments is directly accessibly as an
-		attribute.
-
-		Examples
-		--------
-		Data can be accessed in a number of ways.  Positional data is retained in
-		the same order as it was entered when the bootstrap was initialized.
-		Keyword data is available both as an attribute or using a dictionary syntax
-		on kw_data.
-
-		>>> from arch.bootstrap import CircularBlockBootstrap
-		>>> from numpy.random import standard_normal
-		>>> y = standard_normal((500, 1))
-		>>> x = standard_normal((500, 2))
-		>>> z = standard_normal(500)
-		>>> bs = CircularBlockBootstrap(17, x, y=y, z=z)
-		>>> for data in bs.bootstrap(100):
-		...     bs_x = data[0][0]
-		...     bs_y = data[1]['y']
-		...     bs_z = bs.z
+		:param lag: number of observations used.
+		:type lag: int, optional
+		:param annualize: 
+		:type annualize: str, optional
+		
+		.. note::
+			
+			annualised volatility
+			
 		"""
 		returns = self.returns(period=1)
 
