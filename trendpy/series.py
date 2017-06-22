@@ -151,29 +151,27 @@ class Series(object):
 
 		Parameters
 		----------
-		lag : str
-			Size of block to use
-		args
-			Positional arguments
-		kwargs
+			lag : str
+				Size of block to use
+			args
+				Positional arguments
+			kwargs
 			Keyword arguments
 
 		Notes
 		-----
-		
-			Supports numpy arrays and pandas Series and DataFrames.  Data returned has
-			the same type as the input date.
+		Supports numpy arrays and pandas Series and DataFrames.  Data returned has
+		the same type as the input date.
 
-			Data entered using keyword arguments is directly accessibly as an
-			attribute.
+		Data entered using keyword arguments is directly accessibly as an
+		attribute.
 
 		Examples
 		--------
-		
-			Data can be accessed in a number of ways.  Positional data is retained in
-			the same order as it was entered when the bootstrap was initialized.
-			Keyword data is available both as an attribute or using a dictionary syntax
-			on kw_data.
+		Data can be accessed in a number of ways.  Positional data is retained in
+		the same order as it was entered when the bootstrap was initialized.
+		Keyword data is available both as an attribute or using a dictionary syntax
+		on kw_data.
 
 		>>> from arch.bootstrap import CircularBlockBootstrap
 		>>> from numpy.random import standard_normal
