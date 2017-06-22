@@ -170,7 +170,6 @@ class Series(object):
 			Volatility is computed in this method using the formula:
 
 			.. math::
-	
 			  \begin{eqnarray}
 			    \forall t \in [0,T], \quad y_t = x_t + \epsilon_t
 			  \end{eqnarray}
