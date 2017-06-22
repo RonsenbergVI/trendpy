@@ -126,9 +126,20 @@ class Series(object):
 			values.append([value])
 		table.extend_right(SimpleTable(values, stubs=keys))
 		return smry
+		
+	def annualized_return(self):
+		""" Computes the annualized return.
+	
+		:return: annualized return on the whole time series.
+		:rtype: float
+		"""
+		returns = self.returns().as_matrix()
+		return (252)*sum(returns)
+		
+	def annualized_volatility(self):
 
 	def skewness(self):
-		pass
+		
 	
 	def kurtosis(self):
 		pass
@@ -139,10 +150,10 @@ class Series(object):
 	def max_drawdown(self):
 		pass
 
-	def periodic_returns(self,period):
+	def periodic_returns(self,period=30):
 		pass
 
-	def rolling_max_sdrawdown(self,period=1):
+	def rolling_max_drawdown(self,period=1):
 		pass
 
 	def rolling_volatility(self,lag=360):
@@ -157,12 +168,12 @@ class Series(object):
 		.. note::
 			
 			Volatility is computed in this method using the formula:
-			
-			.. math::
 
-		   	    \begin{eqnarray}
-		              \sum \sqrt{\dfrac{1}{T} (\dfrac{S_t-S_{t-1}}{S_{t-1}})^2} \times \sqrt{N}
-		            \end{eqnarray}
+			.. math::
+	
+			  \begin{eqnarray}
+			    \forall t \in [0,T], \quad y_t = x_t + \epsilon_t
+			  \end{eqnarray}
 		"""
 		returns = self.returns(period=1)
 
