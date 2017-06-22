@@ -151,11 +151,11 @@ class Series(object):
 
 		Parameters
 		----------
-			lag : str
-				Size of block to use
-			args
-				Positional arguments
-			kwargs
+		lag : str
+			Size of block to use
+		args
+			Positional arguments
+		kwargs
 			Keyword arguments
 
 		Notes
