@@ -145,7 +145,7 @@ class Series(object):
 	def rolling_max_sdrawdown(self,period=1):
 		pass
 
-	def rolling_volatility(self,lag='M', *args, **kwargs):
+	def rolling_volatility(self,lag=360):
 		""" Computes the rolling volatility of the time series
 		    with annualization possible. The formula used is the following:
 
@@ -156,8 +156,19 @@ class Series(object):
 		
 		.. note::
 			
-			annualised volatility
+			Volatility is computed in this method using the formula:
 			
+			.. math::
+			
+			   \begin{eqnarray}
+			     \sum \sqrt{\dfrac{1}{T}(\dfrac{S_t-S_{t-1}}{S_{t-1}})^2} \times \sqrt{N}
+			   \end{eqnarray}
+			   
+		Example
+		^^^^^^^
+		>>> from trendpy.series import Series
+		>>> my_stock = Series.from_csv('data.csv')
+		>>> my_stock.rolling_volatility(lag=360).plot()
 		"""
 		returns = self.returns(period=1)
 
