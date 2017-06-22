@@ -26,7 +26,6 @@
 
 import matplotlib.pyplot as plt
 
-
 from trendpy.mcmc import MCMC
 from trendpy.factory import StrategyFactory
 
@@ -36,6 +35,8 @@ from statsmodels.iolib.summary import Summary, fmt_2cols, fmt_params
 from datetime import datetime
 
 from pandas import DataFrame, read_csv
+
+from numpy import array, sqrt
 
 class Series(object):
 	""" Implements univariate time series.
@@ -88,26 +89,26 @@ class Series(object):
 		"""
 		return_series = Series()
 		return_series.data = self.data.pct_change(periods=period)
-		return_series.data.returns.fillna(value=0)
+		return_series.data = return_series.data.fillna(0)
 		return return_series
 		
 	def summary(self):
 		""" Returns an ASCII table with basic statistics of the time series loaded.
 		
-		:return: 
-		:rtype: 
+		:return: ASCII table with main description of the data set
+		:rtype: str
 		"""
 		smry = Summary()
-		summary_title = 'Summary of time series'
-		left = [('Begin: ',0),
-					('End: ',0),
-					('Number of observations: ',0),
-					('Number of time series: ',0),
+		summary_title = 'Summary - %s ' % self.data.columns[0]
+		left = [('Begin: ', self.data.index[0]),
+					('End: ',self.data.index[len(self.data.index)-1]),
+					('Number of observations: ', len(self.data.index)),
+					('Number of time series: ', len(self.data.columns)),
 					('', ''),
 					('Date: ', datetime.now().strftime('%a, %b %d %Y %H:%M:%S'))]
 
-		right = [('Ann. return: ', 0),
-					 ('Ann. volatility: ', 0),
+		right = [('Ann. return: ', round(float(self.annualized_return()),2)),
+					 ('Ann. volatility: ', round(float(self.annualized_volatility()),2)),
 					 ('Max drawdown: ', 0),
 					 ('Drawdown Duration: ', 0),
 					 ('Skewness: ', 0),
@@ -133,13 +134,23 @@ class Series(object):
 		:return: annualized return on the whole time series.
 		:rtype: float
 		"""
-		returns = self.returns().as_matrix()
+		returns = self.returns().data.as_matrix()
 		return (252)*sum(returns)
 		
 	def annualized_volatility(self):
-
+		""" Computes the annualized volatility.
+	
+		:return: annualized volatility on the whole time series.
+		:rtype: float
+		"""
+		r = self.annualized_return()
+		returns = self.returns().data.as_matrix()
+		return sqrt((252/(len(returns)-1))*sum(array([(ret-r)**2 for ret in returns])))
+	
 	def skewness(self):
-		
+		pass
+		#returns = self.returns().as_matrix()
+		#return sum(array([s]))
 	
 	def kurtosis(self):
 		pass
