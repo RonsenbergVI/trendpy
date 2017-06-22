@@ -25,5 +25,8 @@ from trendpy.series import Series
 filename='data.csv'
 
 quant_fund=Series.from_csv(filename)
-quant_fund.filter(number_simulations=30, burns=10)
-quant_fund.plot()
+#print(quant_fund.summary())
+quant_fund.periodic_returns()
+#quant_fund.filter(number_simulations=30, burns=10)
+#quant_fund.plot()
+print(quant_fund.data.index.__class__.__name__)
