@@ -71,9 +71,7 @@ Consider :math:`(y_t)_{t \in [0,T]}` the (continuous), normalized price process 
 
 .. math::
 
-	\begin{eqnarray}
-      \forall t \in [0,T], \quad y_t = x_t + \epsilon_t
-    \end{eqnarray}
+
 
 where :math:`x` is the price trend and :math:`\epsilon` a stochastic noise.
 The process of trend filtering consists in recovering :math:`x` from the
@@ -200,9 +198,27 @@ Class implementing time series analysis.
 
 	.. automethod:: from_csv
 	
-	.. automethod:: rolling_volatility
-
+	.. automethod:: summary
+	
 	.. automethod:: returns
+	
+	.. automethod:: annualized_return
+	
+	.. automethod:: annualized_volatility
+	
+	.. automethod:: skewness
+	
+	.. automethod:: kurtosis
+	
+	.. automethod:: drawdown_duration
+	
+	.. automethod:: max_drawdown
+	
+	.. automethod:: periodic_returns
+	
+	.. automethod:: rolling_max_drawdown
+	
+	.. automethod:: rolling_volatility
 
 	.. automethod:: save
 
