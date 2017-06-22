@@ -145,47 +145,35 @@ class Series(object):
 	def rolling_max_sdrawdown(self,period=1):
 		pass
 
-	def rolling_volatility(self,lag='M'):
+	def rolling_volatility(self,lag='M', *args, **kwargs):
 		"""
 		Bootstrap based on blocks of the same length with end-to-start wrap around
 
 		Parameters
 		----------
-		block_size : int
-		Size of block to use
+		lag : str
+			Size of block to use
 		args
-		Positional arguments to bootstrap
+			Positional arguments
 		kwargs
-		Keyword arguments to bootstrap
-
-		Attributes
-		----------
-		index : array
-		The current index of the bootstrap
-		data : tuple
-		Two-element tuple with the pos_data in the first position and kw_data
-		in the second (pos_data, kw_data)
-		pos_data : tuple
-		Tuple containing the positional arguments (in the order entered)
-		kw_data : dict
-		Dictionary containing the keyword arguments
-		random_state : RandomState
-		RandomState instance used by bootstrap
+			Keyword arguments
 
 		Notes
 		-----
-		Supports numpy arrays and pandas Series and DataFrames.  Data returned has
-		the same type as the input date.
+		
+			Supports numpy arrays and pandas Series and DataFrames.  Data returned has
+			the same type as the input date.
 
-		Data entered using keyword arguments is directly accessibly as an
-		attribute.
+			Data entered using keyword arguments is directly accessibly as an
+			attribute.
 
 		Examples
 		--------
-		Data can be accessed in a number of ways.  Positional data is retained in
-		the same order as it was entered when the bootstrap was initialized.
-		Keyword data is available both as an attribute or using a dictionary syntax
-		on kw_data.
+		
+			Data can be accessed in a number of ways.  Positional data is retained in
+			the same order as it was entered when the bootstrap was initialized.
+			Keyword data is available both as an attribute or using a dictionary syntax
+			on kw_data.
 
 		>>> from arch.bootstrap import CircularBlockBootstrap
 		>>> from numpy.random import standard_normal
