@@ -76,7 +76,7 @@ class Series(object):
 		time_series.data=read_csv(filename,index_col=0)
 		return time_series
 
-	def returns(self,period=1,annualize):
+	def returns(self,period=1,annualize='Y'):
 		""" Adds a new time series to the data with the returns of the original
 			time series.
 
@@ -92,37 +92,113 @@ class Series(object):
 		return return_series
 		
 	def summary(self):
+		""" Returns an ASCII table with basic statistics of the time series loaded.
+		
+		:return: 
+		:rtype: 
+		"""
 		smry = Summary()
-		summary_title = ''
-		top_left = [('begin: ',0),
-					('end: ',0),
-					('number of observations: ',0),
-					('number of time series: ',0),
+		summary_title = 'Summary of time series'
+		left = [('Begin: ',0),
+					('End: ',0),
+					('Number of observations: ',0),
+					('Number of time series: ',0),
 					('', ''),
-					('Date: ', now().strftime('%a, %b %d %Y')),
-					('Time: ', now().strftime('%H:%M:%S'))]
+					('Date: ', datetime.now().strftime('%a, %b %d %Y %H:%M:%S'))]
 
-		top_right = [('return:', 0),
-					 ('volatility:', 0),
-					 ('max-drawdown:', 0),
-					 ('', ''),
-					 ('', ''),
-					 ('', ''),
-					 ('', '')]
-        stubs = []
-        values = []
-        for stub, val in top_left:
-            stubs.append(stub)
-            vals.append([val])
-        table = SimpleTable(vals, txt_fmt=fmt_2cols, title=title, stubs=stubs)
-		
-		
-		
-	def max_drawdown(self):
+		right = [('Ann. return: ', 0),
+					 ('Ann. volatility: ', 0),
+					 ('Max drawdown: ', 0),
+					 ('Drawdown Duration: ', 0),
+					 ('Skewness: ', 0),
+					 ('Kurtosis: ', 0)]
+		keys = []
+		values = []
+		for key, value in left:
+			keys.append(key)
+			values.append([value])
+		table = SimpleTable(values, txt_fmt=fmt_2cols, title=summary_title, stubs=keys)
+		smry.tables.append(table)
+		keys = []
+		values = []
+		for key, value in right:
+			keys.append(key)
+			values.append([value])
+		table.extend_right(SimpleTable(values, stubs=keys))
+		return smry
+
+	def skewness(self):
 		pass
 	
-	def rolling_volatility(self,period,annualize):
+	def kurtosis(self):
 		pass
+	
+	def drawdown_duration(self):
+		pass
+
+	def max_drawdown(self):
+		pass
+
+	def periodic_returns(self,period):
+		pass
+
+	def rolling_max_sdrawdown(self,period=1):
+		pass
+
+	def rolling_volatility(self,lag='M'):
+		"""
+		Bootstrap based on blocks of the same length with end-to-start wrap around
+
+		Parameters
+		----------
+		block_size : int
+		Size of block to use
+		args
+		Positional arguments to bootstrap
+		kwargs
+		Keyword arguments to bootstrap
+
+		Attributes
+		----------
+		index : array
+		The current index of the bootstrap
+		data : tuple
+		Two-element tuple with the pos_data in the first position and kw_data
+		in the second (pos_data, kw_data)
+		pos_data : tuple
+		Tuple containing the positional arguments (in the order entered)
+		kw_data : dict
+		Dictionary containing the keyword arguments
+		random_state : RandomState
+		RandomState instance used by bootstrap
+
+		Notes
+		-----
+		Supports numpy arrays and pandas Series and DataFrames.  Data returned has
+		the same type as the input date.
+
+		Data entered using keyword arguments is directly accessibly as an
+		attribute.
+
+		Examples
+		--------
+		Data can be accessed in a number of ways.  Positional data is retained in
+		the same order as it was entered when the bootstrap was initialized.
+		Keyword data is available both as an attribute or using a dictionary syntax
+		on kw_data.
+
+		>>> from arch.bootstrap import CircularBlockBootstrap
+		>>> from numpy.random import standard_normal
+		>>> y = standard_normal((500, 1))
+		>>> x = standard_normal((500, 2))
+		>>> z = standard_normal(500)
+		>>> bs = CircularBlockBootstrap(17, x, y=y, z=z)
+		>>> for data in bs.bootstrap(100):
+		...     bs_x = data[0][0]
+		...     bs_y = data[1]['y']
+		...     bs_z = bs.z
+		"""
+		returns = self.returns(period=1)
 
 	def save(self,filename='export.csv',separator=',',date_format='%d-%m%y'):
 		""" Saves the data contained in the object to a csv file.
@@ -150,16 +226,6 @@ class Series(object):
 		:type burns: int, optional
 		"""
 		mcmc = MCMC(self, StrategyFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
-
 		mcmc.run(number_simulations)
-
 		trend = mcmc.output(burns,"trend")
-
 		self.data = self.data.join(DataFrame(trend,index=self.data.index,columns=[method]))
-
-		
-class Group(object):
-	
-	
-	def plot(self)
-	
