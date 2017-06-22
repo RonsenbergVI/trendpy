@@ -158,11 +158,11 @@ class Series(object):
 			
 			Volatility is computed in this method using the formula:
 			
-		.. math::
-			
-		   \begin{eqnarray}
-		     \sum \sqrt{\dfrac{1}{T}(\dfrac{S_t-S_{t-1}}{S_{t-1}})^2} \times \sqrt{N}
-		   \end{eqnarray}
+			.. math::
+
+		   	    \begin{eqnarray}
+		              \sum \sqrt{\dfrac{1}{T} (\dfrac{S_t-S_{t-1}}{S_{t-1}})^2} \times \sqrt{N}
+		            \end{eqnarray}
 			   
 		Example
 		^^^^^^^
