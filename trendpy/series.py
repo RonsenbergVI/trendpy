@@ -178,12 +178,8 @@ class Series(object):
 		
 		.. note::
 			
-			Volatility is computed in this method using the formula:
-
-			.. math::
-			  \begin{eqnarray}
-			    \forall t \in [0,T], \quad y_t = x_t + \epsilon_t
-			  \end{eqnarray}
+			Volatility is computed in this method using the formula: :math:`\forall t \in [0,T], \quad y_t = x_t + \epsilon_t`
+	
 		"""
 		returns = self.returns(period=1)
 
