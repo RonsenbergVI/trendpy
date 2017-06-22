@@ -30,6 +30,10 @@ from numpy import zeros
 
 __all__ = ['derivative_matrix']
 
+DATE_FORMAT = '%m/%d/%Y'
+
+DATETIME_FORMAT = '%a, %b %d %Y %H:%M:%S'
+
 def derivative_matrix(size, order=2):
 	""" Computes a discrete difference operator.
 
@@ -63,6 +67,6 @@ def plot(*args,**kwargs):
 	:param kwargs: Keyword arguments.
 	:type kwargs: dict
 	"""
-	
+	pass
 	
 	
