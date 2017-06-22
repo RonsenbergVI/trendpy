@@ -163,12 +163,6 @@ class Series(object):
 		   	    \begin{eqnarray}
 		              \sum \sqrt{\dfrac{1}{T} (\dfrac{S_t-S_{t-1}}{S_{t-1}})^2} \times \sqrt{N}
 		            \end{eqnarray}
-			   
-		Example
-		^^^^^^^
-		>>> from trendpy.series import Series
-		>>> my_stock = Series.from_csv('data.csv')
-		>>> my_stock.rolling_volatility(lag=360).plot()
 		"""
 		returns = self.returns(period=1)
 
