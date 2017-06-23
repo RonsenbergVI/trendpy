@@ -290,10 +290,7 @@ class L1Filter(Sampler):
 		if parameter_name=='trend':
 			return distribution.rvs(parameters['mean'],parameters['cov'])
 		elif parameter_name=='omega':
-			result = zeros(self.parameters.list['omega'].current_value.shape)
-			for i in range(len(result)):
-				result[i] = 1/distribution.rvs(parameters['pos'][i],loc=parameters['loc'],scale=parameters['scale'])
-			return result
+			return array([1/distribution.rvs(parameters['pos'][i],loc=parameters['loc'],scale=parameters['scale']) for i in range(len(result))]).reshape(self.parameters.list['omega'].current_value.shape)
 		return distribution.rvs(parameters['pos'],loc=parameters['loc'],scale=parameters['scale']) #pb with the parameter name
 
 	def output(self, simulations, burn, parameter_name):
