@@ -29,7 +29,7 @@ import seaborn as sns
 
 from trendpy.globals import DATE_FORMAT
 from trendpy.mcmc import MCMC
-from trendpy.factory import StrategyFactory
+from trendpy.factory import SamplerFactory
 
 from statsmodels.iolib.table import SimpleTable
 from statsmodels.iolib.summary import Summary, fmt_2cols, fmt_params
@@ -288,7 +288,7 @@ class Series(object):
 		self.data.plot()
 		plt.show()
 
-	def filter(self, method="L1Filter",number_simulations=100, burns=50,total_variation=2):
+	def filter(self, method="L1Filter",number_simulations=100, burns=50,total_variation=2,merge=False):
 		""" Filters the trend of the time series.
 
 		:param method: path and name of the file to export
@@ -301,4 +301,6 @@ class Series(object):
 		mcmc = MCMC(self, StrategyFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
 		mcmc.run(number_simulations)
 		trend = mcmc.output(burns,"trend")
-		self.data = self.data.join(DataFrame(trend,index=self.data.index,columns=[method]))
+		filtered_trend = Series()
+		filtered_trend.data = DataFrame(trend,index=self.data.index,columns=[method])
+		return filtered_trend
