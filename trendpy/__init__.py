@@ -29,6 +29,6 @@ from __future__ import absolute_import
 from trendpy.globals import *
 
 from trendpy.version import version
-from trendpy.factory import StrategyFactory
+from trendpy.factory import SamplerFactory
 
 __version__ = version
