@@ -130,7 +130,7 @@ Thus any new algorithm can be added to the library by subclassing the **Strategy
 
 Then the new MCMC instance just needs to be initialized with the new strategy and ran::
 
-	>>> new_mcmc = MCMC(self, StrategyFactory.create("BlackScholes",data))
+	>>> new_mcmc = MCMC(self, SamplerFactory.create("BlackScholes",data))
 	>>> mcmc.run(number_simulations=50)
 	>>> estimation = mcmc.output()
 
@@ -164,9 +164,9 @@ Generic structure of the algorithms implemented.
 
 .. autoclass:: MCMC
 
-	.. attribute:: strategy
+	.. attribute:: sampler
 
-	  implementation strategy of the MCMC algorithm
+	  implementation of the MCMC algorithm
 
 	.. attribute:: simulations
 
@@ -226,12 +226,12 @@ Class implementing time series analysis.
 
 	.. automethod:: filter
 
-Strategies
-----------
+Samplers
+--------
 
-Strategies tell the mcmc algorithm how to simulate the Markov chain.
+Samplers tell the mcmc algorithm how to simulate the Markov chain.
 
-.. module:: trendpy.strategies
+.. module:: trendpy.samplers
 
 .. autoclass:: Parameter
 
@@ -267,7 +267,7 @@ Strategies tell the mcmc algorithm how to simulate the Markov chain.
 
 	.. automethod:: append
 
-.. autoclass:: Strategy
+.. autoclass:: Sampler
 
 	.. attribute:: parameters
 
