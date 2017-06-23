@@ -40,7 +40,8 @@ from calendar import monthrange
 
 from pandas import DataFrame, read_csv, period_range, Series
 
-from numpy import array, sqrt, zeros_like, triu_indices_from, random, bool
+from numpy import array, sqrt, zeros_like, triu_indices_from, random, bool, nan
+from numpy.linalg import norm
 
 
 class Series(object):
@@ -69,7 +70,7 @@ class Series(object):
 		return self.data.__str__()
 
 	@staticmethod
-	def from_csv(filename,index='date'):
+	def from_csv(filename):
 		""" Instantiate new time series from a csv file where the first
 			column is a timestamp or a date or a datetime. For now 
 
@@ -78,14 +79,13 @@ class Series(object):
 		:return: the price time series
 		:rtype: `trendpy.series.Series`
 		"""
-		
 		time_series=Series()
-		time_series.data=read_csv(filename,index_col=0)
+		time_series.data=read_csv(filename,index_col=0,parse_dates=True)
 		return time_series
 		
 	def summary(self):
 		""" Returns an ASCII table with basic statistics of the time series loaded.
-		
+
 		:return: ASCII table with main description of the data set
 		:rtype: str
 		"""
@@ -99,12 +99,12 @@ class Series(object):
 					('', ''),
 					('Date: ', datetime.now().strftime('%a, %b %d %Y %H:%M:%S'))]
 
-		right = [('Ann. return:','%.2f%%' % float(100*self.annualized_return())),
-					 ('Ann. volatility:','%.2f%%' % float(100*self.annualized_volatility())),
-					 ('Max drawdown:', 0),
+		right = [('Ann. return:', 100.0*self.annualized_return()),
+					 ('Ann. volatility:', 100.0*self.annualized_volatility()),
+					 ('Max drawdown:', 100.0*self.max_drawdown()),
 					 ('Drawdown Duration: ', 0),
-					 ('Skewness:', 0),
-					 ('Kurtosis:', 0),
+					 ('Skewness:', self.skewness()),
+					 ('Kurtosis:', self.kurtosis()),
 					 ('t-test p value',0)]
 		keys = []
 		values = []
@@ -136,7 +136,7 @@ class Series(object):
 		return_series.data = return_series.data.fillna(0)
 		return return_series
 		
-	def annualized_return(self):
+	def annualized_return(self,**kwargs):
 		""" Computes the annualized return over a given period.
 
 		:param period: period of interest either a year, year-month
@@ -146,7 +146,7 @@ class Series(object):
 		:rtype: float
 		"""
 		returns = self.returns().data.as_matrix()
-		return (252/len(returns))*sum(returns)
+		return float((252/len(returns))*sum(returns))
 		
 	def annualized_volatility(self):
 		""" Computes the annualized return over a given period.
@@ -154,54 +154,62 @@ class Series(object):
 		:return: annualized return on the whole time series.
 		:rtype: float
 		"""
-		r = self.annualized_return()
 		returns = self.returns().data.as_matrix()
-		return sqrt((252/(len(returns)-1))*sum(array([(ret-r)**2 for ret in returns])))
+		T = len(returns)
+		r = self.annualized_return()/T
+		return float(sqrt((252/(len(returns)-1))*sum(array([(ret-r)**2 for ret in returns]))))
 	
 	def skewness(self):
 		""" Computes the skewness of the returns empirical distribution.
-	
+
 		:return: skewness on the whole time series returns.
 		:rtype: float
 		"""
-		pass
+		returns = self.returns().data.as_matrix()
+		T = len(returns)
+		s = self.annualized_volatility()/sqrt(T)
+		r = self.annualized_return()/T
+		return float((T/((T-1)*(T-2)))*sum(array([((ret-r)/s)**3 for ret in returns])))
 
 	def kurtosis(self):
 		""" Computes the kurtosis of the returns empirical distribution.
-	
+
 		:return: kurtosis on the whole time series returns.
 		:rtype: float
 		"""
-		pass
-	
+		returns = self.returns().data.as_matrix()
+		T = len(returns)
+		s = self.annualized_volatility()/sqrt(T)
+		r = self.annualized_return()/T
+		return float(((T*(T+1))/((T-1)*(T-2)*(T-3)))*sum(array([((ret-r)/s)**4 for ret in returns])) - (3*(T-1)**2)/((T-2)*(T-3)))
+
 	def drawdown_duration(self):
 		""" Computes the drawdown duration of the price time series.
-	
+
 		:return: drawdown duration of th time series.
 		:rtype: float
 		"""
 		pass
 
-	def max_drawdown(self):
+	def max_drawdown(self,window=30):
 		""" Computes the maximum drawdown of the price time series.
-	
-		:return: drawdown duration of th time series.
+
+		:param window: number of observations used.
+		:type window: int, optional
+		:return: drawdown duration of the time series.
 		:rtype: float
 		"""
-		pass
+		return float(min(self.rolling_max_drawdown(window=window).data.as_matrix()))
 
-	def periodic_returns(self):
+	def periodic_returns(self,show=True):
 		""" Computes the maximum drawdown of the price time series.
 	
 		:return: periodic return plot of the time series.
 		:rtype: float
 		"""
 		sns.set(style="white")
-		start_date = datetime.strptime(self.data.index[0],DATE_FORMAT)
-		end_date = datetime.strptime(self.data.index[-1],DATE_FORMAT)
-		#print(start_date)
-		#print(end_date.year.__class__)
-		#print(period_range(start_date.year,end_date.year,freq='A-DEC'))
+		start_date = self.data.index[0]
+		end_date = self.data.index[-1]
 		d = DataFrame(data=0,
 		index=period_range(start_date.year,end_date.year,freq='A-DEC'),
 		columns=list(['Jan',
@@ -216,45 +224,56 @@ class Series(object):
 					  'Oct',
 					  'Nov',
 					  'Dec']))
+
 		for year in d.index.to_series().astype(str):
 			m = 1
 			for month in d.columns:
-				print('%s-%s' % (year,m))
-				print(self.annualized_return('%s-%s' % (year,m)))
-				d.ix[year,month] = self.annualized_return('%s-%s' % (year,m))
+				try:
+					returns = self.data['%s-%s' % (year,m)].pct_change(periods=1).fillna(0).as_matrix()
+					d.ix[year,month] = (252/len(returns))*sum(returns)
+				except:
+					d.ix[year,month] = nan
 				m+=1
 		f, ax = plt.subplots(figsize=(7, 7))
 		title = '%s: periodic returns' % self.data.columns[0] 
 		plt.title(title,fontsize=14)
 		ax.title.set_position([0.5,1.05])
-		sns.heatmap(d,ax=ax,annot=True,fmt="d",cmap="YlGnBu")
-		plt.show()
+		sns.heatmap(d,ax=ax,fmt="d",cmap="YlGnBu")
+		if show: plt.show()
+		return d
 
-	def rolling_max_drawdown(self,lag=1):
+	def rolling_max_drawdown(self,window=30):
 		""" Computes the rolling maximum drawdown of the time series.
 
-		:param lag: number of observations used.
-		:type lag: int, optional
+		:param window: number of observations used.
+		:type window: int, optional
+		:return: rolling maximum drawdown of the time series.
+		:rtype: `pandas.DataFrame`
 		"""
-		pass
+		price = self.data.as_matrix()
+		rolling_drawdown = Series()
+		data = DataFrame(array([price[i-1]/max(price[i-window:i])-1 for i in range(window,len(price),1)]),index=self.data.index[window:],columns=['%s - max drawdown' % self.data.columns[0]])
+		rolling_drawdown.data = data
+		return rolling_drawdown
 
-	def rolling_volatility(self,lag=360):
-		""" Computes the rolling volatility of the time series
+	def rolling_volatility(self,window=360):
+		""" Computes the annualized rolling volatility of the time series
 		    with annualization possible. The formula used is the following:
 
-		:param lag: number of observations used.
-		:type lag: int, optional
+		:param window: number of observations used.
+		:type window: int, optional
 		:param annualize: 
 		:type annualize: str, optional
-
-		.. note::
-			
-			Volatility is computed in this method using the formula: :math:`\forall t \in [0,T], \quad y_t = x_t + \epsilon_t`
-	
+		:return: rolling_volatility of the time series.
+		:rtype: `pandas.DataFrame`
 		"""
-		returns = self.returns(period=1)
+		returns = self.returns(period=1).data.as_matrix()
+		rolling_vol = Series()
+		data = DataFrame(array([(252/(len(returns[i-window:i])-1))*norm(returns[i-window:i],ord=2) for i in range(window,len(returns),1)]),index=self.data.index[window:],columns=['%s - rolling volatility' % self.data.columns[0]])
+		rolling_vol.data = data
+		return rolling_vol
 
-	def save(self,filename='export.csv',separator=',',date_format='%d-%m%y'):
+	def save(self,filename='export.csv',separator=',',date_format='%d-%m-%y'):
 		""" Saves the data contained in the object to a csv file.
 
 		:param filename: path and name of the file to export
