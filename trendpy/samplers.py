@@ -166,8 +166,7 @@ class Parameters(object):
 		self.hierarchy.append(parameter.name)
 
 class Sampler(object):
-	""" Abstract class for implementing Gibbs sampling algorithms, implemented following the
-      strategy design pattern."""
+	""" Abstract class for implementing Gibbs sampling algorithms."""
 
 	def __init__(self):
 		self.parameters = None
