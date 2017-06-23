@@ -238,7 +238,7 @@ class Series(object):
 		title = '%s: periodic returns' % self.data.columns[0] 
 		plt.title(title,fontsize=14)
 		ax.title.set_position([0.5,1.05])
-		sns.heatmap(d,ax=ax,fmt="d",cmap="YlGnBu")
+		sns.heatmap(d,ax=ax,fmt="d",cmap="RdYlGn",linewidth=0.5)
 		if show: plt.show()
 		return d
 
@@ -302,7 +302,7 @@ class Series(object):
 		:return: Series of trend filtered.
 		:rtype: `pandas.DataFrame`
 		"""
-		mcmc = MCMC(self, StrategyFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
+		mcmc = MCMC(self, SamplerFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
 		mcmc.run(number_simulations)
 		trend = mcmc.output(burns,"trend")
 		filtered_trend = Series()
