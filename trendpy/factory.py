@@ -26,7 +26,7 @@
 
 from trendpy.strategies import *
 
-class StrategyFactory:
+class SamplerFactory:
 	factories = {}
 
 	@staticmethod
@@ -38,7 +38,7 @@ class StrategyFactory:
 		:param factory: factory subclass of a Strategy instace.
 		:type factory: `Strategy.Factory`
 		"""
-		StrategyFactory.factories.put[id] = factory
+		SamplerFactory.factories.put[id] = factory
 
 	@staticmethod
 	def create(id,*args,**kwargs):
@@ -53,6 +53,6 @@ class StrategyFactory:
 		:return: new instance of a :py:meth:`~trendpy.strategies.Strategy` subclass
 		:rtype: `Numpy.dnarray`
 		"""
-		if not id in StrategyFactory.factories:
-			StrategyFactory.factories[id] = eval('%s.Factory()' % id)
-		return StrategyFactory.factories[id].create(*args,**kwargs)
+		if not id in SamplerFactory.factories:
+			SamplerFactory.factories[id] = eval('%s.Factory()' % id)
+		return SamplerFactory.factories[id].create(*args,**kwargs)
