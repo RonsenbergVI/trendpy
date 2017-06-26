@@ -1,4 +1,4 @@
-# trendpy
+# trendpy (no release yet)
 bayesian trend filtering micro library
 
 ## Documentation
