@@ -57,16 +57,5 @@ def derivative_matrix(size, order=2):
 		for l in range(order+1):
 			D[n,n+l]=d[l]
 	return D
-
-
-def plot(*args,**kwargs):
-	""" Computes a discrete difference operator.
-
-	:param args: Positional arguments.
-	:type args: list
-	:param kwargs: Keyword arguments.
-	:type kwargs: dict
-	"""
-	pass
 	
 	
