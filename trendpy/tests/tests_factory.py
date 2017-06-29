@@ -24,4 +24,39 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import pytest
+#from __future__ import absolute_import
+
+import unittest
+import os,sys,inspect
+
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(os.path.dirname(currentdir))
+sys.path.insert(0,parentdir) 
+
+from trendpy.factory import *
+from trendpy.samplers import *
+
+
+class TestFactory(unittest.TestCase):
+
+	def test_initial_dictionary_is_empty(self):
+		SamplerFactory.removeAll()
+		self.assertEqual(SamplerFactory.factories,{})
+
+	def test_is_sampler(self):
+		s = Sampler()
+		self.assertIsInstance(SamplerFactory.create("Sampler"),type(s))
+		
+	def test_factory_is_added_manually(self):
+		s = Sampler()
+		SamplerFactory.add("test",Sampler.Factory)
+		self.assertTrue("test" in SamplerFactory.factories.keys())
+		
+	def test_factory_is_removed(self):
+		s = Sampler()
+		SamplerFactory.add("test",Sampler.Factory)
+		SamplerFactory.remove("test")
+		self.assertTrue("test" not in SamplerFactory.factories.keys())
+	
+if __name__ == "__main__":
+	unittest.main()
