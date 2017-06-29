@@ -288,7 +288,7 @@ class Series(object):
 		self.data.plot()
 		plt.show()
 
-	def filter(self, method="L1Filter",number_simulations=100, burns=50,total_variation=2,merge=False):
+	def filter(self, method="L1Filter",number_simulations=100, burns=50,total_variation=2,merge=True):
 		""" Filters the trend of the time series.
 
 		:param method: path and name of the file to export
