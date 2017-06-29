@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# tests_strategies.py
+# tests_samplers.py
 
 # MIT License
 
@@ -24,4 +24,4 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import pytest
+import unittest
