@@ -24,6 +24,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from __future__ import absolute_import
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -60,8 +62,6 @@ class Series(object):
 	"""
 	def __init__(self):
 		self.data=None
-		self.begin_index=None
-		self.ed_index=None
 
 	def __len__(self):
 		return self.data.size
@@ -72,7 +72,7 @@ class Series(object):
 	@staticmethod
 	def from_csv(filename):
 		""" Instantiate new time series from a csv file where the first
-			column is a timestamp or a date or a datetime. For now 
+			column is a timestamp or a date or a datetime. For now
 
 		:param filename: path of the file with extension (.csv or .txt)
 		:type filename: str
@@ -82,7 +82,7 @@ class Series(object):
 		time_series=Series()
 		time_series.data=read_csv(filename,index_col=0,parse_dates=True)
 		return time_series
-		
+
 	def summary(self):
 		""" Returns an ASCII table with basic statistics of the time series loaded.
 
@@ -135,8 +135,8 @@ class Series(object):
 		return_series.data = self.data.pct_change(periods=period)
 		return_series.data = return_series.data.fillna(0)
 		return return_series
-		
-	def annualized_return(self,**kwargs):
+
+	def annualized_return(self):
 		""" Computes the annualized return over a given period.
 
 		:param period: period of interest either a year, year-month
@@ -147,7 +147,7 @@ class Series(object):
 		"""
 		returns = self.returns().data.as_matrix()
 		return float((252/len(returns))*sum(returns))
-		
+
 	def annualized_volatility(self):
 		""" Computes the annualized return over a given period.
 
@@ -158,7 +158,7 @@ class Series(object):
 		T = len(returns)
 		r = self.annualized_return()/T
 		return float(sqrt((252/(len(returns)-1))*sum(array([(ret-r)**2 for ret in returns]))))
-	
+
 	def skewness(self):
 		""" Computes the skewness of the returns empirical distribution.
 
@@ -195,7 +195,7 @@ class Series(object):
 
 	def periodic_returns(self,show=True):
 		""" Computes the maximum drawdown of the price time series.
-	
+
 		:return: periodic return plot of the time series.
 		:rtype: float
 		"""
@@ -222,12 +222,12 @@ class Series(object):
 			for month in d.columns:
 				try:
 					returns = self.data['%s-%s' % (year,m)].pct_change(periods=1).fillna(0).as_matrix()
-					d.ix[year,month] = (252/len(returns))*sum(returns)
+					d.loc[year,month] = (252/len(returns))*sum(returns)
 				except:
-					d.ix[year,month] = nan
+					d.loc[year,month] = nan
 				m+=1
 		f, ax = plt.subplots(figsize=(7, 7))
-		title = '%s: periodic returns' % self.data.columns[0] 
+		title = '%s: periodic returns' % self.data.columns[0]
 		plt.title(title,fontsize=14)
 		ax.title.set_position([0.5,1.05])
 		sns.heatmap(d,ax=ax,fmt="d",cmap="RdYlGn",linewidth=0.5)
@@ -254,7 +254,7 @@ class Series(object):
 
 		:param window: number of observations used.
 		:type window: int, optional
-		:param annualize: 
+		:param annualize:
 		:type annualize: str, optional
 		:return: rolling_volatility of the time series.
 		:rtype: `pandas.DataFrame`
@@ -301,5 +301,3 @@ class Series(object):
 		filtered_trend.data = DataFrame(trend,index=self.data.index,columns=[method])
 		if merge: self.data = self.data.join(filtered_trend.data)
 		return filtered_trend
-
-		

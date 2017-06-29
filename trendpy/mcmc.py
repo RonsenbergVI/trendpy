@@ -24,6 +24,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from __future__ import absolute_import
+
 from numpy import reshape, zeros
 
 class MCMC(object):
@@ -86,7 +88,7 @@ class MCMC(object):
         """
 		return self.sampler.output(self.simulations, burn, parameter_name)
 
-	def run(self, number_simulations=100):
+	def run(self, number_simulations=100, max_restart=10):
 		""" Runs the MCMC algorithm.
 
 		:param number_simulations: number of random draws for each parameter.
@@ -100,6 +102,7 @@ class MCMC(object):
 		for i in range(number_simulations):
 			print("== step %i ==" % (int(i+1),))
 			restart_step = True
+			restart = 0
 			while restart_step:
 				for name in self.sampler.parameters.hierarchy:
 					print("== parameter %s ==" % name)
@@ -107,7 +110,12 @@ class MCMC(object):
 						self.sampler.parameters.list[name].current_value = self.generate(name)
 						self.simulations[name][:,:,i] = self.sampler.parameters.list[name].current_value.reshape(self.sampler.parameters.list[name].size)
 						restart_step = False
+						restart = 0
 					except:
-						print("== restart step %i ==" % i)
-						restart_step = True
-						break
+						if restart < max_restart:
+							restart+=1
+							print("== restart step %i ==" % i)
+							restart_step = True
+							break
+						else:
+							raise ValueError("Convergence error")
