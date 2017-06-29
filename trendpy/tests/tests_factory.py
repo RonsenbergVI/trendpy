@@ -39,8 +39,13 @@ from trendpy.samplers import *
 
 class TestFactory(unittest.TestCase):
 
-	def test_initial_dictionary_is_empty(self):
+	def setUp(self):
+		pass
+
+	def tearDown(self):
 		SamplerFactory.removeAll()
+
+	def test_initial_dictionary_is_empty(self):
 		self.assertEqual(SamplerFactory.factories,{})
 
 	def test_is_sampler(self):
