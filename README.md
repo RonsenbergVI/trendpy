@@ -30,12 +30,12 @@ fund.plot()
 
 ### Trend filtering
 
-There are 2 trend filters possible
+There is 1 trend filter available
 
-* L1 filter
-* L2 filter
+* L1 filter (I plan to add a L2 filter in future releases)
 
-Custom filters with more options to come in first stable release.
+Custom filters with more options to come in first stable release. 
+The main advantage is that Bayesian trend filtering displays higher predictive power than frequentist methods (experiments to be added as example).
 
 ```markdown
 
