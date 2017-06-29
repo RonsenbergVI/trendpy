@@ -26,8 +26,11 @@
 
 #from __future__ import absolute_import
 
+
+import os 
+import sys
+import inspect
 import unittest
-import os,sys,inspect
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(os.path.dirname(currentdir))
