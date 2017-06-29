@@ -218,7 +218,7 @@ class Sampler(object):
 
 	def output(self, simulations, burn, parameter_name):
 		""" Computes the poserior mean of the parameters.
-		
+
 		:param simulations: history of the Markov chain simulation
 		:type simulations: dict
 		:param burn: number of draws dismissed as burning samples
@@ -230,6 +230,9 @@ class Sampler(object):
         """
 		raise NotImplementedError("Must be overriden")
 
+	class Factory(object):
+		def create(self,*args,**kwargs):
+			return Sampler()
 
 class L1Filter(Sampler):
 
