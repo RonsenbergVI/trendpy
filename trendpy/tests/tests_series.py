@@ -44,7 +44,8 @@ class TestSeries(unittest.TestCase):
     def setUp(self):
         self.series = trendpy.series.Series()
         dates = date_range(start='2014-01-01', end='2014-04-03',freq='D')
-        d = gamma.rvs(1,size=dates.size)
+        d = gamma.rvs(10,size=dates.size)
+        print(d)
         data = DataFrame(data=d, index=dates)
         self.series.data = data
 
@@ -75,6 +76,27 @@ class TestSeries(unittest.TestCase):
     def test_periodic_returns_is_seres(self):
         self.assertIsInstance(self.series.periodic_returns(show=False),DataFrame)
 
+    def test_rolling_drawdown_has_NaN(self):
+        self.assertFalse(self.series.rolling_max_drawdown().data.isnull().values.any())
+
+    def test_rolling_drawdown_type(self):
+        self.assertIsInstance(self.series.rolling_max_drawdown().data,DataFrame)
+
+    def test_rolling_drawdown_data_type(self):
+        self.assertIsInstance(self.series.rolling_max_drawdown(),trendpy.series.Series)
+
+    def test_volatility_type(self):
+        self.assertIsInstance(self.series.rolling_volatility().data,DataFrame)
+
+    def test_volatility_data_type(self):
+        self.assertIsInstance(self.series.rolling_volatility(),trendpy.series.Series)
+
+    def test_rolling_drawdown_sign(self):
+        print(self.series.rolling_max_drawdown().data.where(self.series.rolling_max_drawdown().data > 0))
+        self.assertTrue(self.series.rolling_max_drawdown().data.where(self.series.rolling_max_drawdown().data > 0).size <= 0)
+
+    def test_volatility_sign(self):
+        self.assertTrue(self.series.rolling_volatility().data.where(self.series.rolling_volatility().data < 0).size <= 0)
 
 if __name__ == '__main__':
     unittest.main()
