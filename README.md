@@ -30,7 +30,7 @@ fund.plot()
 
 ### Trend filtering
 
-There are 3 trend filters possible
+There are 2 trend filters possible
 
 * L1 filter
 * L2 filter
