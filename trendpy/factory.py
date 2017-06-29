@@ -24,7 +24,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from trendpy.strategies import *
+from trendpy.samplers import *
 
 class SamplerFactory:
 	factories = {}
