@@ -183,14 +183,6 @@ class Series(object):
 		r = self.annualized_return()/T
 		return float(((T*(T+1))/((T-1)*(T-2)*(T-3)))*sum(array([((ret-r)/s)**4 for ret in returns])) - (3*(T-1)**2)/((T-2)*(T-3)))
 
-	def drawdown_duration(self):
-		""" Computes the drawdown duration of the price time series.
-
-		:return: drawdown duration of th time series.
-		:rtype: float
-		"""
-		pass
-
 	def max_drawdown(self,window=30):
 		""" Computes the maximum drawdown of the price time series.
 
