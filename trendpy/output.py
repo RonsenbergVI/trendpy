@@ -24,7 +24,7 @@
 
 class Output(object):
 	"""
-	class allowing to
+	class allowing to study the MCMC draws
 	"""
 	
 	
