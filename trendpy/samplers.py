@@ -33,7 +33,7 @@ from numpy.linalg import inv, norm
 
 from trendpy.globals import derivative_matrix
 
-__all__ = ['Parameter','Parameters','Strategy','L1Filter']
+__all__ = ['Parameter','Parameters','Sampler','L1Filter']
 
 class Parameter(object):
 	""" Implements an unknown parameter to be estimated
@@ -290,7 +290,7 @@ class L1Filter(Sampler):
 		if parameter_name=='trend':
 			return distribution.rvs(parameters['mean'],parameters['cov'])
 		elif parameter_name=='omega':
-			return array([1/distribution.rvs(parameters['pos'][i],loc=parameters['loc'],scale=parameters['scale']) for i in range(len(result))]).reshape(self.parameters.list['omega'].current_value.shape)
+			return array([1/distribution.rvs(parameters['pos'][i],loc=parameters['loc'],scale=parameters['scale']) for i in range(len(self.parameters.list['omega'].current_value))]).reshape(self.parameters.list['omega'].current_value.shape)
 		return distribution.rvs(parameters['pos'],loc=parameters['loc'],scale=parameters['scale']) #pb with the parameter name
 
 	def output(self, simulations, burn, parameter_name):
