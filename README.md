@@ -21,7 +21,7 @@ Data is imported from a file (trendpy only supports csv for now).
 from trendpy.timeseries import TimeSeries
 
 filename='data.csv'
-fund=TimeSeries.from_csv(filename)
+fund=Series.from_csv(filename)
 
 # plots time series
 fund.plot()
@@ -33,8 +33,7 @@ fund.plot()
 There are 3 trend filters possible
 
 * L1 filter
-* L2 filter (or Hodrick-Prescott filter)
-* Lp filter with 0<=p<=2
+* L2 filter
 
 Custom filters with more options to come in first stable release.
 
