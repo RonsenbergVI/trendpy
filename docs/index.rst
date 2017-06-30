@@ -118,9 +118,13 @@ Factory class handling the creation of bayesian algorithms.
 
 .. module:: trendpy.factory
 
-.. autoclass:: StrategyFactory
+.. autoclass:: SamplerFactory
 
 	.. automethod:: add
+	
+	.. automethod:: removee
+
+	.. automethod:: remove_All
 
 	.. automethod:: create
 
@@ -178,8 +182,6 @@ Class implementing time series analysis.
 	.. automethod:: skewness
 	
 	.. automethod:: kurtosis
-	
-	.. automethod:: drawdown_duration
 	
 	.. automethod:: max_drawdown
 	
@@ -255,8 +257,6 @@ Samplers tell the mcmc algorithm how to simulate the Markov chain.
 	.. automethod:: generate
 
 	.. automethod:: output
-
-	.. automethod:: filter
 
 Trendpy Changelog
 =================
