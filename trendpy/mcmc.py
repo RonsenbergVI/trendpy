@@ -30,8 +30,7 @@ from numpy import reshape, zeros
 
 class MCMC(object):
 
-	def __init__(self, data, sampler):
-		self.data = data
+	def __init__(self, sampler):
 		self.sampler = sampler
 		self.simulations = None
 
