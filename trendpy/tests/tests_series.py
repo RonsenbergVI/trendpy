@@ -36,7 +36,7 @@ sys.path.insert(0,parentdir)
 import trendpy.series
 
 from scipy.stats import gamma
-from pandas import DataFrame, date_range, DatetimeIndex
+from pandas import DataFrame, date_range
 from statsmodels.iolib.summary import Summary
 
 class TestSeries(unittest.TestCase):
