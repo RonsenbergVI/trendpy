@@ -33,12 +33,27 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(os.path.dirname(currentdir))
 sys.path.insert(0,parentdir)
 
-from trendpy.mcmc import *
+import trendpy.mcmc
+import trendpy.samplers
 
 class TestMCMC(unittest.TestCase):
 
-    def setUp(self):
-        pass
+	def setUp(self):
+		self.s = trendpy.samplers.Sampler()
+		self.mcmc = trendpy.mcmc.MCMC(self.s)
 
-    def tearDown(self):
-        pass
+	def tearDown(self):
+		self.s = trendpy.samplers.Sampler()
+		self.mcmc = trendpy.mcmc.MCMC(self.s)
+
+	def test_define_parameters(self):
+		self.assertEqual(self.s.define_parameters,self.mcmc.sampler.define_parameters)
+		
+	def test_distribution_parameters(self):
+		self.assertEqual(self.s.distribution_parameters,self.mcmc.sampler.distribution_parameters)
+		
+	def test_generate(self):
+		self.assertEqual(self.s.generate,self.mcmc.sampler.generate)
+		
+if __name__ == '__main__':
+    unittest.main()
