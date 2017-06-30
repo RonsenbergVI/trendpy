@@ -41,9 +41,6 @@ from trendpy.samplers import *
 
 class TestFactory(unittest.TestCase):
 
-	def setUp(self):
-		pass
-
 	def tearDown(self):
 		SamplerFactory.removeAll()
 
