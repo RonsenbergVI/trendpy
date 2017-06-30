@@ -41,62 +41,64 @@ from statsmodels.iolib.summary import Summary
 
 class TestSeries(unittest.TestCase):
 
-    def setUp(self):
-        self.series = trendpy.series.Series()
-        dates = date_range(start='2014-01-01', end='2014-04-03',freq='D')
-        d = gamma.rvs(10,size=dates.size)
-        print(d)
-        data = DataFrame(data=d, index=dates)
-        self.series.data = data
+	def setUp(self):
+		self.series = trendpy.series.Series()
+		dates = date_range(start='2014-01-01', end='2015-04-03',freq='D')
+		d = gamma.rvs(10,size=dates.size)
+		data = DataFrame(data=d, index=dates)
+		self.series.data = data
 
-    def tearDown(self):
-        pass
+	def tearDown(self):
+		self.series = trendpy.series.Series()
 
-    def test_summary_type(self):
-        self.assertIsInstance(self.series.summary(),Summary)
+	def test_summary_type(self):
+		self.assertIsInstance(self.series.summary(),Summary)
 
-    def test_rolling_volatility_type(self):
-        self.assertIsInstance(self.series.rolling_volatility().data,DataFrame)
+	def test_rolling_volatility_type(self):
+		self.assertIsInstance(self.series.rolling_volatility().data,DataFrame)
 
-    def test_rolling_volatility_data_type(self):
-        self.assertIsInstance(self.series.rolling_volatility(),trendpy.series.Series)
+	def test_rolling_volatility_data_type(self):
+		self.assertIsInstance(self.series.rolling_volatility(),trendpy.series.Series)
 
-    def test_returns_type(self):
-        self.assertIsInstance(self.series.returns().data,DataFrame)
+	def test_returns_type(self):
+		self.assertIsInstance(self.series.returns().data,DataFrame)
 
-    def test_returns_data_type(self):
-        self.assertIsInstance(self.series.returns(),trendpy.series.Series)
+	def test_returns_data_type(self):
+		self.assertIsInstance(self.series.returns(),trendpy.series.Series)
 
-    def test_returns_has_NaN(self):
-        self.assertFalse(self.series.returns().data.isnull().values.any())
+	def test_returns_has_NaN(self):
+		self.assertFalse(self.series.returns().data.isnull().values.any())
 
-    def test_volatility_is_positive(self):
-        self.assertTrue(self.series.annualized_volatility()>0)
+	def test_volatility_is_positive(self):
+		self.assertTrue(self.series.annualized_volatility()>0)
 
-    def test_periodic_returns_is_seres(self):
-        self.assertIsInstance(self.series.periodic_returns(show=False),DataFrame)
+	def test_periodic_returns_is_seres(self):
+		self.assertIsInstance(self.series.periodic_returns(show=False),DataFrame)
 
-    def test_rolling_drawdown_has_NaN(self):
-        self.assertFalse(self.series.rolling_max_drawdown().data.isnull().values.any())
+	def test_rolling_drawdown_has_NaN(self):
+		self.assertFalse(self.series.rolling_max_drawdown().data.isnull().values.any())
 
-    def test_rolling_drawdown_type(self):
-        self.assertIsInstance(self.series.rolling_max_drawdown().data,DataFrame)
+	def test_rolling_drawdown_type(self):
+		self.assertIsInstance(self.series.rolling_max_drawdown().data,DataFrame)
 
-    def test_rolling_drawdown_data_type(self):
-        self.assertIsInstance(self.series.rolling_max_drawdown(),trendpy.series.Series)
+	def test_rolling_drawdown_data_type(self):
+		self.assertIsInstance(self.series.rolling_max_drawdown(),trendpy.series.Series)
 
-    def test_volatility_type(self):
-        self.assertIsInstance(self.series.rolling_volatility().data,DataFrame)
+	def test_volatility_type(self):
+		self.assertIsInstance(self.series.rolling_volatility().data,DataFrame)
 
-    def test_volatility_data_type(self):
-        self.assertIsInstance(self.series.rolling_volatility(),trendpy.series.Series)
+	def test_volatility_data_type(self):
+		self.assertIsInstance(self.series.rolling_volatility(),trendpy.series.Series)
 
-    def test_rolling_drawdown_sign(self):
-        print(self.series.rolling_max_drawdown().data.where(self.series.rolling_max_drawdown().data > 0))
-        self.assertTrue(self.series.rolling_max_drawdown().data.where(self.series.rolling_max_drawdown().data > 0).size <= 0)
+	# fails -- to fix
+	def test_rolling_drawdown_sign(self):
+		s = self.series.rolling_max_drawdown().data
+		self.assertTrue(s[s > 0].values <= 0)
 
-    def test_volatility_sign(self):
-        self.assertTrue(self.series.rolling_volatility().data.where(self.series.rolling_volatility().data < 0).size <= 0)
-
+	# fails -- to fix
+	def test_volatility_sign(self):
+		s = self.series.rolling_volatility().data
+		self.assertTrue(s[s > 0].values.any().size <= 0)
+		
 if __name__ == '__main__':
     unittest.main()
