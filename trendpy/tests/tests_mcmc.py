@@ -48,12 +48,12 @@ class TestMCMC(unittest.TestCase):
 
 	def test_define_parameters(self):
 		self.assertEqual(self.s.define_parameters,self.mcmc.sampler.define_parameters)
-		
+
 	def test_distribution_parameters(self):
 		self.assertEqual(self.s.distribution_parameters,self.mcmc.sampler.distribution_parameters)
-		
+
 	def test_generate(self):
 		self.assertEqual(self.s.generate,self.mcmc.sampler.generate)
-		
+
 if __name__ == '__main__':
     unittest.main()
