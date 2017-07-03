@@ -23,3 +23,40 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
+import os
+import sys
+import inspect
+import unittest
+
+from numpy.random import randint
+
+from numpy import inf
+
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(os.path.dirname(currentdir))
+sys.path.insert(0,parentdir)
+
+import trendpy.globals
+
+class TestGlobals(unittest.TestCase):
+
+	def setUp(self):
+		self.order = int(randint(low=0,high=4,size=1))
+		self.dim = int(randint(low=self.order+2,high=2000,size=1))
+		print(self.order)
+		print(self.dim)
+		self.D = trendpy.globals.derivative_matrix(self.dim,self.order)
+
+	def tearDown(self):
+		self.dim = None
+		self.order = None
+		self.D = None
+		
+	def test_derivative_matrix_size(self):
+		self.assertEqual(self.D.shape,(self.dim-self.order,self.dim))
+		
+if __name__ == "__main__":
+	suite = unittest.TestSuite()
+	suite.addTest(unittest.makeSuite(TestGlobals))
+	unittest.TextTestRunner(verbosity=2).run(suite)
