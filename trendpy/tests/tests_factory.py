@@ -63,4 +63,7 @@ class TestFactory(unittest.TestCase):
 		self.assertTrue("test" not in SamplerFactory.factories.keys())
 
 if __name__ == "__main__":
-	unittest.main()
+	suite = unittest.TestSuite()
+	suite.addTest(unittest.makeSuite(TestFactory))
+	unittest.TextTestRunner(verbosity=2).run(suite)
+
