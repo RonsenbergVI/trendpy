@@ -57,5 +57,3 @@ def derivative_matrix(size, order=2):
 		for l in range(order+1):
 			D[n,n+l]=d[l]
 	return D
-	
-	
