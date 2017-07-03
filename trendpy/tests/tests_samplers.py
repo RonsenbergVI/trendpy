@@ -40,66 +40,70 @@ from pandas import DataFrame, date_range
 
 class TestSamplers(unittest.TestCase):
 
-	def setUp(self):
-		self.p = Parameter('test',rv_continuous,(10,10))
-		self.q = Parameter('test2',rv_continuous,(1,1))
-		self.P = Parameters()
-		self.S = L1Filter(gamma.rvs(10,size=date_range(start='2014-01-01', end='2015-04-03',freq='D').size))
-		
-	def tearDown(self):
-		self.p = None
-		self.q = None
-		self.P = None
-		self.S = None
-	
 	def test_empty_parameters(self):
-		self.assertEqual(self.P.list,{})
-		self.assertEqual(self.P.hierarchy,[])
+		P = Parameters()
+		self.assertEqual(P.list,{})
 
 	def test_parameter_is_multivariate(self):
-		self.assertTrue(self.p.is_multivariate() and not self.q.is_multivariate())
+		p = Parameter('test',rv_continuous,(10,10))
+		q = Parameter('test2',rv_continuous,(1,1))
+		self.assertTrue(p.is_multivariate() and not q.is_multivariate())
 
 	def test_initial_current_value(self):
-		self.assertIsNone(self.p.current_value)
+		p = Parameter('test',rv_continuous,(10,10))
+		self.assertIsNone(p.current_value)
 
 	def test_add_parameter(self):
-		self.P.append(self.p)
-		self.assertTrue(self.p.name in self.P.list and self.p.name in self.P.hierarchy)
+		P = Parameters()
+		p = Parameter('test',rv_continuous,(10,10))
+		P.append(p)
+		self.assertTrue(p.name in P.list and p.name in P.hierarchy)
 
 	def test_remove_all(self):
-		self.P.append(self.p)
-		self.P.removeAll()
-		self.assertTrue(not self.p.name in self.P.list and not self.p.name in self.P.hierarchy)
+		P = Parameters()
+		p = Parameter('test',rv_continuous,(10,10))
+		P.append(p)
+		P.removeAll()
+		self.assertTrue(not p.name in P.list and not p.name in P.hierarchy)
 
 	def test_hierarchy(self):
-		self.P.append(self.p)
-		self.P.append(self.q)
-		self.assertTrue(self.P.hierarchy.index(self.p.name) < self.P.hierarchy.index(self.q.name))
+		P = Parameters()
+		p = Parameter('test',rv_continuous,(10,10))
+		q = Parameter('test2',rv_continuous,(1,1))
+		P.append(p)
+		P.append(q)
+		self.assertTrue(P.hierarchy.index(p.name) < P.hierarchy.index(q.name))
 
 	def test_parameters_before_initial_value(self):
-		for name in self.S.parameters.hierarchy:
-			self.assertEqual(self.S.parameters.list[name].current_value,None)
+		S = L1Filter(gamma.rvs(10,size=date_range(start='2014-01-01', end='2015-04-03',freq='D').size))
+		print(S.parmeters.hierarchy)
+		for name in S.parameters.hierarchy:
+			self.assertEqual(S.parameters.list[name].current_value,None)
 
 	def test_parameters_length(self):
-		self.assertEqual(len(self.S.parameters),4)
+		S = L1Filter(gamma.rvs(10,size=date_range(start='2014-01-01', end='2015-04-03',freq='D').size))
+		self.assertEqual(len(S.parameters),4)
 
 	def test_size_initial_values(self):
-		for name in self.S.parameters.hierarchy:
-			self.S.parameters.list[name].current_value = self.S.initial_value(name)
-			self.assertNotEqual(self.S.parameters.list[name].current_value,None)
+		S = L1Filter(gamma.rvs(10,size=date_range(start='2014-01-01', end='2015-04-03',freq='D').size))
+		for name in S.parameters.hierarchy:
+			S.parameters.list[name].current_value = S.initial_value(name)
+			self.assertNotEqual(S.parameters.list[name].current_value,None)
 			
 	def test_distribution_parameters(self):
-		for name in self.S.parameters.hierarchy:
-			self.S.parameters.list[name].current_value = self.S.initial_value(name)
-		for name in self.S.parameters.hierarchy:
-			self.assertIsInstance(self.S.distribution_parameters(name),dict)
+		S = L1Filter(gamma.rvs(10,size=date_range(start='2014-01-01', end='2015-04-03',freq='D').size))
+		for name in S.parameters.hierarchy:
+			S.parameters.list[name].current_value = S.initial_value(name)
+		for name in S.parameters.hierarchy:
+			self.assertIsInstance(S.distribution_parameters(name),dict)
 
 	def test_random_draw_size(self):
-		for name in self.S.parameters.hierarchy:
-			self.S.parameters.list[name].current_value = self.S.initial_value(name)
-		for name in self.S.parameters.hierarchy:
-			if self.S.parameters.list[name].is_multivariate():
-				self.assertEqual(self.S.parameters.list[name].current_value.size,self.S.generate(name).size)
+		S = L1Filter(gamma.rvs(10,size=date_range(start='2014-01-01', end='2015-04-03',freq='D').size))
+		for name in S.parameters.hierarchy:
+			S.parameters.list[name].current_value = S.initial_value(name)
+		for name in S.parameters.hierarchy:
+			if S.parameters.list[name].is_multivariate():
+				self.assertEqual(S.parameters.list[name].current_value.size,S.generate(name).size)
 
 if __name__ == "__main__":
 	suite = unittest.TestSuite()
