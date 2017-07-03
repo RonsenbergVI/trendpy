@@ -88,7 +88,7 @@ class Parameter(object):
 
 	def is_multivariate(self):
 		""" Checks if the parameter is univariate."""
-		return self.size == (1,1)
+		return not self.size == (1,1)
 
 class Parameters(object):
 	""" Implements the set of parameters to be estimated
@@ -120,18 +120,15 @@ class Parameters(object):
 		self.hierarchy = hierarchy
 
 	@property
-	def parameters(self):
+	def list(self):
 		""" Dictionary containing the parameters to be
 			estimated.
 		"""
 		return self.__list
 
-	@parameters.setter
-	def parameters(self, list):
-		if not (list=={}):
-			self.__list = list
-		else:
-			self.__list = {}
+	@list.setter
+	def list(self, new_value):
+		self.__list = new_value
 
 	@property
 	def hierarchy(self):
@@ -142,8 +139,8 @@ class Parameters(object):
 		return self.__hierarchy
 
 	@hierarchy.setter
-	def hierarchy(self, hierarchy):
-		self.__hierarchy = hierarchy
+	def hierarchy(self, new_value):
+		self.__hierarchy = new_value
 
 	def __len__(self):
 		return len(self.list)
@@ -162,8 +159,14 @@ class Parameters(object):
 		:param parameter: parameter to estimate
 		:type parameter: trendpy.Parameter
 		"""
-		self.list[parameter.name] = parameter
-		self.hierarchy.append(parameter.name)
+		if not parameter.name in self.list:
+			self.list[parameter.name] = parameter
+			self.hierarchy.append(parameter.name)
+
+	def removeAll(self):
+		""" Removes all parameters."""
+		self.list.clear()
+		self.hierarchy = []
 
 class Sampler(object):
 	""" Abstract class for implementing Gibbs sampling algorithms."""
@@ -246,14 +249,14 @@ class L1Filter(Sampler):
 		self.derivative_matrix = derivative_matrix(self.size, self.total_variation_order)
 
 	def define_parameters(self):
-		parameters=Parameters()
+		params=Parameters()
 
-		parameters.append(Parameter("trend", multivariate_normal, (self.size,1)))
-		parameters.append(Parameter("sigma2", invgamma, (1,1)))
-		parameters.append(Parameter("lambda2", gamma, (1,1)))
-		parameters.append(Parameter("omega", invgauss, (self.size-self.total_variation_order,1)))
+		params.append(Parameter("trend", multivariate_normal, (self.size,1)))
+		params.append(Parameter("sigma2", invgamma, (1,1)))
+		params.append(Parameter("lambda2", gamma, (1,1)))
+		params.append(Parameter("omega", invgauss, (self.size-self.total_variation_order,1)))
 
-		return parameters
+		return params
 
 	def initial_value(self,parameter_name):
 		if parameter_name=='trend':
