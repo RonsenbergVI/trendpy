@@ -44,16 +44,17 @@ class TestSamplers(unittest.TestCase):
 		self.p = Parameter('test',rv_continuous,(10,10))
 		self.q = Parameter('test2',rv_continuous,(1,1))
 		self.P = Parameters()
-		d = gamma.rvs(10,size=date_range(start='2014-01-01', end='2015-04-03',freq='D').size)
-		self.S = L1Filter(d)
-
+		self.S = L1Filter(gamma.rvs(10,size=date_range(start='2014-01-01', end='2015-04-03',freq='D').size))
+		
 	def tearDown(self):
-		self.P.removeAll()
-
-	# this test fails when I add the L1Filter in the setup step
-	# def test_empty_parameters(self):
-		# self.assertEqual(self.P.list,{})
-		# self.assertEqual(self.P.hierarchy,[])
+		self.p = None
+		self.q = None
+		self.P = None
+		self.S = None
+	
+	def test_empty_parameters(self):
+		self.assertEqual(self.P.list,{})
+		self.assertEqual(self.P.hierarchy,[])
 
 	def test_parameter_is_multivariate(self):
 		self.assertTrue(self.p.is_multivariate() and not self.q.is_multivariate())
@@ -64,6 +65,9 @@ class TestSamplers(unittest.TestCase):
 	def test_add_parameter(self):
 		self.P.append(self.p)
 		self.assertTrue(self.p.name in self.P.list and self.p.name in self.P.hierarchy)
+
+	def test_remove_all(self):
+		self.P.append(self.p)
 		self.P.removeAll()
 		self.assertTrue(not self.p.name in self.P.list and not self.p.name in self.P.hierarchy)
 
@@ -98,5 +102,9 @@ class TestSamplers(unittest.TestCase):
 				self.assertEqual(self.S.parameters.list[name].current_value.size,self.S.generate(name).size)
 
 if __name__ == "__main__":
-	unittest.main()
+	suite = unittest.TestSuite()
+	suite.addTest(unittest.makeSuite(TestSamplers))
+	unittest.TextTestRunner(verbosity=2).run(suite)
+	
+
 	
