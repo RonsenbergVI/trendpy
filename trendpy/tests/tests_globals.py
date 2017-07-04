@@ -44,8 +44,6 @@ class TestGlobals(unittest.TestCase):
 	def setUp(self):
 		self.order = int(randint(low=0,high=4,size=1))
 		self.dim = int(randint(low=self.order+2,high=2000,size=1))
-		print(self.order)
-		print(self.dim)
 		self.D = trendpy.globals.derivative_matrix(self.dim,self.order)
 
 	def tearDown(self):
@@ -57,6 +55,5 @@ class TestGlobals(unittest.TestCase):
 		self.assertEqual(self.D.shape,(self.dim-self.order,self.dim))
 		
 if __name__ == "__main__":
-	suite = unittest.TestSuite()
-	suite.addTest(unittest.makeSuite(TestGlobals))
-	unittest.TextTestRunner(verbosity=2).run(suite)
+	unittest.main()
+	
