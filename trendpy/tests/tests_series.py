@@ -100,7 +100,6 @@ class TestSeries(unittest.TestCase):
 		# s = self.series.rolling_volatility().data
 		# self.assertTrue(s[s > 0].values.any().size <= 0)
 		
-if __name__ == '__main__':
-	suite = unittest.TestSuite()
-	suite.addTest(unittest.makeSuite(TestSeries))
-	unittest.TextTestRunner(verbosity=2).run(suite)
+if __name__ == "__main__":
+	unittest.main()
+	
