@@ -56,6 +56,5 @@ class TestMCMC(unittest.TestCase):
 		self.assertEqual(self.s.generate,self.mcmc.sampler.generate)
 
 if __name__ == "__main__":
-	suite = unittest.TestSuite()
-	suite.addTest(unittest.makeSuite(TestMCMC))
-	unittest.TextTestRunner(verbosity=2).run(suite)
+	unittest.main()
+	
