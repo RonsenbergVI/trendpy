@@ -24,9 +24,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-#from __future__ import absolute_import
-
-
 import os
 import sys
 import inspect
@@ -63,6 +60,5 @@ class TestFactory(unittest.TestCase):
 		self.assertTrue("test" not in SamplerFactory.factories.keys())
 
 if __name__ == "__main__":
-	suite = unittest.TestSuite()
-	suite.addTest(unittest.makeSuite(TestFactory))
-	unittest.TextTestRunner(verbosity=2).run(suite)
+	unittest.main()
+	
