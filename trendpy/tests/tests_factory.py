@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# tests_globals.py
+# tests_factory.py
 
 # MIT License
 
@@ -24,39 +24,45 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+#from __future__ import absolute_import
+
+
 import os
 import sys
 import inspect
 import unittest
 
-from numpy.random import randint
-
-from numpy import inf
-
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(os.path.dirname(currentdir))
 sys.path.insert(0,parentdir)
 
-import trendpy.globals
+from trendpy.factory import *
+from trendpy.samplers import *
 
-class TestGlobals(unittest.TestCase):
-
-	def setUp(self):
-		self.order = int(randint(low=0,high=4,size=1))
-		self.dim = int(randint(low=self.order+2,high=2000,size=1))
-		print(self.order)
-		print(self.dim)
-		self.D = trendpy.globals.derivative_matrix(self.dim,self.order)
+class TestFactory(unittest.TestCase):
 
 	def tearDown(self):
-		self.dim = None
-		self.order = None
-		self.D = None
-		
-	def test_derivative_matrix_size(self):
-		self.assertEqual(self.D.shape,(self.dim-self.order,self.dim))
-		
+		SamplerFactory.removeAll()
+
+	def test_initial_dictionary_is_empty(self):
+		self.assertEqual(SamplerFactory.factories,{})
+
+	def test_is_sampler(self):
+		s = Sampler()
+		self.assertIsInstance(SamplerFactory.create("Sampler"),type(s))
+
+	def test_factory_is_added_manually(self):
+		s = Sampler()
+		SamplerFactory.add("test",Sampler.Factory)
+		self.assertTrue("test" in SamplerFactory.factories.keys())
+
+	def test_factory_is_removed(self):
+		s = Sampler()
+		SamplerFactory.add("test",Sampler.Factory)
+		SamplerFactory.remove("test")
+		self.assertTrue("test" not in SamplerFactory.factories.keys())
+
 if __name__ == "__main__":
 	suite = unittest.TestSuite()
-	suite.addTest(unittest.makeSuite(TestGlobals))
+	suite.addTest(unittest.makeSuite(TestFactory))
 	unittest.TextTestRunner(verbosity=2).run(suite)
