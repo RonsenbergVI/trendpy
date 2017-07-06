@@ -107,7 +107,7 @@ class Parameters(object):
 	>>> params.append(param1)
 	>>> print(params)
 	"""
-	def __init__(self, list={}, hierarchy=[]):
+	def __init__(self, list=None, hierarchy=None):
 		""" Creates a parameter set to estimate in the MCMC algorithm.
 
 		:param list: A dictionary with the parameters to estimate
@@ -116,7 +116,7 @@ class Parameters(object):
 	    		the Gibbs sampler updates the parameter values.
 		:type hierarchy: array
 		"""
-		self.list = list
+		self.list = list 
 		self.hierarchy = hierarchy
 
 	@property
@@ -128,7 +128,7 @@ class Parameters(object):
 
 	@list.setter
 	def list(self, new_value):
-		self.__list = new_value
+		self.__list = new_value if new_value is not None else {}
 
 	@property
 	def hierarchy(self):
@@ -140,7 +140,7 @@ class Parameters(object):
 
 	@hierarchy.setter
 	def hierarchy(self, new_value):
-		self.__hierarchy = new_value
+		self.__hierarchy = new_value if new_value is not None else []
 
 	def __len__(self):
 		return len(self.list)
@@ -151,22 +151,53 @@ class Parameters(object):
 		descr += '\n ----------------------- )'
 		return descr
 
+	def __getitem__(self, key):
+		if isinstance(key,str):
+			try:
+				return self.list[key]
+			except KeyError:
+				print("Key %s not found in parameter set" % key)
+			except:
+				print("Wrong key")
+		elif isinstance(key,int):
+			try:
+				return self.list[self.hierarchy[key]]
+			except KeyError:
+				print("Key %s not found in parameter set" % key)
+			except IndexError:
+				print("Index out of bounds: %s > %s" % (key,len(self.hierarchy)))
+		else:
+			raise TypeError("Wrong Type")
+
+	def __delitem__(self,key):
+		pass
+
+	def __contains__(self, item):
+		if isinstance(item,Parameter):
+			try:
+				return item.name in self.hierarchy
+			except KeyError:
+				print("Key %s not found in parameter set" % key)
+			except:
+				print("Wrong key: %s" % item.name)
+		else:
+			raise TypeError("Wrong Type")
+
 	def append(self, parameter):
 		""" Adds a parameter to the parameter set.
 			First parameter added is the first in the
 			hierarchy.
-
 		:param parameter: parameter to estimate
 		:type parameter: trendpy.Parameter
 		"""
 		if not parameter.name in self.list:
 			self.list[parameter.name] = parameter
 			self.hierarchy.append(parameter.name)
-
-	def removeAll(self):
+	
+	def clear(self):
 		""" Removes all parameters."""
-		self.list.clear()
-		self.hierarchy = []
+		self.list = None
+		self.hierarchy = None
 
 class Sampler(object):
 	""" Abstract class for implementing Gibbs sampling algorithms."""
@@ -245,8 +276,17 @@ class L1Filter(Sampler):
 		self.data = data
 		self.size = len(data)
 		self.total_variation_order = total_variation_order
-		self.parameters = self.define_parameters()
+		self.parameters = None
 		self.derivative_matrix = derivative_matrix(self.size, self.total_variation_order)
+		
+	@property
+	def parameters(self):
+		""" List containing the parameters to estimate."""
+		return self.__parameters
+
+	@parameters.setter
+	def parameters(self, new_value):
+		self.__parameters = new_value if new_value is not None else Parameters()
 
 	def define_parameters(self):
 		params=Parameters()
@@ -255,8 +295,8 @@ class L1Filter(Sampler):
 		params.append(Parameter("sigma2", invgamma, (1,1)))
 		params.append(Parameter("lambda2", gamma, (1,1)))
 		params.append(Parameter("omega", invgauss, (self.size-self.total_variation_order,1)))
-
-		return params
+		
+		self.parameters = params
 
 	def initial_value(self,parameter_name):
 		if parameter_name=='trend':
