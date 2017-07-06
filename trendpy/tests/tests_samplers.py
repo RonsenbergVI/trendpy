@@ -60,7 +60,7 @@ class TestSamplers(unittest.TestCase):
 		self.sampler.define_parameters()
 		param1 = self.sampler.parameters['omega']
 		param2 = self.sampler.parameters['sigma2']
-		self.sampler.parameters.removeAll()
+		self.sampler.parameters.clear()
 		self.assertTrue(not param1 in self.sampler.parameters and not param2 in self.sampler.parameters)
 
 	def test_hierarchy(self):
@@ -99,8 +99,3 @@ class TestSamplers(unittest.TestCase):
 
 if __name__ == "__main__":
 	unittest.main()
-	
-
-	
-
-	
