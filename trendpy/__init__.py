@@ -32,3 +32,4 @@ from trendpy.version import version
 from trendpy.factory import SamplerFactory
 
 __version__ = version
+
