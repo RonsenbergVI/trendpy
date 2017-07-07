@@ -29,9 +29,9 @@ import sys
 import inspect
 import unittest
 
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(os.path.dirname(currentdir))
-sys.path.insert(0,parentdir)
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(os.path.dirname(current_dir))
+sys.path.insert(0,parent_dir)
 
 import trendpy.tests.tests_factory
 import trendpy.tests.tests_globals
