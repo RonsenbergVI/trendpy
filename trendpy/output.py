@@ -26,16 +26,13 @@
 
 class Output(object):
 
-	def __init__(self):
-		"""
-		"""
-		pass
+	def __init__(self,simulations):
+		self.__simulations = simulations
 
-	def predict(self,name,horizon,unit='D'):
-		"""
-		"""
-		pass
-		
+	@property
+	def simulations(self):
+		return self.__simulations
+
 	def convergence_diagnostic(self):
 		"""
 		"""
