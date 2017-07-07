@@ -93,7 +93,7 @@ def get_version(version_string):
 	return MAJOR, MINOR, MICRO
 
 def write_new_version(major,minor,micro,release=""):
-	filename = 'setup.cfg'
+	filename = '../setup.cfg'
 	config = ConfigParser()
 	config.read(filename)
 	config['version']['major'] = major
@@ -105,7 +105,7 @@ def write_new_version(major,minor,micro,release=""):
 	print_info("Current version is now: %s.%s.%s" % (major, minor, micro))
 
 def build_for_release():
-    Popen([sys.executable, 'setup.py', 'sdist', 'build_sphinx', 'upload', 'upload_sphinx']).wait()
+    Popen([sys.executable, '../setup.py', 'sdist', 'build_sphinx', 'upload', 'upload_sphinx']).wait()
 
 if __name__ == '__main__':
 	
