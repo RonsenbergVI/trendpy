@@ -45,7 +45,6 @@ from pandas import DataFrame, read_csv, period_range, Series
 from numpy import array, sqrt, zeros_like, triu_indices_from, random, bool, nan
 from numpy.linalg import norm
 
-
 class Series(object):
 	""" Implements univariate time series.
 
