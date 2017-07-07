@@ -293,7 +293,7 @@ class Series(object):
 		:return: Series of trend filtered.
 		:rtype: `pandas.DataFrame`
 		"""
-		mcmc = MCMC(self, SamplerFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
+		mcmc = MCMC(SamplerFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
 		mcmc.run(number_simulations)
 		trend = mcmc.output(burns,"trend")
 		filtered_trend = Series()
