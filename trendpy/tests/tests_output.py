@@ -35,7 +35,7 @@ sys.path.insert(0,parent_dir)
 import trendpy.output
 
 
-class TestsOutputs(unittest.testcase):
+class TestsOutput(unittest.testcase):
 
 	def setUp(self):
 		pass
