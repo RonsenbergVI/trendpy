@@ -200,7 +200,7 @@ class Parameters(object):
 		self.hierarchy = None
 
 class Sampler(object):
-	""" Abstract class for implementing Gibbs sampling algorithms."""
+	""" Abstract class for implementing Gibbs sampling algorithms and providing outputs."""
 
 	def __init__(self):
 		self.parameters = None
@@ -273,11 +273,15 @@ class L1Filter(Sampler):
 	def __init__(self,data,alpha=0.1,rho=0.1,total_variation_order=2):
 		self.rho = rho
 		self.alpha = alpha
-		self.data = data
+		self.__data = data
 		self.size = len(data)
 		self.total_variation_order = total_variation_order
 		self.parameters = None
 		self.derivative_matrix = derivative_matrix(self.size, self.total_variation_order)
+
+	@property
+	def data(self):
+		return self.__data
 		
 	@property
 	def parameters(self):
@@ -295,7 +299,7 @@ class L1Filter(Sampler):
 		params.append(Parameter("sigma2", invgamma, (1,1)))
 		params.append(Parameter("lambda2", gamma, (1,1)))
 		params.append(Parameter("omega", invgauss, (self.size-self.total_variation_order,1)))
-		
+
 		self.parameters = params
 
 	def initial_value(self,parameter_name):
