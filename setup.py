@@ -54,14 +54,14 @@ def write_version_py(filename="version.py"):
 	write software version infos in version.py file
 	"""
 	file_content = """ 
-	 # FILE CONTENT GENERATED FROM SETUP.PY
-	short_version = '%(version)s'
-	version = '%(version)s'
-	full_version = '%(full_version)s'
-	release = %(isrelease)s
+# FILE CONTENT GENERATED FROM SETUP.PY
+short_version = '%(version)s'
+version = '%(version)s'
+full_version = '%(full_version)s'
+release = %(isrelease)s
 
-	if not release:
-		version = full_version
+if not release:
+	version = full_version
 	"""
 	filename = os.path.join(os.path.dirname(__file__), 'trendpy/%s' % filename)
 	
