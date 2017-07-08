@@ -100,8 +100,8 @@ class MCMC(object):
 
 		for i in range(number_simulations):
 			print("== step %i ==" % (int(i+1),))
-			restart_step = True
 			restart = 0
+			restart_step = True
 			while restart_step:
 				for name in self.sampler.parameters.hierarchy:
 					print("== parameter %s ==" % name)
