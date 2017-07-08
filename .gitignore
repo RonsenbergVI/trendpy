@@ -7,4 +7,3 @@ build
 *.pyc
 *.pyo
 *.egg-info
-trendpy/output.py
