@@ -67,6 +67,7 @@ Research papers that helped develop this library
 * Postwar US business cycles: an empirical investigation (1997) - Hodrick Prescott
 * Regression Shrinkage and Selection via the Lasso - (1996) Tibshirani
 * Lasso Regression: Estimation and Shrinkage via Limit of Gibbs Sampling - (2015) Rayaratnam et al.
+* Assessing Convergence of the Markov Chain Monte Carlo Method in Multivariate Case - (2005) Nogueira et al.
 
 ### Support or Contact
 
