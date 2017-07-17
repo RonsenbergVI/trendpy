@@ -18,7 +18,7 @@ Data is imported from a file (trendpy only supports csv for now).
 # import data from csv file (with dates and price) -- for now trendpy only
 # support 1D time series
 
-from trendpy.timeseries import TimeSeries
+from trendpy.timeseries import Series
 
 filename='data.csv'
 fund=Series.from_csv(filename)
