@@ -1,6 +1,8 @@
 # trendpy (no release yet)
 Bayesian trend filtering micro library
 
+I am currently redesigning the API and will release an alpha version in late August.
+
 ## Documentation
 
 The documentation can be found [here](http://trendpy.readthedocs.io/en/latest/).
