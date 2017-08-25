@@ -2,6 +2,7 @@ __pycache__
 .git
 .DS_Store
 dist
+build
 *.bak
 *.pyc
 *.pyo
