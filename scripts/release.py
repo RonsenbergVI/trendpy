@@ -45,7 +45,7 @@ def is_installed(lib):
 	return lib in installed_list().keys()
 
 def get_changes():
-    with open('../CHANGES','r+') as file:
+    with open('CHANGES','r+') as file:
         for line in iter(file):
             match = re.search('Version\s+(.*)', line.strip())
 
@@ -93,7 +93,7 @@ def get_version(version_string):
 	return MAJOR, MINOR, MICRO
 
 def write_new_version(major,minor,micro,release=""):
-	filename = '../setup.cfg'
+	filename = 'setup.cfg'
 	config = ConfigParser()
 	config.read(filename)
 	config['version']['major'] = major
@@ -105,14 +105,12 @@ def write_new_version(major,minor,micro,release=""):
 	print_info("Current version is now: %s.%s.%s" % (major, minor, micro))
 
 def build_for_release():
-    Popen([sys.executable, '../setup.py', 'sdist', 'build_sphinx', 'upload', 'upload_sphinx']).wait()
+
+    Popen([sys.executable, 'setup.py', 'sdist', 'build_sphinx', '-s', './docs', 'upload', 'register']).wait()
+	Popen([sys.executable, 'setup.py', 'sdist', '--formats=gztar,zip']).wait()
 
 if __name__ == '__main__':
-	
 	version, day = get_changes()
-	
 	major,minor,micro = get_version(version)
-	
 	write_new_version(str(major),str(minor),str(micro))
-	
 	build_for_release()

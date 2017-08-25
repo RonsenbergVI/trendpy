@@ -1,0 +1,1006 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>trendpy &#8212; trendpy 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-trendpy">
+<span id="trendpy"></span><h1>trendpy<a class="headerlink" href="#module-trendpy" title="Permalink to this headline">¶</a></h1>
+<p><strong>trendpy</strong> is a bayesian filtering micro library.</p>
+<p>The library also supports bayesian regression models (Lasso and Ridge).</p>
+<p>Models are fitted using MCMC algorithms.</p>
+<div class="section" id="user-s-guide">
+<h2>User’s Guide<a class="headerlink" href="#user-s-guide" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<p>trendpy is build on top of the following libraries:</p>
+<ul class="simple">
+<li><cite>Numpy</cite> (<a class="reference external" href="http://www.numpy.org">http://www.numpy.org</a>)</li>
+<li><cite>SciPy</cite> (<a class="reference external" href="http://www.scipy.org">http://www.scipy.org</a>)</li>
+<li><cite>Pandas</cite> (<a class="reference external" href="http://pandas.pydata.org/">http://pandas.pydata.org/</a>)</li>
+<li><cite>matplotlib</cite> (<a class="reference external" href="http://http://matplotlib.org/">http://http://matplotlib.org/</a>)</li>
+<li><cite>statsmodels</cite> (<a class="reference external" href="http://www.statsmodels.org/stable/index.html">http://www.statsmodels.org/stable/index.html</a>)</li>
+</ul>
+</div>
+<div class="section" id="issues">
+<h3>Issues<a class="headerlink" href="#issues" title="Permalink to this headline">¶</a></h3>
+<p>Should you encounter any issue with the library you can raise them here: <a class="reference external" href="https://github.com/ronsenbergVI/trendpypy/issues">https://github.com/ronsenbergVI/trendpypy/issues</a></p>
+</div>
+<div class="section" id="installing-trendpy">
+<h3>Installing trendpy<a class="headerlink" href="#installing-trendpy" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="installation-with-pip-recommended">
+<h4>Installation with pip (recommended)<a class="headerlink" href="#installation-with-pip-recommended" title="Permalink to this headline">¶</a></h4>
+<p>The library is available on pypi and to install the last available version, run this command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install trendpy
+</pre></div>
+</div>
+<p>To test the installation:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">trendpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trendpy</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+</div>
+<p>this should display the version installed on your system.</p>
+</div>
+<div class="section" id="installation-from-github">
+<h4>Installation from GitHub<a class="headerlink" href="#installation-from-github" title="Permalink to this headline">¶</a></h4>
+<p>trendpy releases are also available on github (<a class="reference external" href="https://github.com/ronsenbergVI/trendpy">https://github.com/ronsenbergVI/trendpy</a>).
+You first need to clone (or fork if you want to modify it) and</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git clone https://github.com/ronsenbergVI/trendpy.git
+$ <span class="nb">cd</span> trendpy
+$ python setup.py build
+$ python setup.py install
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="introduction-to-filtering-theory">
+<h3>Introduction to filtering theory<a class="headerlink" href="#introduction-to-filtering-theory" title="Permalink to this headline">¶</a></h3>
+<p>Consider <span class="math">\((y_t)_{t \in [0,T]}\)</span> the (continuous), normalized price process of a stock, verifying the decomposition:</p>
+<div class="math">
+\[\]</div>
+<p>where <span class="math">\(x\)</span> is the price trend and <span class="math">\(\epsilon\)</span> a stochastic noise.
+The process of trend filtering consists in recovering <span class="math">\(x\)</span> from the
+observations of <span class="math">\(y\)</span>. Under regularity conditions, the first derivative of
+<span class="math">\(x\)</span> indicates up or down price trends:</p>
+<div class="math">
+\[\mu_t = \dfrac{dx_t}{dt}\]</div>
+<p>The trend filtering equation becomes:</p>
+<div class="math">
+\[dy_t = \mu_tdt + d\epsilon_t\]</div>
+<p>A common assumption on the dynamic of the noise is:</p>
+<div class="math">
+\[d\epsilon_t = \sigma_t dW_t\]</div>
+<p>with <span class="math">\(\sigma&gt;0\)</span> and <span class="math">\(W\)</span> a standard Brownian motion.
+From a theoretical point of view trend filtering is equivalent
+to finding the functional form:</p>
+<div class="math">
+\[x_t = \textbf{f}(t,y)\]</div>
+</div>
+<div class="section" id="quickstart">
+<h3>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h3>
+<p>To create a new <a class="reference internal" href="#trendpy.series.Series" title="trendpy.series.Series"><code class="xref py py-meth docutils literal"><span class="pre">Series()</span></code></a> instance from a csv file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">trendpy.series</span> <span class="k">import</span> <span class="n">Series</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">Series</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-new-algorithms">
+<h3>Adding new algorithms<a class="headerlink" href="#adding-new-algorithms" title="Permalink to this headline">¶</a></h3>
+<p>The MCMC class containts the generic structure of any MCMC algorithm:</p>
+<ul class="simple">
+<li><cite>definition of the parameters (posterior distribution, dimensions)</cite></li>
+<li><cite>initialisation of the parameters to be estimated</cite></li>
+<li><cite>random simulation of the parameters from their respective posterior distributions</cite></li>
+</ul>
+<p>Thus any new algorithm can be added to the library by subclassing the <strong>Strategy</strong> class:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BlackScholes</span><span class="p">(</span><span class="n">Strategy</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">():</span>
+                <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Then the new MCMC instance just needs to be initialized with the new strategy and ran:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_mcmc</span> <span class="o">=</span> <span class="n">MCMC</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">SamplerFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;BlackScholes&quot;</span><span class="p">,</span><span class="n">data</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mcmc</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">number_simulations</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">estimation</span> <span class="o">=</span> <span class="n">mcmc</span><span class="o">.</span><span class="n">output</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
+<p>If you are looking for information on a specific function, class or
+method, this part of the documentation is for you.</p>
+<div class="section" id="factory">
+<h3>Factory<a class="headerlink" href="#factory" title="Permalink to this headline">¶</a></h3>
+<p>Factory class handling the creation of bayesian algorithms.</p>
+<span class="target" id="module-trendpy.factory"></span><dl class="class">
+<dt id="trendpy.factory.SamplerFactory">
+<em class="property">class </em><code class="descclassname">trendpy.factory.</code><code class="descname">SamplerFactory</code><a class="reference internal" href="_modules/trendpy/factory.html#SamplerFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.factory.SamplerFactory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="staticmethod">
+<dt id="trendpy.factory.SamplerFactory.add">
+<em class="property">static </em><code class="descname">add</code><span class="sig-paren">(</span><em>id</em>, <em>factory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/factory.html#SamplerFactory.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.factory.SamplerFactory.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a class to factory with a chosen id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – name of the class.</li>
+<li><strong>factory</strong> (<cite>Strategy.Factory</cite>) – factory subclass of a Strategy instace.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="trendpy.factory.SamplerFactory.create">
+<em class="property">static </em><code class="descname">create</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/factory.html#SamplerFactory.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.factory.SamplerFactory.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an instance of the class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – name of the class.</li>
+<li><strong>args</strong> (<a class="reference internal" href="#trendpy.samplers.Parameters.list" title="trendpy.samplers.Parameters.list"><em>list</em></a>) – Positional arguments.</li>
+<li><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – Keyword arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">new instance of a <code class="xref py py-meth docutils literal"><span class="pre">Strategy()</span></code> subclass</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><cite>Numpy.dnarray</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="mcmc">
+<h3>Mcmc<a class="headerlink" href="#mcmc" title="Permalink to this headline">¶</a></h3>
+<p>Generic structure of the algorithms implemented.</p>
+<span class="target" id="module-trendpy.mcmc"></span><dl class="class">
+<dt id="trendpy.mcmc.MCMC">
+<em class="property">class </em><code class="descclassname">trendpy.mcmc.</code><code class="descname">MCMC</code><span class="sig-paren">(</span><em>sampler</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/mcmc.html#MCMC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.mcmc.MCMC" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="trendpy.mcmc.MCMC.sampler">
+<code class="descname">sampler</code><a class="headerlink" href="#trendpy.mcmc.MCMC.sampler" title="Permalink to this definition">¶</a></dt>
+<dd><p>implementation of the MCMC algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trendpy.mcmc.MCMC.simulations">
+<code class="descname">simulations</code><a class="headerlink" href="#trendpy.mcmc.MCMC.simulations" title="Permalink to this definition">¶</a></dt>
+<dd><p>dictionary containing the history of simulations (is None if
+the MCMC algorithm has not been ran yet)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.mcmc.MCMC.define_parameters">
+<code class="descname">define_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/mcmc.html#MCMC.define_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.mcmc.MCMC.define_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to set the parameter set to be updated
+in the MCMC algorithm.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.mcmc.MCMC.initial_value">
+<code class="descname">initial_value</code><span class="sig-paren">(</span><em>parameter_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/mcmc.html#MCMC.initial_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.mcmc.MCMC.initial_value" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Method that sets the initial value of the</dt>
+<dd>parameters to be estimated.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – name of the parameter.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">initial value of the parameter</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><cite>Numpy.dnarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.mcmc.MCMC.distribution_parameters">
+<code class="descname">distribution_parameters</code><span class="sig-paren">(</span><em>parameter_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/mcmc.html#MCMC.distribution_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.mcmc.MCMC.distribution_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Method that sets the parameters of the posterior</dt>
+<dd>distribution of the parameters to be estimated.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – name of the parameter.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dictionary the parameters needed to compute the
+next value of the Markov chain for the parameter with name:
+parameter_name.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.mcmc.MCMC.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>parameter_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/mcmc.html#MCMC.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.mcmc.MCMC.generate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>This method handles the generation of the random draws of</dt>
+<dd>the Markov chain for each parameters.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) – name of the parameter of interest</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">random draw from the posterior probability distribution</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><cite>Numpy.dnarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.mcmc.MCMC.output">
+<code class="descname">output</code><span class="sig-paren">(</span><em>burn</em>, <em>parameter_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/mcmc.html#MCMC.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.mcmc.MCMC.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the poserior mean of the parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>parameter_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) – name of the parameter of interest</li>
+<li><strong>burn</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – number of draws dismissed as burning samples</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">output of the MCMC algorithm</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><cite>Numpy.dnarray</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.mcmc.MCMC.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>number_simulations=100</em>, <em>max_restart=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/mcmc.html#MCMC.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.mcmc.MCMC.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the MCMC algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>number_simulations</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – number of random draws for each parameter.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="series">
+<h3>Series<a class="headerlink" href="#series" title="Permalink to this headline">¶</a></h3>
+<p>Class implementing time series analysis.</p>
+<span class="target" id="module-trendpy.series"></span><dl class="class">
+<dt id="trendpy.series.Series">
+<em class="property">class </em><code class="descclassname">trendpy.series.</code><code class="descname">Series</code><a class="reference internal" href="_modules/trendpy/series.html#Series"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements univariate time series.</p>
+<blockquote>
+<div><p>Import the class</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">trendpy.series</span> <span class="k">import</span> <span class="n">Series</span>
+</pre></div>
+</div>
+<p>create from csv</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">Series</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="s1">&#39;data.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="attribute">
+<dt id="trendpy.series.Series.data">
+<code class="descname">data</code><a class="headerlink" href="#trendpy.series.Series.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="trendpy.series.Series.from_csv">
+<em class="property">static </em><code class="descname">from_csv</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.from_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.from_csv" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Instantiate new time series from a csv file where the first</dt>
+<dd>column is a timestamp or a date or a datetime. For now</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – path of the file with extension (.csv or .txt)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the price time series</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><cite>trendpy.series.Series</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.summary">
+<code class="descname">summary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an ASCII table with basic statistics of the time series loaded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ASCII table with main description of the data set</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.returns">
+<code class="descname">returns</code><span class="sig-paren">(</span><em>period=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.returns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.returns" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Adds a new time series to the data with the returns of the original</dt>
+<dd>time series.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>period</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a><em>, </em><em>optional</em>) – number of days between two consecutive observations used to
+compute the returns.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">output of the MCMC algorithm</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><cite>Numpy.dnarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.annualized_return">
+<code class="descname">annualized_return</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.annualized_return"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.annualized_return" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the annualized return over a given period.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>period</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – period of interest either a year, year-month
+or date range.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">annualized return on the whole time series.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.annualized_volatility">
+<code class="descname">annualized_volatility</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.annualized_volatility"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.annualized_volatility" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the annualized return over a given period.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">annualized return on the whole time series.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.skewness">
+<code class="descname">skewness</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.skewness"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.skewness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the skewness of the returns empirical distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">skewness on the whole time series returns.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.kurtosis">
+<code class="descname">kurtosis</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.kurtosis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.kurtosis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the kurtosis of the returns empirical distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">kurtosis on the whole time series returns.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.max_drawdown">
+<code class="descname">max_drawdown</code><span class="sig-paren">(</span><em>window=30</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.max_drawdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.max_drawdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the maximum drawdown of the price time series.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>window</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a><em>, </em><em>optional</em>) – number of observations used.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">drawdown duration of the time series.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.periodic_returns">
+<code class="descname">periodic_returns</code><span class="sig-paren">(</span><em>show=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.periodic_returns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.periodic_returns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the maximum drawdown of the price time series.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">periodic return plot of the time series.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.rolling_max_drawdown">
+<code class="descname">rolling_max_drawdown</code><span class="sig-paren">(</span><em>window=30</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.rolling_max_drawdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.rolling_max_drawdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the rolling maximum drawdown of the time series.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>window</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a><em>, </em><em>optional</em>) – number of observations used.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">rolling maximum drawdown of the time series.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><cite>pandas.DataFrame</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.rolling_volatility">
+<code class="descname">rolling_volatility</code><span class="sig-paren">(</span><em>window=360</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.rolling_volatility"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.rolling_volatility" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Computes the annualized rolling volatility of the time series</dt>
+<dd>with annualization possible. The formula used is the following:</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>window</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a><em>, </em><em>optional</em>) – number of observations used.</li>
+<li><strong>annualize</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em>, </em><em>optional</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">rolling_volatility of the time series.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><cite>pandas.DataFrame</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>filename='export.csv'</em>, <em>separator='</em>, <em>'</em>, <em>date_format='%d-%m-%y'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the data contained in the object to a csv file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em>, </em><em>optional</em>) – path and name of the file to export</li>
+<li><strong>separator</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em>, </em><em>optional</em>) – separator between columns in file.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the time series.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.series.Series.filter">
+<code class="descname">filter</code><span class="sig-paren">(</span><em>method='L1Filter'</em>, <em>number_simulations=100</em>, <em>burns=50</em>, <em>total_variation=2</em>, <em>merge=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/series.html#Series.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.series.Series.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters the trend of the time series.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>method</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a><em>, </em><em>optional</em>) – path and name of the file to export</li>
+<li><strong>number_simulations</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a><em>, </em><em>optional</em>) – number of simulations in the MCMC algorithm</li>
+<li><strong>burns</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a><em>, </em><em>optional</em>) – number of draws dismissed as burning samples</li>
+<li><strong>merge</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a><em>, </em><em>optional</em>) – joind the filtered trend to the current Series instance.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Series of trend filtered.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><cite>pandas.DataFrame</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="samplers">
+<h3>Samplers<a class="headerlink" href="#samplers" title="Permalink to this headline">¶</a></h3>
+<p>Samplers tell the mcmc algorithm how to simulate the Markov chain.</p>
+<span class="target" id="module-trendpy.samplers"></span><dl class="class">
+<dt id="trendpy.samplers.Parameter">
+<em class="property">class </em><code class="descclassname">trendpy.samplers.</code><code class="descname">Parameter</code><span class="sig-paren">(</span><em>name</em>, <em>distribution</em>, <em>size</em>, <em>current_value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/samplers.html#Parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.samplers.Parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements an unknown parameter to be estimated</p>
+<p>We first need to import the wanted posterior distribution in <cite>Scipy</cite>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">norm</span>
+</pre></div>
+</div>
+<p>and then we can instanciate parameter:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">param1</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;lambda&#39;</span><span class="p">,</span><span class="n">norm</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="trendpy.samplers.Parameter.distribution">
+<code class="descname">distribution</code><a class="headerlink" href="#trendpy.samplers.Parameter.distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclass of the Scipy rv_continuous class.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trendpy.samplers.Parameter.size">
+<code class="descname">size</code><a class="headerlink" href="#trendpy.samplers.Parameter.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dimensions of the parameter.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trendpy.samplers.Parameter.name">
+<code class="descname">name</code><a class="headerlink" href="#trendpy.samplers.Parameter.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the parameter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.samplers.Parameter.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>distribution</em>, <em>size</em>, <em>current_value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/samplers.html#Parameter.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.samplers.Parameter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a parameter to estimate in the MCMC algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) – Name of the parameter (unique identification)</li>
+<li><strong>distribution</strong> (<cite>Scipy.stats.rv_continuous</cite>) – Posterior Probability distribution of the parameter.</li>
+<li><strong>size</strong> – Dimension of the parameter.</li>
+<li><strong>current_value</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a>) – Current value of the parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.samplers.Parameter.is_multivariate">
+<code class="descname">is_multivariate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/samplers.html#Parameter.is_multivariate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.samplers.Parameter.is_multivariate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the parameter is univariate.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="trendpy.samplers.Parameters">
+<em class="property">class </em><code class="descclassname">trendpy.samplers.</code><code class="descname">Parameters</code><span class="sig-paren">(</span><em>list=None</em>, <em>hierarchy=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/samplers.html#Parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.samplers.Parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the set of parameters to be estimated</p>
+<p>We first need to import the wanted posterior distribution in <cite>Scipy.stats</cite>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">invgamma</span>
+</pre></div>
+</div>
+<p>then we can create an empty parameter set and add a new parameter:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">param1</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;sigma2&#39;</span><span class="p">,</span><span class="n">invgamma</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="mf">0.09</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="n">Params</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="trendpy.samplers.Parameters.list">
+<code class="descname">list</code><a class="headerlink" href="#trendpy.samplers.Parameters.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary with the parameters to estimate.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trendpy.samplers.Parameters.hierarchy">
+<code class="descname">hierarchy</code><a class="headerlink" href="#trendpy.samplers.Parameters.hierarchy" title="Permalink to this definition">¶</a></dt>
+<dd><p>List containing the order in which
+the Gibbs sampler updates the
+parameter values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.samplers.Parameters.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>list=None</em>, <em>hierarchy=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/samplers.html#Parameters.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.samplers.Parameters.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a parameter set to estimate in the MCMC algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>list</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – A dictionary with the parameters to estimate</li>
+<li><strong>hierarchy</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a>) – List containing the order in which
+the Gibbs sampler updates the parameter values.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.samplers.Parameters.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>parameter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/samplers.html#Parameters.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.samplers.Parameters.append" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Adds a parameter to the parameter set.</dt>
+<dd>First parameter added is the first in the
+hierarchy.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter</strong> (<em>trendpy.Parameter</em>) – parameter to estimate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="trendpy.samplers.Sampler">
+<em class="property">class </em><code class="descclassname">trendpy.samplers.</code><code class="descname">Sampler</code><a class="reference internal" href="_modules/trendpy/samplers.html#Sampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.samplers.Sampler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract class for implementing Gibbs sampling algorithms and providing outputs.</p>
+<dl class="attribute">
+<dt id="trendpy.samplers.Sampler.parameters">
+<code class="descname">parameters</code><a class="headerlink" href="#trendpy.samplers.Sampler.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters to be estimated in the MCMC algorithm.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trendpy.samplers.Sampler.data">
+<code class="descname">data</code><a class="headerlink" href="#trendpy.samplers.Sampler.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>array with the price time series</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.samplers.Sampler.define_parameters">
+<code class="descname">define_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/samplers.html#Sampler.define_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.samplers.Sampler.define_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to set the parameter set to be updated
+in the MCMC algorithm.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.samplers.Sampler.initial_value">
+<code class="descname">initial_value</code><span class="sig-paren">(</span><em>parameter_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/samplers.html#Sampler.initial_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.samplers.Sampler.initial_value" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Method that sets the initial value of the</dt>
+<dd>parameters to be estimated.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – name of the parameter.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">initial value of the parameter</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><cite>Numpy.dnarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.samplers.Sampler.distribution_parameters">
+<code class="descname">distribution_parameters</code><span class="sig-paren">(</span><em>parameter_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/samplers.html#Sampler.distribution_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.samplers.Sampler.distribution_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Method that sets the parameters of the posterior</dt>
+<dd>distribution of the parameters to be estimated.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – name of the parameter.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dictionary the parameters needed to compute the
+next value of the Markov chain for the parameter with name:
+parameter_name.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.samplers.Sampler.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>parameter_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/samplers.html#Sampler.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.samplers.Sampler.generate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>This method handles the generation of the random draws of</dt>
+<dd>the Markov chain for each parameters.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) – name of the parameter of interest</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">random draw from the posterior probability distribution</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><cite>Numpy.dnarray</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="trendpy.samplers.Sampler.output">
+<code class="descname">output</code><span class="sig-paren">(</span><em>simulations</em>, <em>burn</em>, <em>parameter_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trendpy/samplers.html#Sampler.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trendpy.samplers.Sampler.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the poserior mean of the parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>simulations</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – history of the Markov chain simulation</li>
+<li><strong>burn</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – number of draws dismissed as burning samples</li>
+<li><strong>parameter_name</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) – name of the parameter of interest</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">output of the MCMC algorithm</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><cite>Numpy.dnarray</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="trendpy-changelog">
+<h2>Trendpy Changelog<a class="headerlink" href="#trendpy-changelog" title="Permalink to this headline">¶</a></h2>
+<p>We detail here the changes made to the library</p>
+<div class="section" id="version-0-1-0">
+<h3>Version 0.1.0<a class="headerlink" href="#version-0-1-0" title="Permalink to this headline">¶</a></h3>
+<p>Release day: July 21 2017</p>
+<p>Initial public release.</p>
+</div>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>trendpy is licensed under the MIT Licence. It means that the source
+code provided in the binaries can be used, modified, or distributed
+freely for commercial or personal use with conditions only requiring
+preservation of copyright and license notices.</p>
+<p>The full license text can be found below (<span class="xref std std-ref">trendpy-license</span>).</p>
+<div class="section" id="authors">
+<h3>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h3>
+<p>trendpy is written and maintained by Rene-Jean Corneille</p>
+</div>
+<div class="section" id="contributing">
+<h3>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h3>
+<p>Contribution will be welcomed once a first stable release is ready.</p>
+</div>
+<div class="section" id="license-definitions">
+<h3>License Definitions<a class="headerlink" href="#license-definitions" title="Permalink to this headline">¶</a></h3>
+<p>The following section contains the full license texts for trendpy and the
+documentation.</p>
+<ul class="simple">
+<li>“AUTHORS” hereby refers to all the authors listed in the
+<span class="xref std std-ref">authors</span> section.</li>
+<li>The “<span class="xref std std-ref">trendpy-license</span>” applies to all the source code shipped as
+part of trendpy (trendpy itself as well as the examples and the unittests)
+as well as documentation.</li>
+</ul>
+</div>
+<div class="section" id="trendpy-license">
+<h3>trendpy License<a class="headerlink" href="#trendpy-license" title="Permalink to this headline">¶</a></h3>
+<p>MIT License</p>
+<p>Copyright (c) 2017 Rene Jean Corneille</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">trendpy</a><ul>
+<li><a class="reference internal" href="#user-s-guide">User’s Guide</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#issues">Issues</a></li>
+<li><a class="reference internal" href="#installing-trendpy">Installing trendpy</a><ul>
+<li><a class="reference internal" href="#installation-with-pip-recommended">Installation with pip (recommended)</a></li>
+<li><a class="reference internal" href="#installation-from-github">Installation from GitHub</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#introduction-to-filtering-theory">Introduction to filtering theory</a></li>
+<li><a class="reference internal" href="#quickstart">Quickstart</a></li>
+<li><a class="reference internal" href="#adding-new-algorithms">Adding new algorithms</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#api-reference">API Reference</a><ul>
+<li><a class="reference internal" href="#factory">Factory</a></li>
+<li><a class="reference internal" href="#mcmc">Mcmc</a></li>
+<li><a class="reference internal" href="#series">Series</a></li>
+<li><a class="reference internal" href="#samplers">Samplers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#trendpy-changelog">Trendpy Changelog</a><ul>
+<li><a class="reference internal" href="#version-0-1-0">Version 0.1.0</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#license">License</a><ul>
+<li><a class="reference internal" href="#authors">Authors</a></li>
+<li><a class="reference internal" href="#contributing">Contributing</a></li>
+<li><a class="reference internal" href="#license-definitions">License Definitions</a></li>
+<li><a class="reference internal" href="#trendpy-license">trendpy License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Rene Jean Corneille.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
