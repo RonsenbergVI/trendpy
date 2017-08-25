@@ -1,6 +1,14 @@
-Version 0.1.0
+Version 0.1.1
 -------------
 
-Release day: July 21 2017
+Release day: August 24 2017
 
 Initial public release.
+
+Version 0.1.2
+-------------
+
+Release day: September 6 2017
+
+Some bug fixes
+Deleted the Series class 

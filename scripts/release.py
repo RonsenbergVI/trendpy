@@ -105,9 +105,7 @@ def write_new_version(major,minor,micro,release=""):
 	print_info("Current version is now: %s.%s.%s" % (major, minor, micro))
 
 def build_for_release():
-
-    Popen([sys.executable, 'setup.py', 'sdist', 'build_sphinx', '-s', './docs', 'upload', 'register']).wait()
-	Popen([sys.executable, 'setup.py', 'sdist', '--formats=gztar,zip']).wait()
+	Popen([sys.executable, 'setup.py','sdist','--formats=gztar,zip','register','upload']).wait()
 
 if __name__ == '__main__':
 	version, day = get_changes()
