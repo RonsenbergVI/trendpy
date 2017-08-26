@@ -1,4 +1,4 @@
-# trendpy (no release yet)
+# trendpy (alpha)
 Bayesian trend filtering micro library
 
 I am currently redesigning the API and will release an alpha version in late August.
