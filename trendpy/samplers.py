@@ -116,7 +116,7 @@ class Parameters(object):
 	    		the Gibbs sampler updates the parameter values.
 		:type hierarchy: array
 		"""
-		self.list = list 
+		self.list = list
 		self.hierarchy = hierarchy
 
 	@property
@@ -193,7 +193,7 @@ class Parameters(object):
 		if not parameter.name in self.list:
 			self.list[parameter.name] = parameter
 			self.hierarchy.append(parameter.name)
-	
+
 	def clear(self):
 		""" Removes all parameters."""
 		self.list = None
@@ -268,7 +268,7 @@ class Sampler(object):
 		def create(self,*args,**kwargs):
 			return Sampler()
 
-class L1Filter(Sampler):
+class L1(Sampler):
 
 	def __init__(self,data,alpha=0.1,rho=0.1,total_variation_order=2):
 		self.rho = rho
@@ -282,7 +282,7 @@ class L1Filter(Sampler):
 	@property
 	def data(self):
 		return self.__data
-		
+
 	@property
 	def parameters(self):
 		""" List containing the parameters to estimate."""

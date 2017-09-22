@@ -33,3 +33,28 @@ from trendpy.factory import SamplerFactory
 
 __version__ = version
 
+def filter(data, method="L1", number_simulations=100, burns=50, total_variation=2, merge=True, verbose=0):
+	""" Filters the trend of the time series.
+
+	:param method: path and name of the file to export
+	:type method: str, optional
+	:param number_simulations: number of simulations in the MCMC algorithm
+	:type number_simulations: int, optional
+	:param burns: number of draws dismissed as burning samples
+	:type burns: int, optional
+	:param merge: joind the filtered trend to the current Series instance.
+	:type merge: bool, optional
+	:return: Iterable of the same type with initial data and trend filtered time series.
+	:rtype: `iterable`
+	"""
+	mcmc = MCMC(SamplerFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
+	mcmc.run(number_simulations)
+	trend = mcmc.output(burns,"trend")
+	filtered_trend = Series() # same class as input (numpy array or pandas data frame)
+	filtered_trend.data = DataFrame(trend,index=self.data.index,columns=[method])
+	if merge: self.data = self.data.join(filtered_trend.data)
+	return filtered_trend
+
+
+def merge(data_set1, data_set2):
+	if type(data_set1) == type(data_set2):

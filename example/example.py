@@ -20,13 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from trendpy.series import Series
+from trendpy import filter
+from pandas import read_csv
+from matplotlib import pyplot
 
 filename='data.csv'
 
-quant_fund=Series.from_csv(filename)
+quant_fund=read_csv(filename)
 print(quant_fund.summary())
-quant_fund.periodic_returns()
-quant_fund.filter(number_simulations=30, burns=10)
-quant_fund.plot()
-
+filter(quant_fund,number_simulations=30, burns=10)
