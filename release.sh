@@ -5,4 +5,5 @@ DIR="$( cd -P "$( dirname "$SOURCE")" && pwd )"
 
 SCRIPT_DIR=$DIR/scripts
 
-python3 $SCRIPT_DIR/release.py
+echo $SCRIPT_DIR
+#python3 $SCRIPT_DIR/release.py
