@@ -7,4 +7,3 @@ release = True
 
 if not release:
 	version = full_version
-	

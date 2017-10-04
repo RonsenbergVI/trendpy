@@ -54,7 +54,3 @@ def filter(data, method="L1", number_simulations=100, burns=50, total_variation=
 	filtered_trend.data = DataFrame(trend,index=self.data.index,columns=[method])
 	if merge: self.data = self.data.join(filtered_trend.data)
 	return filtered_trend
-
-
-def merge(data_set1, data_set2):
-	if type(data_set1) == type(data_set2):
