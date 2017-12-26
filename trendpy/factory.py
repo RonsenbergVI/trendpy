@@ -41,7 +41,7 @@ class SamplerFactory:
 		:type factory: `Strategy.Factory`
 		"""
 		SamplerFactory.factories[id] = factory
-		
+
 	@staticmethod
 	def remove(id):
 		""" Removes a class to factory with a chosen id.
@@ -51,13 +51,13 @@ class SamplerFactory:
 		"""
 		if id in SamplerFactory.factories:
 			del SamplerFactory.factories[id]
-		
+
 	@staticmethod
 	def removeAll():
 		""" Removes all factories."""
 		if not(SamplerFactory.factories == None or SamplerFactory.factories == {}):
 			SamplerFactory.factories.clear()
-		
+
 	@staticmethod
 	def create(id,*args,**kwargs):
 		""" Creates an instance of the class.
@@ -74,5 +74,3 @@ class SamplerFactory:
 		if not id in SamplerFactory.factories:
 			SamplerFactory.factories[id] = eval('%s.Factory()' % id)
 		return SamplerFactory.factories[id].create(*args,**kwargs)
-		
-	

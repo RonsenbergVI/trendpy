@@ -27,5 +27,5 @@ from matplotlib import pyplot
 filename='data.csv'
 
 quant_fund=read_csv(filename)
-print(quant_fund.summary())
-filter(quant_fund,number_simulations=30, burns=10)
+
+filter(quant_fund)

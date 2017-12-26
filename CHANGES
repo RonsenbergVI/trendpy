@@ -12,3 +12,10 @@ Release day: September 6 2017
 
 - Some bug fixes
 - Deleted the Series class
+
+Version 0.2.0
+-------------
+
+Release day: October 5 2017
+
+- Major bug fixes in the L1 Sampler (problem with output type)

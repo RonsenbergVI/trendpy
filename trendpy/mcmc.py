@@ -87,11 +87,15 @@ class MCMC(object):
         """
 		return self.sampler.output(self.simulations, burn, parameter_name)
 
-	def run(self, number_simulations=100, max_restart=10):
+	def run(self, number_simulations, max_restart, verbose):
 		""" Runs the MCMC algorithm.
 
 		:param number_simulations: number of random draws for each parameter.
 		:type number_simulations: int
+		:param max_restart: number of times the MCMC routine is allowed to restart.
+		:type max_restart: int
+		:param verbose: control console log information detail.
+		:type verbose: int
 		"""
 		self.simulations = {key : zeros((param.size[0],param.size[1],number_simulations)) for (key, param) in self.sampler.parameters.list.items()}
 
@@ -99,11 +103,13 @@ class MCMC(object):
 			self.sampler.parameters.list[name].current_value = self.initial_value(name)
 
 		for i in range(number_simulations):
-			print("== step %i ==" % (int(i+1),))
+			if verbose > 0
+				print("== step %i ==" % (int(i+1),))
 			restart = 0
 			restart_step = True
 			while restart_step:
 				for name in self.sampler.parameters.hierarchy:
+					if verbose > 3
 					print("== parameter %s ==" % name)
 					try:
 						self.sampler.parameters.list[name].current_value = self.generate(name)
@@ -113,7 +119,8 @@ class MCMC(object):
 					except:
 						if restart < max_restart:
 							restart+=1
-							print("== restart step %i ==" % i)
+							if verbose > 4
+								print("== restart step %i ==" % i)
 							restart_step = True
 							break
 						else:

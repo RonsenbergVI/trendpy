@@ -33,9 +33,11 @@ from trendpy.factory import SamplerFactory
 
 __version__ = version
 
-def filter(data, method="L1", number_simulations=100, burns=50, total_variation=2, merge=True, verbose=0):
+def filter(data, method="L1", number_simulations=100, burns=50, total_variation=2, merge=True, max_restart=5, verbose=0):
 	""" Filters the trend of the time series.
 
+	:param data: 1D time series to be filtered
+	:type data: list, optional (data can also be a numpy array or a pandas.Series)
 	:param method: path and name of the file to export
 	:type method: str, optional
 	:param number_simulations: number of simulations in the MCMC algorithm
@@ -44,13 +46,16 @@ def filter(data, method="L1", number_simulations=100, burns=50, total_variation=
 	:type burns: int, optional
 	:param merge: joind the filtered trend to the current Series instance.
 	:type merge: bool, optional
+	:param max_restart: number of times the MCMC routine is allowed to restart.
+	:type max_restart: int
+	:param verbose: control console log information detail.
+	:type verbose: int
 	:return: Iterable of the same type with initial data and trend filtered time series.
 	:rtype: `iterable`
 	"""
 	mcmc = MCMC(SamplerFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
-	mcmc.run(number_simulations)
+	mcmc.run(number_simulations=number_simulations,max_restart=max_restart,verbose=verbose)
 	trend = mcmc.output(burns,"trend")
-	filtered_trend = Series() # same class as input (numpy array or pandas data frame)
-	filtered_trend.data = DataFrame(trend,index=self.data.index,columns=[method])
+	filtered_trend = type(data)()
 	if merge: self.data = self.data.join(filtered_trend.data)
 	return filtered_trend

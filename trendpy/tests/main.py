@@ -36,15 +36,13 @@ sys.path.insert(0,parent_dir)
 import trendpy.tests.tests_factory
 import trendpy.tests.tests_globals
 import trendpy.tests.tests_mcmc
-import trendpy.tests.tests_samplers
-import trendpy.tests.tests_series
+import trendpy.tests.tests_output
 
 suite = unittest.TestSuite()
 
 suite.addTest(unittest.makeSuite(trendpy.tests.tests_factory.TestFactory))
 suite.addTest(unittest.makeSuite(trendpy.tests.tests_globals.TestGlobals))
 suite.addTest(unittest.makeSuite(trendpy.tests.tests_mcmc.TestMCMC))
-suite.addTest(unittest.makeSuite(trendpy.tests.tests_samplers.TestSamplers))
-suite.addTest(unittest.makeSuite(trendpy.tests.tests_series.TestSeries))
+suite.addTest(unittest.makeSuite(trendpy.tests.tests_series.TestsOutput))
 
 unittest.TextTestRunner(verbosity=2).run(suite)
