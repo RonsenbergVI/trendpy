@@ -6,8 +6,6 @@ trendpy
 
 **trendpy** is a bayesian filtering micro library.
 
-The library also supports bayesian regression models (Lasso and Ridge).
-
 Models are fitted using MCMC algorithms.
 
 
