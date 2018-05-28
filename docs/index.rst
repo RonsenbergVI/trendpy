@@ -80,30 +80,6 @@ To create a new :py:meth:`~trendpy.series.Series` instance from a csv file::
 	>>> data = Series.from_csv('data.csv')
 	>>> data.plot()
 
-Adding new algorithms
----------------------
-
-The MCMC class containts the generic structure of any MCMC algorithm:
-
-* `definition of the parameters (posterior distribution, dimensions)`
-* `initialisation of the parameters to be estimated`
-* `random simulation of the parameters from their respective posterior distributions`
-
-Thus any new algorithm can be added to the library by subclassing the **Strategy** class::
-
-	class BlackScholes(Strategy):
-
-		def __init__():
-			pass
-
-
-Then the new MCMC instance just needs to be initialized with the new strategy and ran::
-
-	>>> new_mcmc = MCMC(self, SamplerFactory.create("BlackScholes",data))
-	>>> mcmc.run(number_simulations=50)
-	>>> estimation = mcmc.output()
-
-
 API Reference
 =============
 
