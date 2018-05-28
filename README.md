@@ -20,31 +20,13 @@ Data is imported from a file (trendpy only supports csv for now).
 # import data from csv file (with dates and price) -- for now trendpy only
 # support 1D time series
 
-from trendpy.timeseries import Series
+from trendpy import filter
+from pandas import read_csv
 
 filename='data.csv'
-fund=Series.from_csv(filename)
+data = read_csv(filename)
 
-# plots time series
-fund.plot()
-
-```
-
-### Trend filtering
-
-There is 1 trend filter available
-
-* L1 filter (I plan to add a L2 filter in future releases)
-
-Custom filters with more options to come in first stable release. 
-The main advantage is that Bayesian trend filtering displays higher predictive power than frequentist methods (experiments to be added as example).
-
-```markdown
-
-# trend filter with selected filter
-
-fund.filter(number_simulations=30, burns=10)
-fund.plot()
+filtered = filter(data['time series'])
 
 ```
 
