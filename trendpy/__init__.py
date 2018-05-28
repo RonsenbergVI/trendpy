@@ -37,7 +37,7 @@ from trendpy.mcmc import MCMC
 
 __version__ = version
 
-def filter(data, method="L1", number_simulations=100, burns=50, total_variation=2, merge=True, max_restart=5, verbose=0):
+def filter(data, method="L1", number_simulations=100, burns=50, total_variation=2, max_restart=5, verbose=0):
 	""" Filters the trend of the time series.
 
 	:param data: 1D time series to be filtered
@@ -48,8 +48,6 @@ def filter(data, method="L1", number_simulations=100, burns=50, total_variation=
 	:type number_simulations: int, optional
 	:param burns: number of draws dismissed as burning samples
 	:type burns: int, optional
-	:param merge: joind the filtered trend to the current Series instance.
-	:type merge: bool, optional
 	:param max_restart: number of times the MCMC routine is allowed to restart.
 	:type max_restart: int
 	:param verbose: control console log information detail.
@@ -60,9 +58,7 @@ def filter(data, method="L1", number_simulations=100, burns=50, total_variation=
 	mcmc = MCMC(SamplerFactory.create(method,_tosequence(data),total_variation_order=total_variation))
 	mcmc.run(number_simulations=number_simulations,max_restart=max_restart,verbose=verbose)
 	trend = mcmc.output(burns,"trend")
-	filtered_trend = type(data)()
-	if merge: data = data.join(filtered_trend.data)
-	return filtered_trend
+	return trend
 
 
 def _tosequence(X):
