@@ -8,3 +8,4 @@ build
 *.pyo
 *.egg-info
 *.pypirc
+*.ipynb_checkpoints

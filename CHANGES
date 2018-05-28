@@ -19,3 +19,10 @@ Version 0.2.0
 Release day: October 5 2017
 
 - Major bug fixes in the L1 Sampler (problem with output type)
+
+Version 0.3.0
+-------------
+
+Release day: May 28 2018
+
+- Major bug fixes after API change
