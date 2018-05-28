@@ -26,9 +26,10 @@
 
 from __future__ import absolute_import
 
-from numpy import zeros
+from collections import Sequence
+from numpy import zeros, asarray, ndarray
 
-__all__ = ['derivative_matrix']
+__all__ = ['derivative_matrix','tosequence']
 
 def derivative_matrix(size, order=2):
 	""" Computes a discrete difference operator.
@@ -53,3 +54,17 @@ def derivative_matrix(size, order=2):
 		for l in range(order+1):
 			D[n,n+l]=d[l]
 	return D
+
+def tosequence(x):
+    """Cast iterable x to a Sequence. (Code from scikit-learn)
+
+    Parameters
+    ----------
+    x : iterable
+    """
+    if isinstance(x, ndarray):
+        return asarray(x)
+    elif isinstance(x, Sequence):
+        return x
+    else:
+        return list(x)

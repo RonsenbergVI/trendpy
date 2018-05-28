@@ -26,10 +26,14 @@
 
 from __future__ import absolute_import
 
+from collections import Mapping
+
 from trendpy.globals import *
 
 from trendpy.version import version
 from trendpy.factory import SamplerFactory
+from trendpy.mcmc import MCMC
+
 
 __version__ = version
 
@@ -53,9 +57,17 @@ def filter(data, method="L1", number_simulations=100, burns=50, total_variation=
 	:return: Iterable of the same type with initial data and trend filtered time series.
 	:rtype: `iterable`
 	"""
-	mcmc = MCMC(SamplerFactory.create(method,self.data.as_matrix()[:,0],total_variation_order=total_variation))
+	mcmc = MCMC(SamplerFactory.create(method,_tosequence(data),total_variation_order=total_variation))
 	mcmc.run(number_simulations=number_simulations,max_restart=max_restart,verbose=verbose)
 	trend = mcmc.output(burns,"trend")
 	filtered_trend = type(data)()
-	if merge: self.data = self.data.join(filtered_trend.data)
+	if merge: data = data.join(filtered_trend.data)
 	return filtered_trend
+
+
+def _tosequence(X):
+    """Turn X into a sequence or ndarray.""" #(code taken from scikit-learn)
+    if isinstance(X, Mapping):  # single sample
+        return [X]
+    else:
+        return tosequence(X)

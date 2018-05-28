@@ -1,9 +1,24 @@
-Version 0.1.1
+Version 0.3.1
 -------------
 
-Release day: August 24 2017
+Release day: May 28 2018
 
-- Initial public release.
+- Minor bug fix after API change
+
+
+Version 0.3.0
+-------------
+
+Release day: May 28 2018
+
+- Major bug fixes after API change
+
+Version 0.2.0
+-------------
+
+Release day: October 5 2017
+
+- Major bug fixes in the L1 Sampler (problem with output type)
 
 Version 0.1.2
 -------------
@@ -13,16 +28,9 @@ Release day: September 6 2017
 - Some bug fixes
 - Deleted the Series class
 
-Version 0.2.0
+Version 0.1.1
 -------------
 
-Release day: October 5 2017
+Release day: August 24 2017
 
-- Major bug fixes in the L1 Sampler (problem with output type)
-
-Version 0.3.0
--------------
-
-Release day: May 28 2018
-
-- Major bug fixes after API change
+- Initial public release.

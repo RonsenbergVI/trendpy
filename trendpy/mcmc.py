@@ -103,14 +103,14 @@ class MCMC(object):
 			self.sampler.parameters.list[name].current_value = self.initial_value(name)
 
 		for i in range(number_simulations):
-			if verbose > 0
+			if verbose > 0:
 				print("== step %i ==" % (int(i+1),))
 			restart = 0
 			restart_step = True
 			while restart_step:
 				for name in self.sampler.parameters.hierarchy:
-					if verbose > 3
-					print("== parameter %s ==" % name)
+					if verbose > 3:
+						print("== parameter %s ==" % name)
 					try:
 						self.sampler.parameters.list[name].current_value = self.generate(name)
 						self.simulations[name][:,:,i] = self.sampler.parameters.list[name].current_value.reshape(self.sampler.parameters.list[name].size)
@@ -119,7 +119,7 @@ class MCMC(object):
 					except:
 						if restart < max_restart:
 							restart+=1
-							if verbose > 4
+							if verbose > 4:
 								print("== restart step %i ==" % i)
 							restart_step = True
 							break

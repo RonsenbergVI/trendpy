@@ -33,7 +33,7 @@ from numpy.linalg import inv, norm
 
 from trendpy.globals import derivative_matrix
 
-__all__ = ['Parameter','Parameters','Sampler','L1Filter']
+__all__ = ['Parameter','Parameters','Sampler','L1']
 
 class Parameter(object):
 	""" Implements an unknown parameter to be estimated
@@ -276,8 +276,9 @@ class L1(Sampler):
 		self.__data = data
 		self.size = len(data)
 		self.total_variation_order = total_variation_order
-		self.parameters = None
 		self.derivative_matrix = derivative_matrix(self.size, self.total_variation_order)
+		self.define_parameters()
+
 
 	@property
 	def data(self):
@@ -290,7 +291,7 @@ class L1(Sampler):
 
 	@parameters.setter
 	def parameters(self, new_value):
-		self.__parameters = new_value if new_value is not None else Parameters()
+		self.__parameters = new_value if new_value is not None else []
 
 	def define_parameters(self):
 		params=Parameters()
@@ -349,4 +350,4 @@ class L1(Sampler):
 
 	class Factory(object):
 		def create(self,*args,**kwargs):
-			return L1Filter(args[0],total_variation_order=kwargs['total_variation_order'])
+			return L1(args[0],total_variation_order=kwargs['total_variation_order'])

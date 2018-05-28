@@ -31,7 +31,7 @@ Issues
 
 Should you encounter any issue with the library you can raise them here: https://github.com/ronsenbergVI/trendpypy/issues
 
-.. include:: ../INSTALL.rst 
+.. include:: ../INSTALL.rst
 
 Introduction to filtering theory
 --------------------------------
@@ -121,7 +121,7 @@ Factory class handling the creation of bayesian algorithms.
 .. autoclass:: SamplerFactory
 
 	.. automethod:: add
-	
+
 	.. automethod:: removee
 
 	.. automethod:: remove_All
@@ -158,44 +158,6 @@ Generic structure of the algorithms implemented.
 
 	.. automethod:: run
 
-Series
-------
-
-Class implementing time series analysis.
-
-.. module:: trendpy.series
-
-.. autoclass:: Series
-
-	.. attribute:: data
-
-	.. automethod:: from_csv
-	
-	.. automethod:: summary
-	
-	.. automethod:: returns
-	
-	.. automethod:: annualized_return
-	
-	.. automethod:: annualized_volatility
-	
-	.. automethod:: skewness
-	
-	.. automethod:: kurtosis
-	
-	.. automethod:: max_drawdown
-	
-	.. automethod:: periodic_returns
-	
-	.. automethod:: rolling_max_drawdown
-	
-	.. automethod:: rolling_volatility
-
-	.. automethod:: save
-
-	.. automethod:: plot
-
-	.. automethod:: filter
 
 Samplers
 --------
