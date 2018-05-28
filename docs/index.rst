@@ -74,11 +74,13 @@ to finding the functional form:
 Quickstart
 ----------
 
-To create a new :py:meth:`~trendpy.series.Series` instance from a csv file::
+The filter method outputs the filtered trend of the input time series (only the time-series
+values can be recognized by trendpy)::
 
-	>>> from trendpy.series import Series
-	>>> data = Series.from_csv('data.csv')
-	>>> data.plot()
+	>>> from trendpy import filter
+  >>> from pandas import read_csv
+	>>> data = read_csv('data.csv')
+	>>> trend = filter(data['y'])
 
 API Reference
 =============
