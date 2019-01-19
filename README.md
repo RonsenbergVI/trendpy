@@ -15,7 +15,7 @@ Contribution will be welcomed once a first stable release is ready. [Contact Me]
 
 Data is imported from a file (trendpy only supports csv for now).
 
-```markdown
+```python
 
 # import data from csv file (with dates and price) -- for now trendpy only
 # support 1D time series
